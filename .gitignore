@@ -1,4 +1,5 @@
 .zshrc
+manifest.xml
 Samples/*
 Tools/*
 Tools-linux/*
