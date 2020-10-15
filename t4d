@@ -1,0 +1,58 @@
+#!/bin/zsh
+
+autoload -U colors &> /dev/null 
+colors &> /dev/null 
+
+export Tools4Dev_PATH="$(dirname $0 | sed "s|\.|$PWD|g")"
+export SHARED_WORKSPACE="$(dirname $Tools4Dev_PATH)"
+
+export T4D_SILENT_COMMAND=true
+
+case $1 in
+    install)
+        set -e
+        cp -f "$HOME/.zshrc" "$HOME/.zshrc_" &&         echo "Tools4Dev  -> Old zshrc saved in $HOME/.zshrc_"
+
+        if [[ $2 == "append" ]]; then
+            ( cat "$Tools4Dev_PATH/Templates/zshrc.env" | sed "s|<TOOLS4DEV_PATH>|$Tools4Dev_PATH|g" | sed "s|<SHARED_WORKSPACE>|$SHARED_WORKSPACE|g"  | tee -a "$HOME/.zshrc" && echo "Tools4Dev  -> Write content of $Tools4Dev_PATH/Templates/zshrc.env at the end of $HOME/.zshrc" ) 2> /dev/null
+            [[ ! -e "$Tools4Dev_PATH/Users/$USER.env" ]] && cp -f "$Tools4Dev_PATH/Templates/user-OhMyZSH.env" "./Users/$USER.env" 
+        elif [[ $2 == "askMe" ]]; then
+            echo "================"
+            cat "$Tools4Dev_PATH/Templates/zshrc.env" | sed "s|<TOOLS4DEV_PATH>|$Tools4Dev_PATH|g" | sed "s|<SHARED_WORKSPACE>|$SHARED_WORKSPACE|g" 
+            echo ""
+            echo "================"
+            echo "Do you want this file to be written at the end of your $HOME/.zshrc ?"
+            echo "Enter to proceed, Ctrl+C to abort"
+            read answer
+            cat "$Tools4Dev_PATH/Templates/zshrc.env" | sed "s|<TOOLS4DEV_PATH>|$Tools4Dev_PATH|g" | sed "s|<SHARED_WORKSPACE>|$SHARED_WORKSPACE|g"  | tee -a "$HOME/.zshrc" && echo "Tools4Dev  -> Write content of $Tools4Dev_PATH/Templates/zshrc.env at the end of $HOME/.zshrc"
+            if [[ ! -e "$Tools4Dev_PATH/Users/$USER.env" ]]; then
+                cp -f "$Tools4Dev_PATH/Templates/user-OhMyZSH.env" "$Tools4Dev_PATH/Users/$USER.env"
+            fi
+        else
+            cat "$Tools4Dev_PATH/Templates/zshrc.env" | sed "s|<TOOLS4DEV_PATH>|$Tools4Dev_PATH|g" | sed "s|<SHARED_WORKSPACE>|$SHARED_WORKSPACE|g"  > "$HOME/.zshrc" && echo "Tools4Dev  -> $Tools4Dev_PATH/Templates/zshrc.env copied in $HOME/.zshrc "
+            if [[ ! -e "$Tools4Dev_PATH/Users/$USER.env" ]]; then
+                cp -f "$Tools4Dev_PATH/Templates/user.env" "$Tools4Dev_PATH/Users/$USER.env"
+            fi
+        fi
+    ;;
+    exec)
+        set -e
+        if [[ -e $PWD/project.env ]]; then
+            source $PWD/project.env &> /dev/null
+        else
+            source $Tools4Dev_PATH/tools4Dev.env &> /dev/null
+        fi
+        t4dLoadProjectConf &> /dev/null
+        $@
+    ;;
+    *)
+        set -e
+        if [[ -e $PWD/project.env ]]; then
+            source $PWD/project.env &> /dev/null || source $PWD/project.env
+        else
+            source $Tools4Dev_PATH/tools4Dev.env &> /dev/null || source $Tools4Dev_PATH/tools4Dev.env
+        fi
+        t4dLoadProjectConf &> /dev/null
+        $@
+    ;;
+esac

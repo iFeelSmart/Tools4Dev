@@ -1,0 +1,24 @@
+ M File1
+ M Folder1/File2
+?? File3
+?? Folder2/File4
+ D File5
+ D Folder3/File6
+M  File7
+M  Folder4/File8
+R  File9
+R  Folder5/File10
+A  File11
+A  Folder6/File12
+D  File13
+D  Folder7/File14
+RM File15
+RM Folder8/File16
+MM File17
+MM Folder9/File18
+AA File19
+AA Folder10/File20
+UU File21
+UU Folder11/File22
+AD File23
+AD Folder12/File24

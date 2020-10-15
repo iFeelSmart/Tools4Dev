@@ -1,0 +1,24 @@
+ M Prefix1/File1
+ M Prefix1/Folder1/File2
+?? Prefix1/File3
+?? Prefix1/Folder2/File4
+ D Prefix1/File5
+ D Prefix1/Folder3/File6
+M  Prefix1/File7
+M  Prefix1/Folder4/File8
+R  Prefix1/File9
+R  Prefix1/Folder5/File10
+A  Prefix1/File11
+A  Prefix1/Folder6/File12
+D  Prefix1/File13
+D  Prefix1/Folder7/File14
+RM Prefix1/File15
+RM Prefix1/Folder8/File16
+MM Prefix1/File17
+MM Prefix1/Folder9/File18
+AA Prefix1/File19
+AA Prefix1/Folder10/File20
+UU Prefix1/File21
+UU Prefix1/Folder11/File22
+AD Prefix1/File23
+AD Prefix1/Folder12/File24
