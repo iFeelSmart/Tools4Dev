@@ -28,6 +28,7 @@ It might be similar to Oh-My-Zsh and it will fufill some of their features (in a
  * [Introduction](.Ressources/docs/MarkDown/Introduction.md)
  * [Install](.Ressources/docs/MarkDown/Platforms/_main_.md)
    * [Alpine](.Ressources/docs/MarkDown/Platforms/Alpine.md)
+   * [Fedora](.Ressources/docs/MarkDown/Platforms/Fedora.md)
    * [Linux](.Ressources/docs/MarkDown/Platforms/Linux.md)
    * [MacOS](.Ressources/docs/MarkDown/Platforms/MacOS.md)
  * [UserStories]()

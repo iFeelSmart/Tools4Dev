@@ -11,19 +11,12 @@
 
 
 ## Name
-<p>Linux</p>
+<p>Fedora</p>
 
 
 ## Dependencies
 ```
-APT
-which git-lfs || sudo apt-get install -y git-lfs
-which zsh || sudo apt-get install -y zsh
-sudo apt-get install -y util-linux python python3-selinux patch jq
-```
-OR
-```
-DNF
+curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.rpm.sh | sudo bash
 which git-lfs || sudo dnf install -y git-lfs
 which zsh || sudo dnf install -y zsh
 sudo dnf install -y util-linux-user python libselinux-python patch jq
