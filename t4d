@@ -3,8 +3,7 @@
 autoload -U colors &> /dev/null 
 colors &> /dev/null 
 
-export Tools4Dev_PATH="$(dirname $0 | sed "s|\.|$PWD|g")"
-export SHARED_WORKSPACE="$(dirname $Tools4Dev_PATH)"
+export Tools4Dev_PATH="$(dirname $0)"
 
 export T4D_SILENT_COMMAND=true
 
