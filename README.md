@@ -37,7 +37,7 @@ It might be similar to Oh-My-Zsh and it will fufill some of their features (in a
    * [How To ...]()
  * [Modules]()
    * [How To Add A New Module]()
- * [Functions]()
+ * [How To Contribute]()
    * [How To Add A New Function]()
    * [How To Create Documentation]()
    * [How To Organize Log In You Function]()
