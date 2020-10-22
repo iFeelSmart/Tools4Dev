@@ -9,15 +9,15 @@
 ###
 #   - Description:
 #       This script should be run via curl:
-#           sh -c "$(curl -fsSL https://raw.githubusercontent.com/ifeelsmart/tools4dev/master/platform/install.sh)"
+#           sh -c "$(curl -fsSL https://raw.githubusercontent.com/iFeelSmart/Tools4Dev/master/Platforms/install.sh?token=ADAHLJVKAYDQRO6IPOCDCSS7SFJWW)"
 #       or via wget:
-#           sh -c "$(wget -qO- https://raw.githubusercontent.com/ifeelsmart/tools4dev/master/platform/install.sh)"
+#           sh -c "$(wget -qO- https://raw.githubusercontent.com/iFeelSmart/Tools4Dev/master/Platforms/install.sh?token=ADAHLJVKAYDQRO6IPOCDCSS7SFJWW)"
 #       or via fetch:
-#           sh -c "$(fetch -o - https://raw.githubusercontent.com/ifeelsmart/tools4dev/master/platform/install.sh)"
+#           sh -c "$(fetch -o - https://raw.githubusercontent.com/iFeelSmart/Tools4Dev/master/Platforms/install.sh?token=ADAHLJVKAYDQRO6IPOCDCSS7SFJWW)"
 #
 #
 #       As an alternative, you can first download the install script and run it afterwards:
-#           https://raw.githubusercontent.com/ifeelsmart/tools4dev/master/platform/install.sh
+#           https://raw.githubusercontent.com/iFeelSmart/Tools4Dev/master/Platforms/install.sh?token=ADAHLJVKAYDQRO6IPOCDCSS7SFJWW
 #           sh install.sh
 #
 #       Some variable on this script can be tweaked by setting them when running the script.
@@ -48,12 +48,11 @@
 ###
 #### HEADER BLOC ####
 set -e
-
 ############################
-T4D_REMOTE="${T4D_REMOTE:-}"
-T4D_BRANCH="${T4D_BRANCH:-}"
-T4D_REPO="${T4D_REPO:-}"
-T4D_MANIFEST="${T4D_MANIFEST:-}"
+T4D_REMOTE="${T4D_REMOTE:-"https://github.com/iFeelSmart/"}"
+T4D_BRANCH="${T4D_BRANCH:-master}"
+T4D_REPO="${T4D_REPO:-"Tools4Dev.git"}"
+T4D_MANIFEST="${T4D_MANIFEST:-"https://raw.githubusercontent.com/iFeelSmart/T4D-Team-Default/master/manifest.xml?token=ADAHLJUVL7RAYHOFTAW7FFC7SFN6O"}"
 T4D_ROOT_PATH="${T4D_ROOT_PATH:-$HOME/.tools4dev}"
 Tools4Dev_PATH="${T4D_ROOT_PATH}/src"
 INSTALL_ROOT="${INSTALL_ROOT:-false}"
@@ -97,7 +96,7 @@ config_zshrc(){
 }
 
 config_root(){
-    if [[ -d "/root"]]; then
+    if [[ -d "/root" ]]; then
         _t4dDebugLog $pinfo "Requesting sudo rights to create simlink /root/.tools4dev -> $T4D_ROOT_PATH"
         sudo ln -sfn $T4D_ROOT_PATH /root/.tools4dev
     fi
