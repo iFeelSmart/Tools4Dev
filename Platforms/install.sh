@@ -150,9 +150,13 @@ config_root(){
 wks_clone(){
     if [[ "$T4D_MANIFEST" != "" ]]; then
         if [[ -e "$T4D_MANIFEST" ]]; then
+            _t4dDebugLog $plog "Using $T4D_MANIFEST as manifest.xml"
             cp -f "$T4D_MANIFEST" "$Tools4Dev_PATH/manifest.xml"
-        elif [[ "$(echo $T4D_MANIFEST | grep '^http')" ]]; then
+        elif [[ "$(echo $T4D_MANIFEST | grep '^http')" != "" ]]; then
+            _t4dDebugLog $plog "Downloading $T4D_MANIFEST as manifest.xml"
             curl -fsSl "$T4D_MANIFEST" > "$Tools4Dev_PATH/manifest.xml"
+        else
+            _t4dDebugLog $pwarning "Unknown type of manifest.xml file - $T4D_MANIFEST -"
         fi
         cd $Tools4Dev_PATH
         zsh -c "$Tools4Dev_PATH/t4d wks clone"
