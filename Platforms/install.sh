@@ -9,15 +9,15 @@
 ###
 #   - Description:
 #       This script should be run via curl:
-#           sh -c "$(curl -fsSL https://raw.githubusercontent.com/iFeelSmart/Tools4Dev/master/Platforms/install.sh?token=ADAHLJVKAYDQRO6IPOCDCSS7SFJWW)"
+#           sh -c "$(curl -fsSL https://raw.githubusercontent.com/iFeelSmart/Tools4Dev/master/Platforms/install.sh)"
 #       or via wget:
-#           sh -c "$(wget -qO- https://raw.githubusercontent.com/iFeelSmart/Tools4Dev/master/Platforms/install.sh?token=ADAHLJVKAYDQRO6IPOCDCSS7SFJWW)"
+#           sh -c "$(wget -qO- https://raw.githubusercontent.com/iFeelSmart/Tools4Dev/master/Platforms/install.sh)"
 #       or via fetch:
-#           sh -c "$(fetch -o - https://raw.githubusercontent.com/iFeelSmart/Tools4Dev/master/Platforms/install.sh?token=ADAHLJVKAYDQRO6IPOCDCSS7SFJWW)"
+#           sh -c "$(fetch -o - https://raw.githubusercontent.com/iFeelSmart/Tools4Dev/master/Platforms/install.sh)"
 #
 #
 #       As an alternative, you can first download the install script and run it afterwards:
-#           https://raw.githubusercontent.com/iFeelSmart/Tools4Dev/master/Platforms/install.sh?token=ADAHLJVKAYDQRO6IPOCDCSS7SFJWW
+#           https://raw.githubusercontent.com/iFeelSmart/Tools4Dev/master/Platforms/install.sh
 #           sh install.sh
 #
 #       Some variable on this script can be tweaked by setting them when running the script.
@@ -47,21 +47,8 @@
 #
 ###
 #### HEADER BLOC ####
+############################
 set -e
-############################
-T4D_REMOTE="${T4D_REMOTE:-"https://github.com/iFeelSmart/"}"
-T4D_BRANCH="${T4D_BRANCH:-master}"
-T4D_REPO="${T4D_REPO:-"Tools4Dev.git"}"
-T4D_MANIFEST="${T4D_MANIFEST:-"https://raw.githubusercontent.com/iFeelSmart/T4D-Team-Default/master/manifest.xml?token=ADAHLJUVL7RAYHOFTAW7FFC7SFN6O"}"
-T4D_ROOT_PATH="${T4D_ROOT_PATH:-$HOME/.tools4dev}"
-Tools4Dev_PATH="${T4D_ROOT_PATH}/src"
-INSTALL_ROOT="${INSTALL_ROOT:-false}"
-CSH="${CSH:-true}"
-KEEP_ZSHRC="${KEEP_ZSHRC:-false}"
-
-############################
-
-
 
 plog="\033[1;36m[LOG] \033[m"
 psucceed="\033[1;32m[SUCCEED] \033[m"
@@ -71,54 +58,131 @@ perror="\033[1;31m [ERROR]\033[m"
 pwarning="\033[1;33m [WARNING]\033[m"
 
 _t4dDebugLog(){
-    (>&2 echo "$(printf "%-4s" ' ')$1 ${@:2}" )
+    echo -e "$(printf "%-4s" ' ')$1 ${@:2}"
 }
 
 _t4dCheckCommand(){
-    if [[ "$(command -v $1 2> /dev/null)" == "" ]]; then
-        _t4dDebugLog $perror "command $1 not found"
-        return 1
-    fi
+    local _return=0
+    for _command in $(echo $@); do
+        if [[ "$(command -v $_command 2> /dev/null)" == "" ]]; then
+            _t4dDebugLog $perror "command $_command not found"
+            _return=1
+        fi
+    done
+    return $_return
 }
+############################
+_t4dCheckCommand zsh git git-lfs jq chsh
+############################
+
+T4D_REMOTE="${T4D_REMOTE:-"https://github.com/iFeelSmart/"}"
+T4D_BRANCH="${T4D_BRANCH:-master}"
+T4D_REPO="${T4D_REPO:-"Tools4Dev.git"}"
+T4D_MANIFEST="${T4D_MANIFEST:-"https://raw.githubusercontent.com/iFeelSmart/T4D-Team-Default/master/manifest.xml"}"
+T4D_ROOT_PATH="${T4D_ROOT_PATH:-$HOME/.tools4dev}"
+Tools4Dev_PATH="${T4D_ROOT_PATH}/src"
+INSTALL_ROOT="${INSTALL_ROOT:-false}"
+CSH="${CSH:-true}"
+KEEP_ZSHRC="${KEEP_ZSHRC:-false}"
+ZSH_PATH="$(command -v zsh || true)"
+
 
 install_tools4dev(){
-    
-    _t4dCheckCommand git || exit 1
+
+    _t4dDebugLog $plog "Tools4Dev Installation"
+    mkdir -p $Tools4Dev_PATH
+    cd $T4D_ROOT_PATH
+    git clone -b ${T4D_BRANCH} "${T4D_REMOTE}${T4D_REPO}" "$(basename $Tools4Dev_PATH)" && _t4dDebugLog $psucceed "Repository Cloned"
 
 }
 
 config_shell(){
-    true
+
+    _t4dDebugLog $pinfo "Request sudo rights to change default $1 shell -> $ZSH_PATH"
+    sudo chsh -s "$ZSH_PATH" $1 && _t4dDebugLog $psucceed "Default shell ( $1 ) -> $ZSH_PATH"
+
 }
 
 config_zshrc(){
-    true
-}
+    local _prefix
+    local _path="${1:-$HOME}"
 
-config_root(){
-    if [[ -d "/root" ]]; then
-        _t4dDebugLog $pinfo "Requesting sudo rights to create simlink /root/.tools4dev -> $T4D_ROOT_PATH"
-        sudo ln -sfn $T4D_ROOT_PATH /root/.tools4dev
+    if [[ -e "$_path/.zshrc" ]]; then
+        _t4dDebugLog $plog "Creating $_path/.zshrc file backup in $T4D_ROOT_PATH/.zshrc_"
+        cp -f "$_path/.zshrc" "$T4D_ROOT_PATH/.zshrc_"
+    fi
+
+    if [[ "$KEEP_ZSHRC" == "false" ]]; then
+        _t4dDebugLog $plog "Zshrc Setup"
+        cat "$Tools4Dev_PATH/Templates/zshrc.env" | sed "s|<TOOLS4DEV_PATH>|$Tools4Dev_PATH|g" \
+                                                  | sed "s|<ZSH_PATH>|$ZSH_PATH|g" > "$_path/.zshrc" \
+                                                 && _t4dDebugLog $psucceed "$Tools4Dev_PATH/Templates/zshrc.env copied in ${_path}/.zshrc "
+    else
+        if [[ "$(cat ${_path}/.zshrc | grep '#Tools4Dev')" != "" ]]; then
+            _t4dDebugLog $pskip "Tools4Dev setup detected in $_path/.zshrc"
+        else
+            _t4dDebugLog $plog "Zshrc Setup ( Oh-My-Zsh Compatible )"
+            ( cat "$Tools4Dev_PATH/Templates/zshrc.env" | grep -v '^#!' \
+                                                        | sed "s|<TOOLS4DEV_PATH>|$Tools4Dev_PATH|g" \
+                                                        | sed "s|<ZSH_PATH>|$ZSH_PATH|g"  >> "${_path}/.zshrc" ) && _t4dDebugLog $psucceed "$Tools4Dev_PATH/Templates/zshrc.env added at the end of $_path/.zshrc"
+        fi
     fi
 }
 
+config_root(){
+    _t4dDebugLog $plog "Configuring Tools4Dev for root user"
+    local _simLink="/root/.tools4dev"
+
+    if [[ -d "/root" ]]; then
+        _t4dDebugLog $pinfo "Request sudo rights to install root config, press enter to continue" && read
+        config_shell root
+        _t4dDebugLog $pinfo "Request sudo rights to create simlink $_simLink -> $T4D_ROOT_PATH, press enter to continue" && read
+        sudo ln -sfn $T4D_ROOT_PATH $_simLink && _t4dDebugLog $psucceed "$_simLink -> $T4D_ROOT_PATH"
+        if [[ ! -e "/root/.zshrc" ]]; then
+             _t4dDebugLog $pinfo "Request sudo rights to install .zshrc for root user, press enter to continue" && read
+            sudo cat "$Tools4Dev_PATH/Templates/zshrc.env"  | sed "s|<TOOLS4DEV_PATH>|/root/.tools4dev/src|g" \
+                                                            | sed "s|<ZSH_PATH>|$ZSH_PATH|g" | sudo tee "/root/.zshrc" > /dev/null \
+                                                            && _t4dDebugLog $psucceed "$Tools4Dev_PATH/Templates/zshrc.env copied in /root/.zshrc "
+        fi
+    else
+        _t4dDebugLog $pskip "/root does not exist"
+    fi
+}
+
+wks_clone(){
+    if [[ "$(echo $T4D_MANIFEST | grep '<manifest>')" != "" ]]; then
+        echo "$T4D_MANIFEST" > "$Tools4Dev_PATH/manifest.xml"
+        cd $Tools4Dev_PATH
+        zsh -c "$Tools4Dev_PATH/t4d wks clone"
+    fi
+}
+
+logo(){
+
+    echo -e "\033[1;32m            _____            _     _  _     ___           \033[m"
+    echo -e "\033[1;32m           /__   \___   ___ | |___| || |   /   \_____   __\033[m"
+    echo -e "\033[1;32m             / /\/ _ \ / _ \| / __| || |_ / /\ / _ \ \ / /\033[m"
+    echo -e "\033[1;32m            / / | (_) | (_) | \__ \__   _/ /_//  __/\ V / \033[m"
+    echo -e "\033[1;32m            \/   \___/ \___/|_|___/  |_|/___ / \___| \_/  \033[m"
+    echo -e ""
+
+}
+
 main(){
-    
-
-
+    logo
 
     if [[ ! -d "$T4D_ROOT_PATH" ]]; then
         install_tools4dev
     else
-        _t4dDebugLog $perror "Folder $T4D_ROOT_PATH already exist"
-        exit 1
+        _t4dDebugLog $pskip "Folder $T4D_ROOT_PATH already exist"
+        return 1
     fi
     
-
-    if [[ "$CSH"          == "true"  ]]; then    config_shell; fi
-    if [[ "$KEEP_ZSHRC"   == "false" ]]; then    config_zshrc; fi
+    if [[ "$KEEP_ZSHRC"   == "false" ]]; then    config_zshrc $HOME; fi
+    if [[ "$CSH"          == "true"  ]]; then    config_shell $USER; fi
     if [[ "$INSTALL_ROOT" == "true"  ]]; then    config_root; fi
 
+    wks_clone
 }
 
 main "$@"
