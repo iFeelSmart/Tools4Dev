@@ -9,19 +9,17 @@
 ###
 #   - Description:
 #       This script should be run via curl:
-#           sh -c "$(curl -fsSL https://raw.githubusercontent.com/iFeelSmart/Tools4Dev/master/Platforms/install.sh)"
-#       or via wget:
-#           sh -c "$(wget -qO- https://raw.githubusercontent.com/iFeelSmart/Tools4Dev/master/Platforms/install.sh)"
-#       or via fetch:
-#           sh -c "$(fetch -o - https://raw.githubusercontent.com/iFeelSmart/Tools4Dev/master/Platforms/install.sh)"
-#
+#           sh -c "$(curl -fsSL https://raw.githubusercontent.com/iFeelSmart/Tools4Dev/master/Platforms/install.sh)"; zsh
 #
 #       As an alternative, you can first download the install script and run it afterwards:
 #           https://raw.githubusercontent.com/iFeelSmart/Tools4Dev/master/Platforms/install.sh
 #           sh install.sh
+#           zsh
 #
 #       Some variable on this script can be tweaked by setting them when running the script.
 #           Tools4Dev_PATH=$HOME/.tools4dev sh install.sh
+#           sh -c "Tools4Dev_PATH=$HOME/.tools4dev; $(curl -fsSL https://raw.githubusercontent.com/iFeelSmart/Tools4Dev/master/Platforms/install.sh)"; zsh
+#
 ###
 #   - Available Options:
 #       * Tools4Dev_PATH            = Set Tools4Dev install path (default is $HOME/.tools4dev/src)
@@ -72,7 +70,7 @@ _t4dCheckCommand(){
     return $_return
 }
 ############################
-_t4dCheckCommand zsh git git-lfs jq chsh
+_t4dCheckCommand zsh git git-lfs jq chsh curl
 ############################
 
 T4D_REMOTE="${T4D_REMOTE:-"https://github.com/iFeelSmart/"}"
@@ -150,8 +148,12 @@ config_root(){
 }
 
 wks_clone(){
-    if [[ "$(echo $T4D_MANIFEST | grep '<manifest>')" != "" ]]; then
-        echo "$T4D_MANIFEST" > "$Tools4Dev_PATH/manifest.xml"
+    if [[ "$T4D_MANIFEST" != "" ]]; then
+        if [[ -e "$T4D_MANIFEST" ]]; then
+            cp -f "$T4D_MANIFEST" "$Tools4Dev_PATH/manifest.xml"
+        elif [[ "$(echo $T4D_MANIFEST | grep '^http')" ]]; then
+            curl -fsSl "$T4D_MANIFEST" > "$Tools4Dev_PATH/manifest.xml"
+        fi
         cd $Tools4Dev_PATH
         zsh -c "$Tools4Dev_PATH/t4d wks clone"
     fi
