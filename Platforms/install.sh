@@ -133,11 +133,10 @@ config_zshrc(){
 }
 
 config_root(){
-    _t4dDebugLog $plog "Configuring Tools4Dev for root user"
+    _t4dDebugLog $plog "Configuring Tools4Dev for root user, it will require sudo rights. Press enter to continue" && read
     local _simLink="/root/.tools4dev"
 
     if [[ -d "/root" ]]; then
-        _t4dDebugLog $pinfo "Request sudo rights to install root config, press enter to continue" && read
         config_shell root
         _t4dDebugLog $pinfo "Request sudo rights to create simlink $_simLink -> $T4D_ROOT_PATH, press enter to continue" && read
         sudo ln -sfn $T4D_ROOT_PATH $_simLink && _t4dDebugLog $psucceed "$_simLink -> $T4D_ROOT_PATH"
