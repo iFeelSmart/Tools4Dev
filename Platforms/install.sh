@@ -55,8 +55,13 @@ pskip="\033[1;35m[SKIPPED]\033[m"
 perror="\033[1;31m [ERROR]\033[m"
 pwarning="\033[1;33m [WARNING]\033[m"
 
+#Testing echo statement to allow color management in output and avoid "-e" at beginning on line
+if [[ "$(echo -e toto)" == "toto" ]]; then
+    alias echo='echo -e'
+fi
+
 _t4dDebugLog(){
-    echo -e "$(printf "%-4s" ' ')$1 ${@:2}"
+    echo "$(printf "%-4s" ' ')$1 ${@:2}"
 }
 
 _t4dCheckCommand(){
@@ -165,12 +170,12 @@ wks_clone(){
 
 logo(){
 
-    echo -e "\033[1;32m            _____            _     _  _     ___           \033[m"
-    echo -e "\033[1;32m           /__   \___   ___ | |___| || |   /   \_____   __\033[m"
-    echo -e "\033[1;32m             / /\/ _ \ / _ \| / __| || |_ / /\ / _ \ \ / /\033[m"
-    echo -e "\033[1;32m            / / | (_) | (_) | \__ \__   _/ /_//  __/\ V / \033[m"
-    echo -e "\033[1;32m            \/   \___/ \___/|_|___/  |_|/___ / \___| \_/  \033[m"
-    echo -e ""
+    echo "\033[1;32m            _____            _     _  _     ___           \033[m"
+    echo "\033[1;32m           /__   \___   ___ | |___| || |   /   \_____   __\033[m"
+    echo "\033[1;32m             / /\/ _ \ / _ \| / __| || |_ / /\ / _ \ \ / /\033[m"
+    echo "\033[1;32m            / / | (_) | (_) | \__ \__   _/ /_//  __/\ V / \033[m"
+    echo "\033[1;32m            \/   \___/ \___/|_|___/  |_|/___ / \___| \_/  \033[m"
+    echo ""
 
 }
 
