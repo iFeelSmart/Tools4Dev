@@ -163,10 +163,13 @@ Source/Common/_project_:_wksDoctorAndroidSDKTools
 Source/Common/_project_:_wksDoctorLinuxPackage
 Source/Common/_project_:_wks
 Source/Common/html:_t4dGetHtmlData
+Source/Common/_team_:_t4dTeamGitServerSetBuildStatus
+Source/Common/_team_:_t4dTeamIrcSendNotif
 Source/Common/version:_t4dSrcBumpVersion
 Source/Common/version:_t4dSrcGetProjectVersion
 Source/Common/version:_t4dSrcVersionCodeGenerate
 Source/Common/version:_t4dSrcVersionCodeParse
+Source/Common/system:_t4dSystemBindKeys
 Source/Common/system:_t4dSystemFileCount
 Source/Common/system:_t4dSystemWritablePath
 Source/Common/system:_t4dSystemGetCores
@@ -406,6 +409,7 @@ Engine/Make/_main_:_t4dMakeIndex
 Engine/Make/_main_:_t4dMakeSample
 Engine/Make/_main_:_t4dMakeStatistic
 Engine/Make/_main_:_t4dMakeTest
+Engine/Make/_main_:_t4dMakeDocUnderConstruction
 Engine/Make/_main_:_t4dMakeDoc
 Engine/Make/_main_:_t4dMakeMan
 Engine/Make/_main_:_t4dMakeDefaultMarkdownHeader
