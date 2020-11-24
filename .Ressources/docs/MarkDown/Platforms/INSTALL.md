@@ -1,9 +1,26 @@
+ [<<< Back To Readme](../../../../README.md)
+<p align="center">
+<img src="https://github.com/T4D-Suites/T4D-Ressources/blob/master/LogoT4D.png" width="512">
+</p>
 
 ## Name
 <p>Install Tools4Dev script</p>
 
 
+## Recommandations
+
+Tools4Dev is fully customizable by user and we try to made our code as readable as we can.
+You can install Tools4Dev manually or use this method described bellow.
+You might have to install dependencies depending on your system.
+We recommand you to read at least manual install process without executing it before launching this script to be fully aware on what we will do on your terminal configuration.
+
+   * [Alpine](Alpine.md)
+   * [Fedora](Fedora.md)
+   * [Linux](Linux.md)
+   * [MacOS](MacOS.md)
+
 ## Description
+
 This script should be run via curl:
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/iFeelSmart/Tools4Dev/master/Platforms/install.sh)"; zsh
 

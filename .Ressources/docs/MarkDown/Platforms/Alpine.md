@@ -1,6 +1,6 @@
  [<<< Back To Readme](../../../../README.md)
  <p align="center">
-     <img src="https://image.ibb.co/mfkNxG/Screen_Shot_2018_01_02_at_10_55_58.png">
+     <img src="https://github.com/T4D-Suites/T4D-Ressources/blob/master/LogoT4D.png">
  </p>
 
  **Welcome to Tools4Dev !**
