@@ -17,7 +17,7 @@
 
 Bpi (Build Puller & Injector) is a command line tools that allow user to interact with
 
-1. Devices
+### Devices
 By loading their config files stored in a global inventory manager (smartphone, iphone etc. ).
 It allow any user to save and share a configuration like his IP, his MacAddress, his Name or even his project's
 
@@ -27,7 +27,7 @@ bpi help device add
 bpi help device select
 ```
 
-2. Binaries on AWS S3
+### Binaries on AWS S3
 All archives built might be stored in a global server called S3.
 You can use bpi s3 to explore every single folders to find the right build that you need to test and import/pull it directly to your workspace
 
@@ -36,7 +36,7 @@ You can use bpi s3 to explore every single folders to find the right build that 
 bpi help s3
 ```
 
-3. Install local bin to your devices
+### Install local bin to your devices
 Using bpi install you will be able to connect to previous selected device ( by using bpi device {ID} ) to install any available AND compatible binaries downloaded ( using bpi s3 )
 
 - For more information:
@@ -45,7 +45,7 @@ bpi help install
 ```
 
 
-4. Base Workflow
+### Base Workflow
 Using default workflow behavior you might want to first add you device to the current inventory, select it and load his configuration file.
 Then you will be able to explore S3 Server to find any compatible archive, pull it (download + extract) then install it on your device.
 
