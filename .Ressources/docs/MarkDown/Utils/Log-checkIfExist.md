@@ -149,7 +149,7 @@ Read sended argument, then check if folder or file exist. Send normalize output 
 
 ## Definition
 
-
+<p>
 Compare Variable sent in arg1 with value send in arg2.
 
 Sending normalized output depending on result
@@ -158,7 +158,7 @@ Sending normalized output depending on result
 2. If var's data match with arg2 - execute _t4dCheckSucceeded then return 0
 3. If var's doesn't match value but is not empty - execute _t4dCheckWarning then return 0
 4. If var's data is empty - execute _t4dCheckFailed and return 1
-
+</p>
 
 
 ## Example
