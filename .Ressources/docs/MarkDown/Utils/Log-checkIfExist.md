@@ -1,6 +1,6 @@
-[<<< Back To Readme](../../../..//README.md)
+[<<< Back To Readme](../../../../README.md)
 <p align="center">
-    <img src="https://github.com/iFeelSmart/T4D-Ressources/blob/master/Logo.png">
+    <img src="https://github.com/T4D-Suites/T4D-Ressources/blob/master/LogoT4D.png">
 </p>
 
 # _t4dCheckFile
@@ -26,6 +26,8 @@ if file does not exist will execute _t4dCheckFailed & return 1
 
 
 </p>
+
+
 
 # _t4dCheckFunction
 
@@ -53,6 +55,8 @@ This function will allways return empty result. It can only be used by parsing $
 
 </p>
 
+
+
 # _t4dCheckFolder
 
 ## Synopsis
@@ -77,6 +81,8 @@ If sended argument is not a folder OR does not exist OR could not be found, will
 
 
 </p>
+
+
 
 # _t4dCheckFolderIsNotEmpty
 
@@ -105,6 +111,8 @@ If folder exist, ls his content including hidden files. send normalized output d
 
 </p>
 
+
+
 # _t4dCheckSymLink
 
 ## Synopsis
@@ -130,6 +138,8 @@ Read sended argument, then check if folder or file exist. Send normalize output 
 
 
 </p>
+
+
 
 # _t4dCheckEnv
 
@@ -165,6 +175,8 @@ Sending normalized output depending on result
 
 </p>
 
+
+
 # _t4dCheckVersion
 
 ## Synopsis
@@ -189,58 +201,116 @@ Please see _t4dCheckBinaryVersion documentation to see exact output
 
 </p>
 
-# _t4dCheckPackage
+
+
 # _t4dCheckBinary
-# _t4dCheckCommand
-# _t4dCheckBinaryVersion
+
+## Synopsis
+<p>DEPRECATED - see _t4dCheckCommand</p>
+
 
 ## Definition
 <p>
 
-Test Binary Version
+Use **which** to check if sended arg is an actual binary present in PATH or if path-to-bin is correct
 
-Usage:
-_t4dCheckBinaryVersion <Name> <BinaryVersion> <Version>
-
-Options:
-
-Example:
-On OSX : _t4dCheckBinaryVersion gcc "$(gcc -v 2>&1 | grep 'LLVM' | cut -d ' ' -f4)" "9.0.0"
-
-Note:
-
-- Keyword:
-
-
-DOCUMENTATION BLOC 
+Sending normalized output depending on result
+    1. If result is not empty - execute _t4dCheckSucceeded then return 0
+    2. If result is empty - execute _t4dCheckFailed then return 1
 </p>
 
-
-## Usage
-_t4dCheckBinaryVersion <Name> <BinaryVersion> <Version>
-
-Options:
-
-Example:
-
-On OSX : _t4dCheckBinaryVersion gcc "$(gcc -v 2>&1 | grep 'LLVM' | cut -d ' ' -f4)" "9.0.0"
-
-Note:
-
-- Keyword:
-
-DOCUMENTATION BLOC 
-
-
-## Options
 
 ## Example
 <p>
 
+* _t4dCheckBinary git              
+
+>  Check if git is a binary and his dirname present in PATH
+
+
+* _t4dCheckBinary /usr/bin/git     
+
+>  Check if /usr/bin/git is valid
+
+
 </p>
 
-# _t4dCheckOSXApp
-# _t4dCheckFailed
-# _t4dCheckSucceeded
-# _t4dCheckWarning
-# _t4dCheckInfo
+
+
+# _t4dCheckCommand
+
+## Synopsis
+<p>check if command exist</p>
+
+
+## Definition
+<p>
+
+Use **which** to check if sended arg is an actual binary present in PATH or if path-to-bin is correct
+
+Sending normalized output depending on result
+    1. If result is not empty - execute _t4dCheckSucceeded then return 0
+    2. If result is empty - execute _t4dCheckFailed then return 1
+</p>
+
+
+## Example
+<p>
+
+* _t4dCheckCommand git              
+
+>  Check if git is a binary and his dirname present in PATH
+
+
+* _t4dCheckCommand /usr/bin/git     
+
+>  Check if /usr/bin/git is valid
+
+
+</p>
+
+
+
+# _t4dCheckBinaryVersion
+
+## Synopsis
+<p>Utilitary that compare binary version and send normalized output</p>
+
+
+## Definition
+<p>
+
+First argument is pure syntax, it's what user will see
+
+
+It will send normalized output depending on version's diff
+    1. Major ( BinaryParsedVersion <  Version) - execute _t4dCheckFailed then return 1
+    2. Major ( BinaryParsedVersion >  Version) - execute _t4dCheckInfo then return 0
+    3. Minor ( BinaryParsedVersion >  Version) - execute _t4dCheckSucceeded then return 0
+    4. Minor ( BinaryParsedVersion <  Version) - execute _t4dCheckWarning then return 2
+    5. Patch ( BinaryParsedVersion >  Version) - execute _t4dCheckSucceeded then return 0
+6. Patch ( BinaryParsedVersion <  Version) - execute _t4dCheckWarning then return 3
+</p>
+
+
+## Usage
+_t4dCheckBinaryVersion <Name> <BinaryParsedVersion> <Version>
+
+
+## Example
+<p>
+
+* _t4dCheckBinaryVersion clang "$(clang -v 2>&1 | grep clang | cut -d ' ' -f4)" "9.0.0"         
+
+>  Check if clang version is newer than 9.0.0
+
+
+* _t4dCheckBinaryVersion git "$(git --version 2>&1 | cut -d ' ' -f3)" "2.0.0"                   
+
+>  Check if git version is newer than 2.0.0
+
+
+</p>
+
+
+
