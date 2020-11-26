@@ -95,9 +95,9 @@ If sended argument is not a folder OR does not exist OR could not be found, will
 
 
 If folder exist, ls his content including hidden files. send normalized output depending on his content:
-    1. Folder exist and not empty           - execute _t4dCheckSucceeded and return 0
-    2. Folder exist and seems to be empty   - execute _t4dCheckWarning and return 0
-    3. Folder does not exist                - execute _t4dCheckFailed and return 1
+1. Folder exist and not empty           - execute _t4dCheckSucceeded and return 0
+2. Folder exist and seems to be empty   - execute _t4dCheckWarning and return 0
+3. Folder does not exist                - execute _t4dCheckFailed and return 1
 </p>
 
 
@@ -123,9 +123,9 @@ If folder exist, ls his content including hidden files. send normalized output d
 <p>
 
 Read sended argument, then check if folder or file exist. Send normalize output depending on the result
-    1. If simlink is good and folder or file exist, execute _t4dCheckSucceeded then return 0
-    2. If simlink is empty and sended argument seems to be an existing file/folder, execute _t4dCheckWarning and return 0
-    3. All other result (simlink empty and or folder/file not existing) execute _t4dCheckFailed and return 1
+1. If simlink is good and folder or file exist, execute _t4dCheckSucceeded then return 0
+2. If simlink is empty and sended argument seems to be an existing file/folder, execute _t4dCheckWarning and return 0
+3. All other result (simlink empty and or folder/file not existing) execute _t4dCheckFailed and return 1
 </p>
 
 
@@ -148,12 +148,11 @@ Read sended argument, then check if folder or file exist. Send normalize output 
 
 
 ## Definition
-
 <p>
+
 Compare Variable sent in arg1 with value send in arg2.
-
+{Text}
 Sending normalized output depending on result
-
 1. If arg2 is empty and var's data is not empty - execute _t4dCheckSucceeded then return 0
 2. If var's data match with arg2 - execute _t4dCheckSucceeded then return 0
 3. If var's doesn't match value but is not empty - execute _t4dCheckWarning then return 0
@@ -216,8 +215,8 @@ Please see _t4dCheckBinaryVersion documentation to see exact output
 Use **which** to check if sended arg is an actual binary present in PATH or if path-to-bin is correct
 
 Sending normalized output depending on result
-    1. If result is not empty - execute _t4dCheckSucceeded then return 0
-    2. If result is empty - execute _t4dCheckFailed then return 1
+1. If result is not empty - execute _t4dCheckSucceeded then return 0
+2. If result is empty - execute _t4dCheckFailed then return 1
 </p>
 
 
@@ -250,8 +249,8 @@ Sending normalized output depending on result
 Use **which** to check if sended arg is an actual binary present in PATH or if path-to-bin is correct
 
 Sending normalized output depending on result
-    1. If result is not empty - execute _t4dCheckSucceeded then return 0
-    2. If result is empty - execute _t4dCheckFailed then return 1
+1. If result is not empty - execute _t4dCheckSucceeded then return 0
+2. If result is empty - execute _t4dCheckFailed then return 1
 </p>
 
 
@@ -285,11 +284,11 @@ First argument is pure syntax, it's what user will see
 
 
 It will send normalized output depending on version's diff
-    1. Major ( BinaryParsedVersion <  Version) - execute _t4dCheckFailed then return 1
-    2. Major ( BinaryParsedVersion >  Version) - execute _t4dCheckInfo then return 0
-    3. Minor ( BinaryParsedVersion >  Version) - execute _t4dCheckSucceeded then return 0
-    4. Minor ( BinaryParsedVersion <  Version) - execute _t4dCheckWarning then return 2
-    5. Patch ( BinaryParsedVersion >  Version) - execute _t4dCheckSucceeded then return 0
+1. Major ( BinaryParsedVersion <  Version) - execute _t4dCheckFailed then return 1
+2. Major ( BinaryParsedVersion >  Version) - execute _t4dCheckInfo then return 0
+3. Minor ( BinaryParsedVersion >  Version) - execute _t4dCheckSucceeded then return 0
+4. Minor ( BinaryParsedVersion <  Version) - execute _t4dCheckWarning then return 2
+5. Patch ( BinaryParsedVersion >  Version) - execute _t4dCheckSucceeded then return 0
 6. Patch ( BinaryParsedVersion <  Version) - execute _t4dCheckWarning then return 3
 </p>
 

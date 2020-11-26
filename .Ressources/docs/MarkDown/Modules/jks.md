@@ -28,18 +28,18 @@ Depending on your project will start a new build of your current workspace/branc
 
 * IMPORTANT : This command use JENKINS_USER_AND_PASSWORD variable.
 To define it you have to go to $JENKINS_WEB_URL
-    1. log in with your google account
-    2. Click on the top right corner __YourName__ then Configure
-    3. Add Token or show legacy token
-    4. copy and paste its content into $Tools4Dev_PATH/.$USER.env using following syntax
+1. log in with your google account
+2. Click on the top right corner __YourName__ then Configure
+3. Add Token or show legacy token
+4. copy and paste its content into $Tools4Dev_PATH/.$USER.env using following syntax
 JENKINS_USER_AND_PASSWORD="{GoogleEmailAddress}:{YourToken}"
 
 * Some project can also send build notification to personnal slack channel.
 To define it you will have to create your personnal token:
-    1. Go on __https://$WS_SLACK_ADDRESS/apps/A0F7VRFKN-jenkins-ci?next_id=0__
-    2. Click on Add Configuration (if you do not have all rights you will have to request access)
-    3. Choose a channel (privately to you)
-    4. copy and paste Integration Token value into $Tools4Dev_PATH/.$USER.env using following syntax
+1. Go on __https://$WS_SLACK_ADDRESS/apps/A0F7VRFKN-jenkins-ci?next_id=0__
+2. Click on Add Configuration (if you do not have all rights you will have to request access)
+3. Choose a channel (privately to you)
+4. copy and paste Integration Token value into $Tools4Dev_PATH/.$USER.env using following syntax
 __WS_CUSTOM_CHANNEL_NOTIFICATION="{YourToken}"__ .
 </p>
 
