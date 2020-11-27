@@ -1,7 +1,8 @@
 [<<< Back To Readme](../../../../README.md)
 <p align="center">
-    <img src="https://github.com/iFeelSmart/T4D-Ressources/blob/master/LogoJIC.png">
+    <img src="https://github.com/T4D-Suites/T4D-Ressources/blob/master/LogoJIC.png">
 </p>
+
 
 ## Name
 <p>jic</p>
