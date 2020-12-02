@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="https://github.com/iFeelSmart/T4D-Ressources/blob/master/Logo.png" width="256">
+    <img src="https://github.com/T4D-Suites/T4D-Ressources/blob/master/Logo.png" width="256">
 </p>
 <br />
 <br />
@@ -18,7 +18,7 @@ Tools4Dev is a development tools library which allows you to set up an entire ec
 It might be similar to Oh-My-Zsh and it will fufill some of their features (in a way), but T4D is very different and both can totally cohabit together.
 
 <p align="center">
-    <img src="https://github.com/iFeelSmart/T4D-Ressources/blob/master/Readme-Banner1.png" width="800">
+    <img src="https://github.com/T4D-Suites/T4D-Ressources/blob/master/Readme-Banner1.png" width="800">
 </p> 
 
 
