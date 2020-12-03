@@ -12,7 +12,7 @@
 </p>
 
 <p align="center">
-    <img src="https://github.com/T4D-Suites/T4D-Ressources/blob/master/Funny.png" width="800">
+    <img src="https://github.com/T4D-Suites/T4D-Ressources/blob/master/Funny.png" width="300">
 </p> 
 
 ## Presentation
