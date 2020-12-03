@@ -11,9 +11,15 @@
   <br />
 </p>
 
+<p align="center">
+    <img src="https://github.com/T4D-Suites/T4D-Ressources/blob/master/Funny.png" width="800">
+</p> 
+
 ## Presentation
 
-Tools4Dev is a development tools library which allows you to set up an entire ecosystem based on DevOps philosophy. You will be able to bring together all the teams involved in the life cycle of a product under one roof. This library also allows managers to set up and deploy complex and automated project’s management tasks within their team without ever reducing their productivity. Based on the scripting shell language, it does not require in-depth knowledge in scripting to achieve its ends. You will find below all the UserStories available to allow you to easily get to implement your project in a CI. This library is not a "You have nothing to do and it works" library. It will encourage you to kown and learn every step of your product lifecycle in a simple way and more over understandable log output.
+Tools4Dev is a development tools library written in shell which allows you to set up an entire ecosystem based on DevOps philosophy. You will be able to bring together all the teams involved in the life cycle of a product under one roof. This library also allows managers to set up and deploy complex and automated project’s management tasks within their team without ever reducing their productivity. Based on the scripting shell language, it does not require in-depth knowledge in scripting to achieve its ends. You will find below all the UserStories available to allow you to easily get to implement your project in a CI. This library is not a "You have nothing to do and it works" library. It will encourage you to kown and learn every step of your product lifecycle in a simple way and more over understandable log output.
+
+We use shell langage to be as closer as the user's terminal. Every Unix developper some day had to use a terminal and we want him to access to understandable and customizable shell function by using object-oriented development phylosophy inside a shell environment.
 
 It might be similar to Oh-My-Zsh and it will fufill some of their features (in a way), but T4D is very different and both can totally cohabit together.
 
