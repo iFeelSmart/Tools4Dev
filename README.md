@@ -26,6 +26,9 @@ It might be similar to Oh-My-Zsh and it will fufill some of their features (in a
 <p align="center">
     <img src="https://github.com/T4D-Suites/T4D-Ressources/blob/master/Readme-Banner1.png" width="800">
 </p> 
+<p align="center">
+    <img src="https://github.com/T4D-Suites/T4D-Ressources/blob/master/Readme-Banner2.png" width="400">
+</p> 
 
 
 ## Table of contents
