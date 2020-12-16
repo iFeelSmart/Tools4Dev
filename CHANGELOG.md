@@ -8,3 +8,8 @@
 
 ## 5.0.0
 - **feature**    First Open source release
+
+
+## 5.0.1
+- **bugfix**     wks clone error during first install
+- **bugfix**     jks startWithParams was parsing commented bloc
