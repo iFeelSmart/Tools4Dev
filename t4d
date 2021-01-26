@@ -3,7 +3,11 @@
 autoload -U colors &> /dev/null 
 colors &> /dev/null 
 
-export Tools4Dev_PATH="$(dirname $0)"
+export Tools4Dev_PATH="${Tools4Dev_PATH:-$HOME/.tools4dev/src}"
+
+if [[ -e "$Tools4Dev_PATH/manifest.xml" ]]; then
+    export WS_TEAM="$(cat $Tools4Dev_PATH/manifest.xml | grep '<team' | grep -Eo 'name=.*' | cut -d '"' -f2)"
+fi
 
 export T4D_SILENT_COMMAND=true
 
