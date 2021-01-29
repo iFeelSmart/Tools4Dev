@@ -145,7 +145,7 @@ Source/MailMarkdown/_main_:_t4dSrcMmdConvertToHtml
 Source/MailMarkdown/_main_:_t4dSrcMmdGenerateOutput
 Source/Common/_tools_:_t4dMakeTools
 Source/Common/_tools_:_t4dMakeAll
-Source/Common/_project_:_wksLog
+Source/Common/_project_:_wksCatLogFile
 Source/Common/_project_:_wksClone
 Source/Common/_project_:_wksGetVersion
 Source/Common/_project_:_wksDoctor
