@@ -2,7 +2,6 @@
 
 autoload -U colors &> /dev/null 
 colors &> /dev/null 
-
 export Tools4Dev_PATH="${Tools4Dev_PATH:-$HOME/.tools4dev/src}"
 
 if [[ -e "$Tools4Dev_PATH/manifest.xml" ]]; then
