@@ -13,3 +13,8 @@
 ## 5.0.1
 - **bugfix**     wks clone error during first install
 - **bugfix**     jks startWithParams was parsing commented bloc
+
+
+## 5.1.0
+- **feature**    Bb8 duplicate pull request to target another branch with cherry-picking strategy
+- **core**       add _t4dPromptChart to manage table output WikiJS compatible

@@ -66,4 +66,7 @@
 * [_t4dPromptTable](Log-prompt.md#_t4dPromptTable)
     |One-line description of what it does. (less than 55 char)|
 
+* [_t4dPromptChart](Log-prompt.md#_t4dPromptChart)
+    utils that will return a preformated table
+
 
