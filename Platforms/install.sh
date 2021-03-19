@@ -76,6 +76,9 @@ _t4dCheckCommand(){
 }
 ############################
 _t4dCheckCommand zsh git git-lfs jq chsh curl
+if [[ "$(uname -s)" == "Darwin" ]]; then
+    _t4dCheckCommand gdate
+fi
 ############################
 
 T4D_REMOTE="${T4D_REMOTE:-"https://github.com/T4D-Suites/"}"
