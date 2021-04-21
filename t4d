@@ -47,6 +47,19 @@ case $1 in
         t4dLoadProjectConf &> /dev/null
         $@
     ;;
+    -path)
+        set -e
+        cd $2
+        shift
+        shift
+        if [[ -e $PWD/project.env ]]; then
+            source $PWD/project.env &> /dev/null || source $PWD/project.env
+        else
+            source $Tools4Dev_PATH/tools4Dev.env &> /dev/null || source $Tools4Dev_PATH/tools4Dev.env
+        fi
+        t4dLoadProjectConf &> /dev/null
+        $@
+    ;;
     *)
         set -e
         if [[ -e $PWD/project.env ]]; then
