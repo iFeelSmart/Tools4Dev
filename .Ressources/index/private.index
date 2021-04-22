@@ -340,6 +340,8 @@ Source/Jenkins/jenkins-page-pipeline:_t4dSrcJenkinsPagePipelineGetHtmlPage
 Source/Jenkins/jenkins-page-pipeline:_t4dSrcJenkinsPagePipelineSync
 Source/Jenkins/jenkins-page-pipeline:_t4dSrcJenkinsPagePipelineListBranch
 Source/Jenkins/jenkins-page-pipeline:_t4dSrcJenkinsPagePipelineGetBranchStatus
+Source/Kubernetes/kubernetes-info:_t4dSrcKubeGetNamespaces
+Source/Kubernetes/kubernetes-info:_t4dSrcKubeGetIngress
 Source/WikiJS/wikijs-graphql:_t4dSrcWikiJsGraphQLCreatePage
 Source/WikiJS/wikijs-graphql:_t4dSrcWikiJsGraphQLMove
 Source/WikiJS/wikijs-graphql:_t4dSrcWikiJsGraphQLUpdate
@@ -360,6 +362,7 @@ Source/Git/git-info:_t4dSrcGitInfoGetHEADType
 Source/Git/git-info:_t4dSrcGitInfoLogFromBranch
 Source/Git/git-info:_t4dSrcGitUtilsBusyGit
 Source/Git/git-info:_t4dSrcGitUtilsDirtyGit
+Source/Git/git-info:_t4dSrcGitUtilsRepoNotDirtyGit
 Source/Git/git-info:_t4dSrcGitInfoListCommit
 Source/Git/git-info:_t4dSrcGitInfoListRemotesBranch
 Source/Git/git-info:_t4dSrcGitInfoBranchState
@@ -373,6 +376,8 @@ Source/Git/git-info:_t4dSrcGitInfoShaFromTag
 Source/Git/git-info:_t4dSrcGitInfoGetPRMerged
 Source/Git/git-info:_t4dSrcGitInfoBranchStatus
 Source/Git/git-utils:_t4dSrcGitUtilsLoadCompletion
+Source/Git/git-utils:_t4dSrcGitUtilsGetVersionSuffix
+Source/Git/git-utils:_t4dSrcGitUtilsNormalizeCommitMessage
 Source/Git/git-utils:_t4dSrcGitUtilsDuplicateBranch
 Source/Git/git-utils:_t4dSrcGitUtilsFileAction
 Source/Git/git-utils:_t4dSrcGitUtilsExportCommits

@@ -1,4 +1,6 @@
 -folders
 -force
+-diff-file
 -branch
+-normalize
 -message
