@@ -27,6 +27,7 @@
 #       * CSH                       = Configure zsh to be your default shell
 #       * KEEP_ZSHRC                = if true do not install new zshrc file
 #       * T4D_REMOTE                = set Tools4Dev Remote URL
+#       * T4D_NATIVE                = set to false if you don't want t4d to be natively loaded
 #       * T4D_BRANCH                = set Tools4Dev branch to install
 #       * T4D_REPO                  = set Tools4Dev Repo Path
 #       * T4D_MANIFEST              = if not empty and valid, will download manifest file and link to it
@@ -88,6 +89,7 @@ T4D_MANIFEST="${T4D_MANIFEST:-"https://raw.githubusercontent.com/T4D-Suites/T4D-
 T4D_ROOT_PATH="${T4D_ROOT_PATH:-$HOME/.tools4dev}"
 Tools4Dev_PATH="${T4D_ROOT_PATH}/src"
 INSTALL_ROOT="${INSTALL_ROOT:-false}"
+T4D_NATIVE="${T4D_NATIVE:-true}"
 CSH="${CSH:-true}"
 KEEP_ZSHRC="${KEEP_ZSHRC:-false}"
 ZSH_PATH="$(command -v zsh || true)"
@@ -124,6 +126,7 @@ config_zshrc(){
     if [[ "$KEEP_ZSHRC" == "false" ]]; then
         _t4dDebugLog $plog "Zshrc Setup"
         cat "$Tools4Dev_PATH/Templates/zshrc.env" | sed "s|<T4D_ROOT_PATH>|$T4D_ROOT_PATH|g" \
+                                                  | sed "s|<T4D_NATIVE>|$T4D_NATIVE|g" \
                                                   | sed "s|<ZSH_PATH>|$ZSH_PATH|g" > "$_path/.zshrc" \
                                                  && _t4dDebugLog $psucceed "$Tools4Dev_PATH/Templates/zshrc.env copied in ${_path}/.zshrc "
     else
@@ -133,6 +136,7 @@ config_zshrc(){
             _t4dDebugLog $plog "Zshrc Setup ( Oh-My-Zsh Compatible )"
             ( cat "$Tools4Dev_PATH/Templates/zshrc.env" | grep -v '^#!' \
                                                         | sed "s|<T4D_ROOT_PATH>|$T4D_ROOT_PATH|g" \
+                                                        | sed "s|<T4D_NATIVE>|$T4D_NATIVE|g" \
                                                         | sed "s|<ZSH_PATH>|$ZSH_PATH|g"  >> "${_path}/.zshrc" ) && _t4dDebugLog $psucceed "$Tools4Dev_PATH/Templates/zshrc.env added at the end of $_path/.zshrc"
         fi
     fi
@@ -149,6 +153,7 @@ config_root(){
         if [[ ! -e "/root/.zshrc" ]]; then
              _t4dDebugLog $pinfo "Request sudo rights to install .zshrc for root user, press enter to continue" && read
             sudo cat "$Tools4Dev_PATH/Templates/zshrc.env"  | sed "s|<T4D_ROOT_PATH>|/root/.tools4dev|g" \
+                                                            | sed "s|<T4D_NATIVE>|$T4D_NATIVE|g" \
                                                             | sed "s|<ZSH_PATH>|$ZSH_PATH|g" | sudo tee "/root/.zshrc" > /dev/null \
                                                             && _t4dDebugLog $psucceed "$Tools4Dev_PATH/Templates/zshrc.env copied in /root/.zshrc "
         fi
