@@ -61,6 +61,7 @@ case $1 in
         _t4dDebugLog $pinfo "It will erase $T4D_ROOT_PATH from your computer"
         
         read answer
+        rm -rf "${T4D_ROOT_PATH:-$HOME/.tools4dev}"
     ;;
     exec)
         set -e
