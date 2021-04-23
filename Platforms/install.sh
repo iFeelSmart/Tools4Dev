@@ -86,13 +86,15 @@ T4D_REMOTE="${T4D_REMOTE:-"https://github.com/T4D-Suites/"}"
 T4D_BRANCH="${T4D_BRANCH:-main}"
 T4D_REPO="${T4D_REPO:-"Tools4Dev.git"}"
 T4D_MANIFEST="${T4D_MANIFEST:-"https://raw.githubusercontent.com/T4D-Suites/T4D-Team-Default/main/manifest.xml"}"
-T4D_ROOT_PATH="${T4D_ROOT_PATH:-$HOME/.tools4dev}"
+T4D_ROOT_PATH="${T4D_ROOT_PATH:-"$HOME/.tools4dev"}"
 Tools4Dev_PATH="${T4D_ROOT_PATH}/src"
 INSTALL_ROOT="${INSTALL_ROOT:-false}"
 T4D_NATIVE="${T4D_NATIVE:-true}"
 CSH="${CSH:-true}"
 KEEP_ZSHRC="${KEEP_ZSHRC:-false}"
 ZSH_PATH="$(command -v zsh || true)"
+echo "T4D_ROOT_PATH -> $T4D_ROOT_PATH"
+echo "T4D_NATIVE -> $T4D_NATIVE"
 
 
 install_tools4dev(){
