@@ -120,7 +120,7 @@ config_zshrc(){
 
     if [[ "$KEEP_ZSHRC" == "false" ]]; then
         _t4dDebugLog $plog "Zshrc Setup"
-        cat "$Tools4Dev_PATH/Templates/zshrc.env" | sed "s|<TOOLS4DEV_PATH>|$Tools4Dev_PATH|g" \
+        cat "$Tools4Dev_PATH/Templates/zshrc.env" | sed "s|<T4D_ROOT_PATH>|$T4D_ROOT_PATH|g" \
                                                   | sed "s|<ZSH_PATH>|$ZSH_PATH|g" > "$_path/.zshrc" \
                                                  && _t4dDebugLog $psucceed "$Tools4Dev_PATH/Templates/zshrc.env copied in ${_path}/.zshrc "
     else
@@ -129,7 +129,7 @@ config_zshrc(){
         else
             _t4dDebugLog $plog "Zshrc Setup ( Oh-My-Zsh Compatible )"
             ( cat "$Tools4Dev_PATH/Templates/zshrc.env" | grep -v '^#!' \
-                                                        | sed "s|<TOOLS4DEV_PATH>|$Tools4Dev_PATH|g" \
+                                                        | sed "s|<T4D_ROOT_PATH>|$T4D_ROOT_PATH|g" \
                                                         | sed "s|<ZSH_PATH>|$ZSH_PATH|g"  >> "${_path}/.zshrc" ) && _t4dDebugLog $psucceed "$Tools4Dev_PATH/Templates/zshrc.env added at the end of $_path/.zshrc"
         fi
     fi
@@ -145,7 +145,7 @@ config_root(){
         sudo ln -sfn $T4D_ROOT_PATH $_simLink && _t4dDebugLog $psucceed "$_simLink -> $T4D_ROOT_PATH"
         if [[ ! -e "/root/.zshrc" ]]; then
              _t4dDebugLog $pinfo "Request sudo rights to install .zshrc for root user, press enter to continue" && read
-            sudo cat "$Tools4Dev_PATH/Templates/zshrc.env"  | sed "s|<TOOLS4DEV_PATH>|/root/.tools4dev/src|g" \
+            sudo cat "$Tools4Dev_PATH/Templates/zshrc.env"  | sed "s|<T4D_ROOT_PATH>|/root/.tools4dev|g" \
                                                             | sed "s|<ZSH_PATH>|$ZSH_PATH|g" | sudo tee "/root/.zshrc" > /dev/null \
                                                             && _t4dDebugLog $psucceed "$Tools4Dev_PATH/Templates/zshrc.env copied in /root/.zshrc "
         fi

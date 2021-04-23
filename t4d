@@ -37,6 +37,31 @@ case $1 in
             fi
         fi
     ;;
+    uninstall)
+        source $Tools4Dev_PATH/tools4Dev.env
+        _t4dPromptObjectCenter "$(_t4dPromptSquare --no-color 'UNINSTALL')" "$plyellow" "15"
+        echo ""
+        echo "${plyellow}You are going to do nasty things, please verify first :${pstd}"
+        echo "    - Local Git Content will be erased, please verify that your work is commited & pushed"
+        echo "    - Also check cmake sub-repository that you might forgotten"
+        echo "    - Check if you are local or hidden files that you want to keep in $T4D_ROOT_PATH or $Tools4Dev_PATH"
+        if [[ -e "$Tools4Dev_PATH/.${USER}.env" ]]; then
+            _t4dDebugLog $pinfo "Found $Tools4Dev_PATH/.${USER}.env backing up in $HOME/.t4d-$USER-backup.env"
+            cp -f "$Tools4Dev_PATH/.${USER}.env" "$HOME/.t4d-$USER-backup.env"
+        fi
+        _t4dPromptSquare "Enter to continue, Ctrl+C to abort" $plpurple
+        read answer
+        echo ""
+        echo ""
+        echo ""
+        
+        echo ""
+        _t4dPromptObjectCenter "$(_t4dPromptSquare --no-color 'Deleting Tools4Dev ?')" "$plyellow" "15"
+        _t4dPromptObjectCenter "$(_t4dPromptSquare --no-color 'Enter to proceed, Ctrl+C to abort')" "$plyellow" "15"
+        _t4dDebugLog $pinfo "It will erase $T4D_ROOT_PATH from your computer"
+        
+        read answer
+    ;;
     exec)
         set -e
         if [[ -e $PWD/project.env ]]; then
