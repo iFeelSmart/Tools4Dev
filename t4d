@@ -39,6 +39,11 @@ case $1 in
     ;;
     uninstall)
         source $Tools4Dev_PATH/tools4Dev.env
+        if [[ "$(echo $PWD | grep '.tools4dev')" != "" ]]; then
+            _t4dDebugLog $perror "Please uninstall tools4dev from another repository"
+            _t4dDebugLog $pinfo "cd $HOME"
+            return 1
+        fi
         _t4dPromptObjectCenter "$(_t4dPromptSquare --no-color 'UNINSTALL')" "$plyellow" "15"
         echo ""
         echo "${plyellow}You are going to do nasty things, please verify first :${pstd}"
