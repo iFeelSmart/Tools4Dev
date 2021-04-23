@@ -100,10 +100,9 @@ install_tools4dev(){
     cd $T4D_ROOT_PATH
     git clone -b ${T4D_BRANCH} "${T4D_REMOTE}${T4D_REPO}" "$(basename $Tools4Dev_PATH)" && _t4dDebugLog $psucceed "Repository Cloned"
     if [[ -e "$HOME/.t4d-$USER-backup.env" ]]; then
-        echo "Restoring t4d-$USER-backup file"
+        _t4dDebugLog $plog "Restoring t4d-$USER-backup file"
         cp "$HOME/.t4d-$USER-backup.env" "$Tools4Dev_PATH/.$USER.env"
     fi
-
 }
 
 config_shell(){
