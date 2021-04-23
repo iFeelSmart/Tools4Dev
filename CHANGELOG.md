@@ -29,3 +29,4 @@
 - **chore**     testflight - UploadOnTestflight is now able to force upload even if ipa path file was not properly sent. Works only if there is only one ipa file in given folder- **bugfix**     wks clone - was returning error even if repo was manually cloned
 - **chore**     kubernetes - add kubernetes get functions
 - **feature**    t4d - Tools4Dev_PATH/bin can now be added to path. It will allow user not loading natively t4d to use it as external binary script
+- **feature**    t4d uninstall available

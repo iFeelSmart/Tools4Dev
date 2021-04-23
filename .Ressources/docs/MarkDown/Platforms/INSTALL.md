@@ -23,6 +23,7 @@ sh -c "Tools4Dev_PATH=$HOME/.tools4dev; $(curl -fsSL https://raw.githubuserconte
 * CSH                       = Configure zsh to be your default shell
 * KEEP_ZSHRC                = if true do not install new zshrc file
 * T4D_REMOTE                = set Tools4Dev Remote URL
+* T4D_NATIVE                = set to false if you don't want t4d to be natively loaded
 * T4D_BRANCH                = set Tools4Dev branch to install
 * T4D_REPO                  = set Tools4Dev Repo Path
 * T4D_MANIFEST              = if not empty and valid, will download manifest file and link to it
