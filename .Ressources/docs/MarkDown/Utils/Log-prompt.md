@@ -181,11 +181,15 @@ _t4dPromptHyperLink <Link> <Name>
 
 
 ## Usage
-_t4dPromptChart -start ""
+_t4dPromptChart -head  "   A1   |      B1      "
 
-_t4dPromptChart -data  ""
+_t4dPromptChart -data  "   A2   |      B2      "
 
-_t4dPromptChart -end   ""
+
+## Example
+<p>
+
+</p>
 
 
 
