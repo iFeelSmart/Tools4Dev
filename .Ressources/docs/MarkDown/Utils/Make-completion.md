@@ -6,7 +6,7 @@
 # t4dLoadCompletion
 
 ## Synopsis
-<p>load t4d autocompletion</p>
+<p>It will allow user to load all t4d available completions if exist.</p>
 
 
 
