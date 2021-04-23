@@ -93,8 +93,6 @@ T4D_NATIVE="${T4D_NATIVE:-true}"
 CSH="${CSH:-true}"
 KEEP_ZSHRC="${KEEP_ZSHRC:-false}"
 ZSH_PATH="$(command -v zsh || true)"
-echo "T4D_ROOT_PATH -> $T4D_ROOT_PATH"
-echo "T4D_NATIVE -> $T4D_NATIVE"
 
 
 install_tools4dev(){
