@@ -90,6 +90,7 @@ Show Option documentation
     - _Will pull sub directories only when current manifest branch is identical to Global Project Branch_
 - **update**
     - _Update manifest.xml with current projects state_
+        >        * -no-logo               = remove logo from output
 - **origin**
     - _Edit default origin branch to current working branch_
 - **commit**
@@ -98,6 +99,7 @@ Show Option documentation
         >        * -force  | -f                  = Force commit
         >        * -branch | -b                  = Select which branch will be selected for commit
         >        * -message| -m                  = Add a 'OneLine' message for commit
+        >        * -diff-file                    = Enable .diff file generation
 - **checkout**
     - _Exec git checkout on file or sync projects_
 - **all**

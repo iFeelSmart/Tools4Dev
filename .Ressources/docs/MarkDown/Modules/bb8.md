@@ -101,6 +101,12 @@ Show Option documentation
         >        -done = remove WIP or other temp PR status
         >        -wip  = Add WIP status
         >        -add <Url> = Add PullRequest to description
+- **duplicate**
+    - _Allow user to cherry-pick all commits from a pull request to another base branch_
+        >        * -url <link>           = Get All information from specified PullRequest URL
+        >        * -tgt <branch>         = Select new base branch, for example a release branch
+        >        * -f                    = Apply Cherry-picking
+        >        * -v                    = See if there is any cherry-picking error without applying modifications
 - **start**
     - _Create Single Pull Request or Related PullRequest in a gik project_
         >        here        = Disable Multi Pull Request Creation and Create a pull request in current repository

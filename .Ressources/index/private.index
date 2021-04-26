@@ -83,6 +83,7 @@ Modules/bb8/bb8-utils:_t4dModBb8UtilsGlobalMerge
 Modules/bb8/bb8-utils:_t4dModBb8UtilsWksProjectManager
 Modules/bb8/bb8-utils:_t4dModBb8UtilsGetPRSummary
 Modules/bb8/bb8-utils:_t4dModBb8UtilsDecline
+Modules/bb8/bb8-utils:_t4dModBb8DuplicatePullRequest
 Modules/bb8/bb8-utils:_t4dModBb8UtilsGenerateDefaultDescriptionFile
 Modules/bb8/bb8-utils:_t4dModBb8UtilsFind
 Modules/bb8/bb8-utils:_t4dModBb8UtilsNormalizeBranch
@@ -270,6 +271,8 @@ Source/BitBucket/bitbucket-info:_t4dBitBucketParseBuildStatus
 Source/BitBucket/bitbucket-info:_t4dBitBucketGetRefBranchName
 Source/BitBucket/bitbucket-info:_t4dBitBucketUtilsGetPullRequestUuid
 Source/BitBucket/bitbucket-utils:_t4dBitBucketPRStart
+Source/BitBucket/bitbucket-utils:_t4dModBb8UtilsGetDefaultProjectReviewers
+Source/BitBucket/bitbucket-utils:_t4dModBb8UtilsParseReviewers
 Source/BitBucket/bitbucket-utils:_t4dBitBucketGetServerResponse
 Source/BitBucket/bitbucket-utils:_t4dBitBucketDeleteBranch
 Source/BitBucket/bitbucket-utils:_t4dBitBucketSafetyCheck
@@ -282,6 +285,7 @@ Source/BitBucket/bitbucket-api:_t4dBitBucketPullRequestAPIGet
 Source/BitBucket/bitbucket-api:_t4dBitBucketAPIBrowse
 Source/BitBucket/bitbucket-api:_t4dBitBucketUserAPIGet
 Source/BitBucket/bitbucket-api:_t4dBitBucketRepoAPIListBranches
+Source/BitBucket/bitbucket-api:_t4dBitBucketRepoGetDefaultReviewers
 Source/BitBucket/bitbucket-api:_t4dBitBucketPullRequestAPIDiff
 Source/BitBucket/bitbucket-api:_t4dBitBucketPullRequestAPIList
 Source/BitBucket/bitbucket-api:_t4dBitBucketPullRequestAPIListByRepo
@@ -336,6 +340,15 @@ Source/Jenkins/jenkins-page-pipeline:_t4dSrcJenkinsPagePipelineGetHtmlPage
 Source/Jenkins/jenkins-page-pipeline:_t4dSrcJenkinsPagePipelineSync
 Source/Jenkins/jenkins-page-pipeline:_t4dSrcJenkinsPagePipelineListBranch
 Source/Jenkins/jenkins-page-pipeline:_t4dSrcJenkinsPagePipelineGetBranchStatus
+Source/Kubernetes/kubernetes-info:_t4dSrcKubeGetNamespaces
+Source/Kubernetes/kubernetes-info:_t4dSrcKubeGetIngress
+Source/WikiJS/wikijs-graphql:_t4dSrcWikiJsGraphQLCreatePage
+Source/WikiJS/wikijs-graphql:_t4dSrcWikiJsGraphQLMove
+Source/WikiJS/wikijs-graphql:_t4dSrcWikiJsGraphQLUpdate
+Source/WikiJS/wikijs-graphql:_t4dSrcWikiJsGraphQLToJson
+Source/WikiJS/wikijs-index:_t4dSrcWikiJsIndexGet
+Source/WikiJS/wikijs-index:_t4dSrcWikiJsIndexPut
+Source/WikiJS/wikijs-api:_t4dSrcWikiJsApi
 Source/Git/git-info:_t4dSrcGitInfoBranch
 Source/Git/git-info:_t4dSrcGitInfoSha7BranchName
 Source/Git/git-info:_t4dSrcGitInfoGetLocalBranches
@@ -349,6 +362,7 @@ Source/Git/git-info:_t4dSrcGitInfoGetHEADType
 Source/Git/git-info:_t4dSrcGitInfoLogFromBranch
 Source/Git/git-info:_t4dSrcGitUtilsBusyGit
 Source/Git/git-info:_t4dSrcGitUtilsDirtyGit
+Source/Git/git-info:_t4dSrcGitUtilsRepoNotDirtyGit
 Source/Git/git-info:_t4dSrcGitInfoListCommit
 Source/Git/git-info:_t4dSrcGitInfoListRemotesBranch
 Source/Git/git-info:_t4dSrcGitInfoBranchState
@@ -362,6 +376,9 @@ Source/Git/git-info:_t4dSrcGitInfoShaFromTag
 Source/Git/git-info:_t4dSrcGitInfoGetPRMerged
 Source/Git/git-info:_t4dSrcGitInfoBranchStatus
 Source/Git/git-utils:_t4dSrcGitUtilsLoadCompletion
+Source/Git/git-utils:_t4dSrcGitUtilsGetVersionSuffix
+Source/Git/git-utils:_t4dSrcGitUtilsNormalizeCommitMessage
+Source/Git/git-utils:_t4dSrcGitUtilsDuplicateBranch
 Source/Git/git-utils:_t4dSrcGitUtilsFileAction
 Source/Git/git-utils:_t4dSrcGitUtilsExportCommits
 Source/Git/git-utils:_t4dSrcGitUtilsStartBranch
@@ -458,6 +475,7 @@ Engine/Log/prompt:_t4dPromptSquare
 Engine/Log/prompt:_t4dPromptHyperLink
 Engine/Log/prompt:_t4dPromptFixedCol
 Engine/Log/prompt:_t4dPromptTable
+Engine/Log/prompt:_t4dPromptChart
 Engine/Log/prompt:_t4dPromptCol
 Engine/Log/colors:_t4dColorInfo
 Engine/Log/colors:_t4dColorDisabled

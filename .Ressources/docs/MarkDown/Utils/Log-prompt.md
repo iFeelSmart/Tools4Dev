@@ -174,3 +174,22 @@ _t4dPromptHyperLink <Link> <Name>
 
 
 
+# _t4dPromptChart
+
+## Synopsis
+<p>utils that will return a preformated table</p>
+
+
+## Usage
+_t4dPromptChart -head  "   A1   |      B1      "
+
+_t4dPromptChart -data  "   A2   |      B2      "
+
+
+## Example
+<p>
+
+</p>
+
+
+

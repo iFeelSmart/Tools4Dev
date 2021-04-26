@@ -22,3 +22,6 @@ Man
 .t4d/*
 
 **/Inventory/*/*.env
+
+#External Modules
+Modules/nvm
