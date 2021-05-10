@@ -3,6 +3,7 @@
 autoload -U colors &> /dev/null 
 colors &> /dev/null 
 export Tools4Dev_PATH="${Tools4Dev_PATH:-$HOME/.tools4dev/src}"
+function t4d-init() { source $T4D_ROOT_PATH/init }
 
 if [[ -e "$Tools4Dev_PATH/manifest.xml" ]]; then
     export WS_TEAM="$(cat $Tools4Dev_PATH/manifest.xml | grep '<team' | grep -Eo 'name=.*' | cut -d '"' -f2)"
@@ -67,6 +68,13 @@ case $1 in
         
         read answer
         rm -rf "${T4D_ROOT_PATH:-$HOME/.tools4dev}" &
+    ;;
+    update)
+        set -e
+        shift
+        t4d-init &> /dev/null || t4d-init
+        # t4dLoadProjectConf &> /dev/null
+        t4dUpdate ${@}
     ;;
     exec)
         set -e
