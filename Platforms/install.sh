@@ -22,7 +22,7 @@
 #
 ###
 #   - Available Options:
-#       * Tools4Dev_PATH            = Set Tools4Dev install path (default is $HOME/.tools4dev/src)
+#       * T4D_ROOT_PATH            = Set Tools4Dev install path (default is $HOME/.tools4dev)
 #       * INSTALL_ROOT              = On linux system, also create simlink for root user
 #       * CSH                       = Configure zsh to be your default shell
 #       * KEEP_ZSHRC                = if true do not install new zshrc file
