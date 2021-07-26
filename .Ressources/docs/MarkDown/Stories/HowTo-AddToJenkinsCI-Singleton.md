@@ -1,3 +1,8 @@
+[<<< Back To Readme](../../../../README.md)
+<p align="center">
+    <img src="https://github.com/T4D-Suites/T4D-Ressources/blob/master/LogoT4D.png">
+</p>
+
 # Intro
 
 Every Jenkins server compatible with T4D is managed by a repository prefixed with `ConfigT4J` and piloted by [Tools4Jenkins](https://github.com/iFeelSmart/Tools4Jenkins) repository. 
