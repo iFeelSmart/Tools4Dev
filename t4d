@@ -83,7 +83,7 @@ case $1 in
         else
             source $Tools4Dev_PATH/tools4Dev.env &> /dev/null
         fi
-        t4dLoadProjectConf &> /dev/null
+        t4dLoadProjectConf &> /dev/null || t4dLoadProjectConf
         $@
     ;;
     -path)
@@ -96,7 +96,7 @@ case $1 in
         else
             source $Tools4Dev_PATH/tools4Dev.env &> /dev/null || source $Tools4Dev_PATH/tools4Dev.env
         fi
-        t4dLoadProjectConf &> /dev/null
+        t4dLoadProjectConf &> /dev/null || t4dLoadProjectConf
         $@
     ;;
     *)
@@ -106,7 +106,7 @@ case $1 in
         else
             source $Tools4Dev_PATH/tools4Dev.env &> /dev/null || source $Tools4Dev_PATH/tools4Dev.env
         fi
-        t4dLoadProjectConf &> /dev/null
+        t4dLoadProjectConf &> /dev/null || t4dLoadProjectConf
         $@
     ;;
 esac
