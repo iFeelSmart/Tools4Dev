@@ -377,6 +377,7 @@ Source/Git/git-info:_t4dSrcGitInfoRepoName
 Source/Git/git-info:_t4dSrcGitInfoRootPath
 Source/Git/git-info:_t4dSrcGitInfoRelativeRootPath
 Source/Git/git-info:_t4dSrcGitInfoProjectKEY
+Source/Git/git-info:_t4dSrcGitInfoGetAbsolutePath
 Source/Git/git-info:_t4dSrcGitInfoShaFromTag
 Source/Git/git-info:_t4dSrcGitInfoGetPRMerged
 Source/Git/git-info:_t4dSrcGitInfoBranchStatus
