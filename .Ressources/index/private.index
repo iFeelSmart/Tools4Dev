@@ -20,9 +20,7 @@ Modules/jic/jic-parser:_t4dModJicParseAndDumpComments
 Modules/jic/_main_:_jic
 Modules/jic/_main_:_jicDoc
 Modules/jic/_main_:_t4dModJicLogo
-Modules/jks/jks-page-branch:_t4dSrcJenkinsPageBranchGetHtmlPage
-Modules/jks/jks-page-branch:_t4dSrcJenkinsPageBranchListBuilds
-Modules/jks/jks-page-branch:_t4dSrcJenkinsPageBranchBuildNow
+Modules/jks/jks-file:_t4dSrcJksFileInit
 Modules/jks/jks-info:_t4dModJksInfoMain
 Modules/jks/jks-info:_t4dModJksInfoGetBuild
 Modules/jks/jks-utils:_t4dModJksUtilsStart
@@ -265,6 +263,7 @@ Source/Common/xml:_t4dFindTypeInXML
 Source/Common/xml:_t4dFindMarkerInXML
 Source/Common/json:_t4dConvertToJson
 Source/Common/json:_t4dGetJsonData
+Source/Common/json:_t4dConvertJsonToJwt
 Source/Common/json:_t4dGetJsonTabSize
 Source/Common/json:_t4dRemoveDataFromJson
 Source/Common/variable:_t4dSystemSetVariable
@@ -467,6 +466,7 @@ Source/Git/git-status:_t4dSrcGitStatusCommitNoColor
 Source/Git/git-status:_t4dSrcGitStatusHuman
 Source/Git/_main_:_t4dSrcGitNormalizedBranchName
 Source/Git/_main_:_t4dSrcGitStatus
+Source/Git/_main_:_t4dSrcGitGenerateManifestConfig
 Source/Git/_main_:_t4dSrcGitIsMyBranchProtected
 Engine/Documentation/_main_:_t4dDocLogo
 Engine/Documentation/_main_:_t4dDocWks
@@ -485,6 +485,7 @@ Engine/Documentation/_main_:_t4dDocGetOptionsListV4
 Engine/Documentation/_main_:_t4dDocGetOptionsList
 Engine/Documentation/_main_:_t4dDocGetOptionsHiddenCall
 Engine/Documentation/_main_:_t4dDocConvertContentInto
+Engine/Make/completion:_t4d
 Engine/Make/test:_t4dTestSuiteStart
 Engine/Make/test:_t4dTestSuiteEnd
 Engine/Make/test:_t4dTestGetClassName

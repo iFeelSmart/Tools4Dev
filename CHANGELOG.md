@@ -63,3 +63,5 @@
 ## 5.4.0
 - **feature**    bb8 - add gitlab support
 - _improvements_ jic - improve how jira password is set
+
+## 6.0.0
