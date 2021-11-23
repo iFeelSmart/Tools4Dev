@@ -84,10 +84,18 @@ fi
 ############################
 
 T4D_REMOTE="${T4D_REMOTE:-"https://github.com/T4D-Suites/"}"
-T4D_BRANCH="${T4D_BRANCH:-main}"
+
 T4D_CLONE_ARGS="${T4D_CLONE_ARGS}"
 T4D_REPO="${T4D_REPO:-"Tools4Dev.git"}"
 T4D_MANIFEST="${T4D_MANIFEST:-"https://raw.githubusercontent.com/T4D-Suites/T4D-Team-Default/main/manifest.xml"}"
+
+if [[ -e $T4D_MANIFEST ]]; then
+    DEFAULT_T4D_BRANCH="$(cat $T4D_MANIFEST | grep '<team' | grep -Eo "branch=.*" | cut -d '=' -f2 | cut -d '"' -f2)"
+else
+    DEFAULT_T4D_BRANCH="${T4D_BRANCH:-main}"
+fi
+
+T4D_BRANCH="${DEFAULT_T4D_BRANCH:-main}"
 T4D_ROOT_PATH="${T4D_ROOT_PATH:-"$HOME/.tools4dev"}"
 Tools4Dev_PATH="${T4D_ROOT_PATH}/src"
 INSTALL_ROOT="${INSTALL_ROOT:-false}"
@@ -168,10 +176,11 @@ wks_clone(){
     if [[ "$T4D_MANIFEST" != "" ]]; then
         if [[ -e "$T4D_MANIFEST" ]]; then
             _t4dDebugLog $plog "Using $T4D_MANIFEST as manifest.xml"
-            cp -f "$T4D_MANIFEST" "$Tools4Dev_PATH/manifest.xml"
+            ln -sfn "$T4D_MANIFEST" "$Tools4Dev_PATH/manifest.xml"
         elif [[ "$(echo $T4D_MANIFEST | grep '^http')" != "" ]]; then
             _t4dDebugLog $plog "Downloading $T4D_MANIFEST as manifest.xml"
-            curl -fsSl "$T4D_MANIFEST" > "$Tools4Dev_PATH/manifest.xml"
+            curl -fsSl "$T4D_MANIFEST" > "$Tools4Dev_PATH/.t4d-manifest.xml"
+            ln -sfn "$Tools4Dev_PATH/.t4d-manifest.xml" "$Tools4Dev_PATH/manifest.xml"
         else
             _t4dDebugLog $pwarning "Unknown type of manifest.xml file - $T4D_MANIFEST -"
         fi
