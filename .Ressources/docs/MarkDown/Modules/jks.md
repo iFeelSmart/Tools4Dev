@@ -82,6 +82,8 @@ Show specific option's documentation
 - **init**
     - _allow user to create jenkinsfile dynamically_
         >        * -suffix               = add suffix to output file
+- **update-lib**
+    - _update jenkinsFiles to sended version_
 - **help**
     - _Show Project Documentation_
 - **edit**

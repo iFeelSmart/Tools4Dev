@@ -20,7 +20,8 @@ Modules/jic/jic-parser:_t4dModJicParseAndDumpComments
 Modules/jic/_main_:_jic
 Modules/jic/_main_:_jicDoc
 Modules/jic/_main_:_t4dModJicLogo
-Modules/jks/jks-file:_t4dSrcJksFileInit
+Modules/jks/jks-file:_t4dModJksFileInit
+Modules/jks/jks-file:_t4dModJksFileUpdateLib
 Modules/jks/jks-info:_t4dModJksInfoMain
 Modules/jks/jks-info:_t4dModJksInfoGetBuild
 Modules/jks/jks-utils:_t4dModJksUtilsStart

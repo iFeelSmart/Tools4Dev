@@ -6,6 +6,7 @@ stop
 restart
 monitor
 init
+update-lib
 help
 edit
 sync
