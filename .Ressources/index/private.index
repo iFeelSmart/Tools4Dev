@@ -263,8 +263,10 @@ Source/Common/xml:_t4dFindDataInXmlV2
 Source/Common/xml:_t4dFindLineInXml
 Source/Common/xml:_t4dFindTypeInXML
 Source/Common/xml:_t4dFindMarkerInXML
+Source/Common/plist:_t4dPlistSetStringValue
 Source/Common/json:_t4dConvertToJson
 Source/Common/json:_t4dGetJsonData
+Source/Common/json:_t4dJsonSetData
 Source/Common/json:_t4dConvertJsonToJwt
 Source/Common/json:_t4dGetJsonTabSize
 Source/Common/json:_t4dRemoveDataFromJson
