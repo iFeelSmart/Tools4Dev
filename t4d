@@ -109,6 +109,15 @@ case $1 in
         # t4dLoadProjectConf &> /dev/null
         t4dUpdate ${@}
     ;;
+    clone)
+        set -e
+        shift
+        cd $Tools4Dev_PATH
+        t4d-init &> /dev/null || t4d-init
+        # t4dLoadProjectConf &> /dev/null
+        t4dUpdate ${@}
+        wks clone
+    ;;
     exec)
         set -e
         if [[ -e $PWD/project.env ]]; then
