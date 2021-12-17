@@ -26,5 +26,9 @@ Man
 .play-store.json
 
 #External Modules
-Modules/nvm
-Modules/tsu
+Modules/*
+!Modules/gik
+!Modules/bb8
+!Modules/jks
+!Modules/bpi
+!Modules/jic
