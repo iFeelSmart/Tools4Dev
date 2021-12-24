@@ -39,8 +39,20 @@
 
 
 ### prompt
+* [_t4dPromptLine](Log-prompt.md#_t4dPromptLine)
+    Will read your term Length create a line with =
+
+* [_t4dPromptLineChar](Log-prompt.md#_t4dPromptLineChar)
+    Will read your term Length create a line with char send in $1
+
+* [_t4dPromptEndOfLine](Log-prompt.md#_t4dPromptEndOfLine)
+    Will write $1 at the end of line of your term
+
 * [_t4dPromptIndent](Log-prompt.md#_t4dPromptIndent)
     |One-line description of what it does. (less than 55 char)|
+
+* [_t4dPromptCentralLine](Log-prompt.md#_t4dPromptCentralLine)
+    Will read your term Length create a line with char send in $1
 
 * [_t4dPromptSize](Log-prompt.md#_t4dPromptSize)
     Get Terminal number of columns

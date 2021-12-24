@@ -3,6 +3,109 @@
     <img src="https://github.com/T4D-Suites/T4D-Ressources/blob/master/LogoT4D.png">
 </p>
 
+# _t4dPromptLine
+
+## Synopsis
+<p>Will read your term Length create a line with =</p>
+
+
+## Usage
+
+* `{Name} <option>  **arguments**        = {One-Line Description}`
+
+
+## Example
+<p>
+
+* {Example1}              
+
+>  {One-Line Description}
+
+
+</p>
+
+
+
+# _t4dPromptLineChar
+
+## Synopsis
+<p>Will read your term Length create a line with char send in $1</p>
+
+
+## Usage
+
+* `_t4dPromptLineChar <char> **color**        = fill line with char and colorize it`
+
+
+## Example
+<p>
+
+* {Example1}              
+
+>  {One-Line Description}
+
+
+</p>
+
+
+
+# _t4dPromptEndOfLine
+
+## Synopsis
+<p>Will write $1 at the end of line of your term</p>
+
+
+## Usage
+
+* `_t4dPromptEndOfLine <string> **colorCode** **remove n char**`
+
+Usage:
+
+
+* `_t4dPromptEndOfLine toto`
+
+
+* `_t4dPromptEndOfLine toto $plblue`
+
+
+* `_t4dPromptEndOfLine toto $plblue 20`
+
+- Note:
+
+<Required>
+
+
+* `**Optionnal**`
+
+{XXXXXXX}       = Value To Be Changed, if {URL} then replace {URL} with a valid URL
+
+
+## Usage
+
+* `_t4dPromptEndOfLine <string> **colorCode** **remove n char**`
+
+Usage:
+
+
+* `_t4dPromptEndOfLine toto`
+
+
+* `_t4dPromptEndOfLine toto $plblue`
+
+
+* `_t4dPromptEndOfLine toto $plblue 20`
+
+- Note:
+
+<Required>
+
+
+* `**Optionnal**`
+
+{XXXXXXX}       = Value To Be Changed, if {URL} then replace {URL} with a valid URL
+
+
+
 # _t4dPromptIndent
 
 ## Synopsis
@@ -22,6 +125,39 @@ _t4dPromptIndent <NumberOfIndent> <Content>
 
 ## Example
 <p>
+
+</p>
+
+
+
+# _t4dPromptCentralLine
+
+## Synopsis
+<p>Will read your term Length create a line with char send in $1</p>
+
+
+## Usage
+
+* `_t4dPromptCentralLine **color**        = create central line with color`
+
+
+## Example
+<p>
+
+* _t4dPromptCentralLine                      
+
+>  Default behavior
+
+
+* _t4dPromptCentralLine $plblue              
+
+>  Central line in blue
+
+
+* _t4dPromptCentralLine $plblue  toto        
+
+>  Central line in blue with toto at end
+
 
 </p>
 
