@@ -77,7 +77,7 @@ _t4dCheckCommand(){
     return $_return
 }
 ############################
-_t4dCheckCommand zsh git git-lfs jq chsh curl
+_t4dCheckCommand zsh git jq chsh curl
 if [[ "$(uname -s)" == "Darwin" ]]; then
     _t4dCheckCommand gdate
 fi
