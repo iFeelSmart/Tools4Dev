@@ -131,7 +131,10 @@ config_zshrc(){
     local _oldZshrc=".zshrc_$(date +%Y-%m-%d_%H-%M-%S)"
 
     if [[ -e "$_path/.zshrc" ]]; then
-        _t4dDebugLog $plog "Creating $_path/.zshrc file backup in $T4D_ROOT_PATH/$_oldZshrc"
+        _t4dDebugLog $plog "Creating $_path/.zshrc backup's file in $T4D_ROOT_PATH/$_oldZshrc"
+        if [[ ! -e "$HOME/.oh-my-zsh" ]]; then
+            _t4dPromptAskForChar "Press Enter to continue, Ctrl+C to abort"
+        fi
         cp -f "$_path/.zshrc" "$T4D_ROOT_PATH/$_oldZshrc"
     fi
 
