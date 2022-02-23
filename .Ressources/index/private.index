@@ -126,8 +126,10 @@ Modules/bb8/bb8-utils-gitlab:_t4dModBb8UtilsFind
 Modules/bb8/bb8-utils-gitlab:_t4dModBb8UtilsNormalizeBranch
 Modules/bb8/bb8-utils-gitlab:_t4dModBb8UtilsError
 Modules/bb8/bb8-utils-gitlab:_t4dModBb8UtilsDeclinePullRequestInfoCase
-Modules/tsu/android-store/store-api:_t4dModTsuAndroidGetTokenAccess
-Modules/tsu/android-store/store-api:_t4dModTsuAndroidEditInsert
+Modules/tsu/_t4d_/android-store/store-api:_t4dModTsuAndroidGetTokenAccess
+Modules/tsu/_t4d_/android-store/store-api:_t4dModTsuAndroidEditInsert
+Modules/tsu/_t4d_/android-store/store-api:_t4dModTsuAndroidEditUploadFile
+Modules/tsu/_t4d_/tsu-utils:_t4dModTsuAndroidUpload
 Modules/bpi/bpi-s3:_t4dModBpiParsePath
 Modules/bpi/bpi-s3:_t4dModBpiListAddToCache
 Modules/bpi/bpi-s3:_t4dModBpiList
@@ -266,6 +268,8 @@ Source/Common/xml:_t4dFindLineInXml
 Source/Common/xml:_t4dFindTypeInXML
 Source/Common/xml:_t4dFindMarkerInXML
 Source/Common/plist:_t4dPlistSetStringValue
+Source/Common/properties:_t4dGetPropertiesData
+Source/Common/properties:_t4dSetPropertiesData
 Source/Common/json:_t4dConvertToJson
 Source/Common/json:_t4dGetJsonData
 Source/Common/json:_t4dJsonSetData
