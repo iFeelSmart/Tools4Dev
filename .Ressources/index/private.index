@@ -149,10 +149,6 @@ Modules/jks/jks-utils:_t4dModJksUtilsStart
 Modules/jks/jks-utils:_t4dModJksUtilsStartWithParams
 Modules/jks/jks-utils:_t4dModJksUtilsStop
 Modules/jks/jks-utils:_t4dModJksUtilsSync
-Modules/tsu/_t4d_/android-store/store-api:_t4dModTsuAndroidEditInsert
-Modules/tsu/_t4d_/android-store/store-api:_t4dModTsuAndroidEditUploadFile
-Modules/tsu/_t4d_/android-store/store-api:_t4dModTsuAndroidGetTokenAccess
-Modules/tsu/_t4d_/tsu-utils:_t4dModTsuAndroidUpload
 Source/Android/android-utils:_t4dSrcAndroidAdbExists
 Source/Android/android-utils:_t4dSrcAndroidCheckFolderPermission
 Source/Android/android-utils:_t4dSrcAndroidCheckJavaBinary
@@ -530,7 +526,6 @@ Engine/G4d/template-module:_t4dUtilsModuleMainDoc
 Engine/G4d/template-module:_t4dUtilsModuleMainFunction
 Engine/G4d/template-module:_t4dUtilsModuleMainHeader
 Engine/G4d/template-module:_t4dUtilsModuleMainLogo
-Engine/G4d/template-module:_t4dUtilsModuleVariable
 Engine/G4d/template-project:_t4dUtilsAddOptionsToMenu
 Engine/G4d/template-project:_t4dUtilsProjectCreateFile
 Engine/G4d/template-project:_t4dUtilsProjectDependencies
