@@ -4,6 +4,7 @@ Modules/bpi/_main_:bpi
 Modules/gik/_main_:gik
 Modules/jic/_main_:jic
 Modules/jks/_main_:jks
+Source/Common/debug:t4ddm
 Source/Common/_main_:t4dLogVerbose
 Source/Common/_main_:t4dLogVerbose
 Source/Common/_main_:t4dCheckForLastInit
@@ -20,7 +21,6 @@ Source/Common/_main_:t4dvv
 Source/Common/_project_:findDataInXML
 Source/Common/_project_:findTypeInXML
 Source/Common/_project_:wkd
-Source/Common/debug:t4ddm
 Source/_main_:t4dClearEnv
 Source/_main_:t4dLoadFile
 Source/_main_:t4dLoadProjectConf
