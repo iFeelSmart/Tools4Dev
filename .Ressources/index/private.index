@@ -91,6 +91,7 @@ Modules/gik/gik-info:_t4dModGikInfoStatus
 Modules/gik/gik-info:_t4dModGikInfoWorkspace
 Modules/gik/gik-utils:_t4dModGikDirtyWorkspace
 Modules/gik/gik-utils:_t4dModGikEditOriginBranch
+Modules/gik/gik-utils:_t4dModGiklUtilsCheckout
 Modules/gik/gik-utils:_t4dModGikOther
 Modules/gik/gik-utils:_t4dModGikUtilsDiff
 Modules/gik/gik-utils:_t4dModGikUtilsFatalError
@@ -108,7 +109,6 @@ Modules/gik/gik-utils:_t4dModGikUtilsSwitchToBranch
 Modules/gik/gik-utils:_t4dModGikUtilsSync
 Modules/gik/gik-utils:_t4dModGikUtilsTag
 Modules/gik/gik-utils:_t4dModGikUtilsUpdate
-Modules/gik/gik-utils:_t4dModGiklUtilsCheckout
 Modules/gik/_main_:_gik
 Modules/gik/_main_:_gikDoc
 Modules/gik/_main_:_gikTips
@@ -197,10 +197,10 @@ Source/BitBucket/bitbucket-api:_t4dBitBucketSetBuildStatus
 Source/BitBucket/bitbucket-api:_t4dBitBucketUserAPIGet
 Source/BitBucket/bitbucket-info:_t4dBitBucketGetRefBranchName
 Source/BitBucket/bitbucket-info:_t4dBitBucketGetRelatedPullRequests
+Source/BitBucket/bitbucket-info:_t4dBitBucketParseBuildStatus
 Source/BitBucket/bitbucket-info:_t4dBitBucketPRInfoGetAllReviewers
 Source/BitBucket/bitbucket-info:_t4dBitBucketPRInfoGetDescription
 Source/BitBucket/bitbucket-info:_t4dBitBucketPRInfoGetReviewersName
-Source/BitBucket/bitbucket-info:_t4dBitBucketParseBuildStatus
 Source/BitBucket/bitbucket-info:_t4dBitBucketUtilsGetPullRequestUuid
 Source/BitBucket/bitbucket-utils:_t4dBitBucketCheckLogIn
 Source/BitBucket/bitbucket-utils:_t4dBitBucketDeleteBranch
@@ -217,7 +217,6 @@ Source/BitBucket/_main_:_t4dBitBucketDefaultWIPTag
 Source/CMake/_main_:_t4dSrcCMakeParseTargets
 Source/Common/boolean:_t4dBooleanListContains
 Source/Common/debug:_t4dDebugInfoEnd
-Source/Common/debug:_t4dDebugInfoStart
 Source/Common/debug:_t4dDebugInfoStart
 Source/Common/debug:_t4dDebugCleanLog
 Source/Common/debug:_t4dDebugLogArg
@@ -238,7 +237,6 @@ Source/Common/system:_t4dSystemBindKeys
 Source/Common/system:_t4dSystemCreateSymLink
 Source/Common/system:_t4dSystemFileCount
 Source/Common/system:_t4dSystemFindFiles
-Source/Common/system:_t4dSystemFindInFiles
 Source/Common/system:_t4dSystemFindInFiles
 Source/Common/system:_t4dSystemGetCores
 Source/Common/system:_t4dSystemGetDiffSha7
@@ -516,9 +514,9 @@ Engine/Documentation/_main_:_t4dDocGetOptionsListV4
 Engine/Documentation/_main_:_t4dDocGetSectionContent
 Engine/Documentation/_main_:_t4dDocGetSectionList
 Engine/Documentation/_main_:_t4dDocLogo
+Engine/Documentation/_main_:_t4dDocumentationIntro
 Engine/Documentation/_main_:_t4dDocWks
 Engine/Documentation/_main_:_t4dDocWksLong
-Engine/Documentation/_main_:_t4dDocumentationIntro
 Engine/G4d/template-module:_t4dUtilsModuleCreateFile
 Engine/G4d/template-module:_t4dUtilsModuleMain
 Engine/G4d/template-module:_t4dUtilsModuleMainCompletion
@@ -575,9 +573,9 @@ Engine/Log/prompt:_t4dPromptEndOfLine
 Engine/Log/prompt:_t4dPromptError
 Engine/Log/prompt:_t4dPromptFixedCol
 Engine/Log/prompt:_t4dPromptHyperLink
-Engine/Log/prompt:_t4dPromptInProgress
 Engine/Log/prompt:_t4dPromptIndent
 Engine/Log/prompt:_t4dPromptInfo
+Engine/Log/prompt:_t4dPromptInProgress
 Engine/Log/prompt:_t4dPromptLine
 Engine/Log/prompt:_t4dPromptLineChar
 Engine/Log/prompt:_t4dPromptListInfo

@@ -6,7 +6,6 @@ Modules/jic/_main_:jic
 Modules/jks/_main_:jks
 Source/Common/debug:t4ddm
 Source/Common/_main_:t4dLogVerbose
-Source/Common/_main_:t4dLogVerbose
 Source/Common/_main_:t4dCheckForLastInit
 Source/Common/_main_:t4dCheckForUpdate
 Source/Common/_main_:t4dDoc
