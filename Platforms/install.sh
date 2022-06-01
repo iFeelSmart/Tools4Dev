@@ -105,12 +105,6 @@ CSH="${CSH:-true}"
 KEEP_ZSHRC="${KEEP_ZSHRC:-false}"
 ZSH_PATH="$(command -v zsh || true)"
 
-_su=""
-if [[ "$(whoami)" != "root" ]]; then
-    echo "Request sudo rights as $(whoami) to change default $1 shell -> $ZSH_PATH"
-    _su="sudo"
-fi
-
 
 install_tools4dev(){
 
@@ -217,6 +211,12 @@ logo(){
 
 main(){
     logo
+
+    local _su=""
+    if [[ "$(whoami)" != "root" ]]; then
+        _t4dDebugLog $pinfo "Request sudo rights as $(whoami) to change default $1 shell -> $ZSH_PATH"
+        _su="sudo"
+    fi
 
     if [[ ! -d "$T4D_ROOT_PATH" ]]; then
         install_tools4dev
