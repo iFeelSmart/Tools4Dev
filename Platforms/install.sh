@@ -105,6 +105,12 @@ CSH="${CSH:-true}"
 KEEP_ZSHRC="${KEEP_ZSHRC:-false}"
 ZSH_PATH="$(command -v zsh || true)"
 
+_su=""
+if [[ "$USER" != "root" ]]; then
+    _t4dDebugLog $pinfo "Request sudo rights to change default $1 shell -> $ZSH_PATH"
+    _su="sudo"
+fi
+
 
 install_tools4dev(){
 
@@ -119,9 +125,7 @@ install_tools4dev(){
 }
 
 config_shell(){
-
-    _t4dDebugLog $pinfo "Request sudo rights to change default $1 shell -> $ZSH_PATH"
-    sudo chsh -s "$ZSH_PATH" $1 && _t4dDebugLog $psucceed "Default shell ( $1 ) -> $ZSH_PATH"
+    $_su chsh -s "$ZSH_PATH" $1 && _t4dDebugLog $psucceed "Default shell ( $1 ) -> $ZSH_PATH"
 
 }
 
@@ -160,18 +164,18 @@ config_zshrc(){
 }
 
 config_root(){
-    _t4dDebugLog $plog "Configuring Tools4Dev for root user, it will require sudo rights. Press enter to continue" && read
+    _t4dDebugLog $plog "Configuring Tools4Dev for root user, it will require $_su rights. Press enter to continue" && read
     local _simLink="/root/.tools4dev"
 
     if [[ -d "/root" ]]; then
         config_shell root
-        _t4dDebugLog $pinfo "Request sudo rights to create simlink $_simLink -> $T4D_ROOT_PATH, press enter to continue" && read
-        sudo ln -sfn $T4D_ROOT_PATH $_simLink && _t4dDebugLog $psucceed "$_simLink -> $T4D_ROOT_PATH"
+        _t4dDebugLog $pinfo "Request $_su rights to create simlink $_simLink -> $T4D_ROOT_PATH, press enter to continue" && read
+        $_su ln -sfn $T4D_ROOT_PATH $_simLink && _t4dDebugLog $psucceed "$_simLink -> $T4D_ROOT_PATH"
         if [[ ! -e "/root/.zshrc" ]]; then
-             _t4dDebugLog $pinfo "Request sudo rights to install .zshrc for root user, press enter to continue" && read
-            sudo cat "$Tools4Dev_PATH/Templates/zshrc.env"  | sed "s|<T4D_ROOT_PATH>|/root/.tools4dev|g" \
+             _t4dDebugLog $pinfo "Request $_su rights to install .zshrc for root user, press enter to continue" && read
+            $_su cat "$Tools4Dev_PATH/Templates/zshrc.env"  | sed "s|<T4D_ROOT_PATH>|/root/.tools4dev|g" \
                                                             | sed "s|<T4D_NATIVE>|$T4D_NATIVE|g" \
-                                                            | sed "s|<ZSH_PATH>|$ZSH_PATH|g" | sudo tee "/root/.zshrc" > /dev/null \
+                                                            | sed "s|<ZSH_PATH>|$ZSH_PATH|g" | $_su tee "/root/.zshrc" > /dev/null \
                                                             && _t4dDebugLog $psucceed "$Tools4Dev_PATH/Templates/zshrc.env copied in /root/.zshrc "
         fi
     else
