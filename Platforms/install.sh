@@ -107,7 +107,7 @@ ZSH_PATH="$(command -v zsh || true)"
 
 _su=""
 if [[ "$(whoami)" != "root" ]]; then
-    _t4dDebugLog $pinfo "Request sudo rights to change default $1 shell -> $ZSH_PATH"
+    echo "Request sudo rights to change default $1 shell -> $ZSH_PATH"
     _su="sudo"
 fi
 
