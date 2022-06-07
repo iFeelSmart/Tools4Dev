@@ -530,6 +530,7 @@ Engine/Documentation/_main_:_t4dDocLogo
 Engine/Documentation/_main_:_t4dDocumentationIntro
 Engine/Documentation/_main_:_t4dDocWks
 Engine/Documentation/_main_:_t4dDocWksLong
+Engine/Documentation/_main_:_t4dGetModuleModeFromFunction
 Engine/G4d/template-module:_t4dUtilsModuleCreateFile
 Engine/G4d/template-module:_t4dUtilsModuleMain
 Engine/G4d/template-module:_t4dUtilsModuleMainCompletion
