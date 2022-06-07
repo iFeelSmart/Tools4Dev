@@ -3,18 +3,37 @@
 <p>Install Tools4Dev script</p>
 
 
-## Description
+## Default Install
+Tools4Dev is configured to be working with a private repository called <Team-Folder>
+You should first duplicate the Team-Default repository provided by T4D-Suites here:
+https://github.com/T4D-Suites/T4D-Team-Default
+
+```
+cd $HOME/.tools4dev
+git clone  git@github.com:T4D-Suites/T4D-Team-Default.git team-default
+cd team-default
+./INSTALL
+```
+
+
+## Manual Instal
 This script should be run via curl:
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/iFeelSmart/Tools4Dev/master/Platforms/install.sh)"; zsh
+```
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/iFeelSmart/Tools4Dev/main/Platforms/install.sh)"; zsh
+```
 
 As an alternative, you can first download the install script and run it afterwards:
-https://raw.githubusercontent.com/iFeelSmart/Tools4Dev/master/Platforms/install.sh
+Download : https://raw.githubusercontent.com/iFeelSmart/Tools4Dev/main/Platforms/install.sh
+```
 sh install.sh
 zsh
+```
 
 Some variable on this script can be tweaked by setting them when running the script.
+```
 Tools4Dev_PATH=$HOME/.tools4dev sh install.sh
-sh -c "Tools4Dev_PATH=$HOME/.tools4dev; $(curl -fsSL https://raw.githubusercontent.com/iFeelSmart/Tools4Dev/master/Platforms/install.sh)"; zsh
+sh -c "Tools4Dev_PATH=$HOME/.tools4dev; $(curl -fsSL https://raw.githubusercontent.com/iFeelSmart/Tools4Dev/main/Platforms/install.sh)"; zsh
+```
 
 
 ## Available Options
