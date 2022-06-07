@@ -12,6 +12,8 @@
 #       You should first duplicate the Team-Default repository provided by T4D-Suites here :
 #           https://github.com/T4D-Suites/T4D-Team-Default
 #
+#       IMPORTANT : If your organization already has a team repository, you might want to use it instead of Team-Default
+#
 #       <code>
 #           cd $HOME/.tools4dev
 #           git clone  git@github.com:T4D-Suites/T4D-Team-Default.git team-default
@@ -19,7 +21,7 @@
 #           ./INSTALL
 #       </code>
 ###
-#   - Manual Instal:
+#   - Manual Install:
 #       This script should be run via curl:
 #           <code>
 #               sh -c "$(curl -fsSL https://raw.githubusercontent.com/iFeelSmart/Tools4Dev/main/Platforms/install.sh)"; zsh
