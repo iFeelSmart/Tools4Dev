@@ -218,7 +218,7 @@ main(){
         _su="sudo"
     fi
 
-    if [[ ! -d "$T4D_ROOT_PATH" ]]; then
+    if [[ ! -d "${T4D_ROOT_PATH}/src" ]]; then
         install_tools4dev
     elif [[ "$SKIP_T4D_CLONE" == "true" ]]; then
         _t4dDebugLog $pskip "Folder $T4D_ROOT_PATH already exist"
