@@ -152,8 +152,8 @@ config_zshrc(){
         _t4dDebugLog $plog "Creating $_path/.zshrc backup's file in $T4D_ROOT_PATH/$_oldZshrc"
         if [[ -e "$HOME/.oh-my-zsh" ]]; then
             local _answer
-            echo "Please wait 10 sec to continue, Ctrl+C to abort"
-            sleep 10
+            echo "Press enter to continue, Ctrl+C to abort"
+            read
         fi
         cp -f "$_path/.zshrc" "$T4D_ROOT_PATH/$_oldZshrc"
     fi
