@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 #### MODULE HEADER BLOC
 # Generated From $Tools4Dev_PATH/Templates/function.env
 # This documentation will be read and compile for man usage, MarkDown file and shell documentation
