@@ -21,11 +21,11 @@ cd team-default
 ## Manual Install
 This script should be run via curl:
 ```
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/iFeelSmart/Tools4Dev/main/Platforms/install.sh)"; zsh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/T4D-Suites/Tools4Dev/main/Platforms/install.sh)"; zsh
 ```
 
 As an alternative, you can first download the install script and run it afterwards:
-Download : https://raw.githubusercontent.com/iFeelSmart/Tools4Dev/main/Platforms/install.sh
+Download : https://raw.githubusercontent.com/T4D-Suites/Tools4Dev/main/Platforms/install.sh
 ```
 sh install.sh
 zsh
@@ -34,7 +34,7 @@ zsh
 Some variable on this script can be tweaked by setting them when running the script.
 ```
 Tools4Dev_PATH=$HOME/.tools4dev sh install.sh
-sh -c "Tools4Dev_PATH=$HOME/.tools4dev; $(curl -fsSL https://raw.githubusercontent.com/iFeelSmart/Tools4Dev/main/Platforms/install.sh)"; zsh
+sh -c "Tools4Dev_PATH=$HOME/.tools4dev; $(curl -fsSL https://raw.githubusercontent.com/T4D-Suites/Tools4Dev/main/Platforms/install.sh)"; zsh
 ```
 
 

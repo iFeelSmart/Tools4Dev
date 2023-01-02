@@ -21,3 +21,10 @@
 
 
 
+# _t4dDebugTimerReset
+
+## Synopsis
+<p>Reset _t4dDebugLogInProgress with end of line statement</p>
+
+
+

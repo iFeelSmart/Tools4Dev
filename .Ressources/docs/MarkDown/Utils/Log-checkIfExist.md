@@ -354,3 +354,31 @@ _t4dCheckBinaryVersion <Name> <BinaryParsedVersion> <Version>
 
 
 
+# _t4dCheckFailed
+
+## Synopsis
+<p>Output prompt from colored check Failed</p>
+
+
+
+# _t4dCheckSucceeded
+
+## Synopsis
+<p>Output prompt from colored check Succeded</p>
+
+
+
+# _t4dCheckWarning
+
+## Synopsis
+<p>Output prompt from colored Warning</p>
+
+
+
+# _t4dCheckInfo
+
+## Synopsis
+<p>Output prompt from colored info</p>
+
+
+

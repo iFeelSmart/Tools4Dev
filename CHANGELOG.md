@@ -110,3 +110,16 @@
 
 
 ## 6.1.0
+- **feature**    bb8 add gitlab support
+- _improvements_ new modules will now have a debug mode by adding --debug as first arg
+- **bugfix**     project config was loaded before module, should be after
+- _improvements_ gik: will now use WS_MANIFEST_PROJECTS instead of GIK_PROJECTS
+- _improvements_ jks: stability administration and user management
+- _improvements_ install.sh : add more stability on linux and install as root
+- **feature**    add Ubuntu support
+- _improvements_ wks clone: refactor and several minor patches for stability and scalability
+- _improvements_ oh-my-zsh: add git completions compat
+- _improvements_ jenkins: improve log when server unavailable
+- _improvements_ jira: update and handle JiraAPI v2
+- **feature**    kvm: add virtualizer integration
+
