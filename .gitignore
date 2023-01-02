@@ -9,7 +9,7 @@ Users
 .bitbucket/*
 .log
 .*.env
-.t4d-manifest.xm
+.t4d-manifest.xml
 
 .clone
 .*.tmp
