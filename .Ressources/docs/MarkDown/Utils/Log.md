@@ -39,12 +39,27 @@
 * [_t4dCheckOSXApp](Log-checkIfExist.md#_t4dCheckOSXApp)
     check for OSX app installed
 
+* [_t4dCheckFailed](Log-checkIfExist.md#_t4dCheckFailed)
+    Output prompt from colored check Failed
+
+* [_t4dCheckSucceeded](Log-checkIfExist.md#_t4dCheckSucceeded)
+    Output prompt from colored check Succeded
+
+* [_t4dCheckWarning](Log-checkIfExist.md#_t4dCheckWarning)
+    Output prompt from colored Warning
+
+* [_t4dCheckInfo](Log-checkIfExist.md#_t4dCheckInfo)
+    Output prompt from colored info
+
 
 ### colors
 
 ### debug
 * [_t4dDebugLog](Log-debug.md#_t4dDebugLog)
     Log Function
+
+* [_t4dDebugTimerReset](Log-debug.md#_t4dDebugTimerReset)
+    Reset _t4dDebugLogInProgress with end of line statement
 
 
 ### prompt

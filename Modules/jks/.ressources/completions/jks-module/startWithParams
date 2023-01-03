@@ -3,5 +3,7 @@
 -clean
 -Filter
 -force
+-clear-params
 -pipeline
+-pipeline-param
 -verbose
