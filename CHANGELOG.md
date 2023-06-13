@@ -132,3 +132,6 @@
 - **chore**     _t4dMath : using bc cli
 - **feature**    t4dSearch : find a function based on name
 - _improvements_ bb8 edit : can now update description
+- **bugfix**     jks : new version of jenkins was returning a bad in progress status
+- _improvements_ apple-store : upload is now available with local signature provision
+- _improvements_ jks sync : improve output and performance of jenkins pipeline sync
