@@ -27,6 +27,9 @@
 * [_t4dCheckPackage](Log-checkIfExist.md#_t4dCheckPackage)
     Check for package installed on fedora only
 
+* [_t4dCheckListPackage](Log-checkIfExist.md#_t4dCheckListPackage)
+    check if package is installed. depend on platform
+
 * [_t4dCheckBinary](Log-checkIfExist.md#_t4dCheckBinary)
     DEPRECATED - see _t4dCheckCommand
 
@@ -95,6 +98,9 @@
 
 * [_t4dPromptVarCenterWithChar](Log-prompt.md#_t4dPromptVarCenterWithChar)
     Fill variable with char to create a fixed lenght variable with value at center
+
+* [_t4dPromptVarFillWithChar](Log-prompt.md#_t4dPromptVarFillWithChar)
+    fill variable
 
 * [_t4dPromptEchoTimer](Log-prompt.md#_t4dPromptEchoTimer)
     Echo Timer that decrease his value until 1 + sleeping 1 seconds

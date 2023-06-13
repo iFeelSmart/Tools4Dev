@@ -15,6 +15,7 @@ Source/Common/_main_:t4dImportExample
 Source/Common/_main_:t4dLoadModule
 Source/Common/_main_:t4dLogo
 Source/Common/_main_:t4dPerf
+Source/Common/_main_:t4dSearch
 Source/Common/_main_:t4dUpdate
 Source/Common/_main_:t4dvv
 Source/Common/_project_:findDataInXML
@@ -24,6 +25,7 @@ Source/_main_:t4dClearEnv
 Source/_main_:t4dLoadFile
 Source/_main_:t4dLoadProjectConf
 Source/_main_:t4dMake
+Source/_main_:t4dModuleTest
 Engine/G4d/template-project:$_Name
 Engine/Make/completion:t4dLoadCompletion
 Engine/_main_:chf
