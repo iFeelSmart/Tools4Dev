@@ -1,4 +1,5 @@
 .zshrc
+.t4drc
 manifest.xml
 Samples/*
 Tools/*
@@ -28,10 +29,5 @@ Man
 
 #External Modules
 Modules/*
-!Modules/gik
-!Modules/bb8
-!Modules/jks
-!Modules/bpi
-!Modules/jic
 
 Utils

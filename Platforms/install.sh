@@ -45,7 +45,6 @@
 #       * T4D_ROOT_PATH            = Set Tools4Dev install path (default is $HOME/.tools4dev)
 #       * INSTALL_ROOT              = On linux system, also create simlink for root user
 #       * CSH                       = Configure zsh to be your default shell
-#       * KEEP_ZSHRC                = if true do not install new zshrc file
 #       * T4D_REMOTE                = set Tools4Dev Remote URL
 #       * T4D_CLONE_ARGS            = transfert args to wks clone
 #       * T4D_NATIVE                = set to false if you don't want t4d to be natively loaded
@@ -119,10 +118,10 @@ T4D_BRANCH="${DEFAULT_T4D_BRANCH:-main}"
 T4D_ROOT_PATH="${T4D_ROOT_PATH:-"$HOME/.tools4dev"}"
 Tools4Dev_PATH="${T4D_ROOT_PATH}/src"
 INSTALL_ROOT="${INSTALL_ROOT:-false}"
+FORCE_T4D_CLONE="${FORCE_T4D_CLONE:-false}"
 SKIP_T4D_CLONE="${SKIP_T4D_CLONE:-false}"
 T4D_NATIVE="${T4D_NATIVE:-true}"
 CSH="${CSH:-true}"
-KEEP_ZSHRC="${KEEP_ZSHRC:-false}"
 ZSH_PATH="$(command -v zsh || true)"
 
 
@@ -143,38 +142,22 @@ config_shell(){
 
 }
 
-config_zshrc(){
+config_rc(){
     local _prefix
     local _path="${1:-$HOME}"
-    local _oldZshrc=".zshrc_$(date +%Y-%m-%d_%H-%M-%S)"
+    local _oldRc=".t4drc_$(date +%Y-%m-%d_%H-%M-%S)"
 
-    if [[ -e "$_path/.zshrc" ]]; then
-        _t4dDebugLog $plog "Creating $_path/.zshrc backup's file in $T4D_ROOT_PATH/$_oldZshrc"
-        if [[ -e "$HOME/.oh-my-zsh" ]]; then
-            local _answer
-            echo "Press enter to continue, Ctrl+C to abort"
-            read
-        fi
-        cp -f "$_path/.zshrc" "$T4D_ROOT_PATH/$_oldZshrc"
+    if [[ -e "$_path/.t4drc" ]]; then
+        _t4dDebugLog $plog "Creating $_path/.t4drc backup's file in $T4D_ROOT_PATH/$_oldRc"
+        cp -f "$_path/.t4drc" "$T4D_ROOT_PATH/$_oldRc"
     fi
 
-    if [[ "$KEEP_ZSHRC" == "false" ]]; then
-        _t4dDebugLog $plog "Zshrc Setup"
-        cat "$Tools4Dev_PATH/Templates/zshrc.env" | sed "s|<T4D_ROOT_PATH>|$T4D_ROOT_PATH|g" \
-                                                  | sed "s|<T4D_NATIVE>|$T4D_NATIVE|g" \
-                                                  | sed "s|<ZSH_PATH>|$ZSH_PATH|g" > "$_path/.zshrc" \
-                                                 && _t4dDebugLog $psucceed "$Tools4Dev_PATH/Templates/zshrc.env copied in ${_path}/.zshrc "
-    else
-        if [[ "$(cat ${_path}/.zshrc | grep '#Tools4Dev')" != "" ]]; then
-            _t4dDebugLog $pskip "Tools4Dev setup detected in $_path/.zshrc"
-        else
-            _t4dDebugLog $plog "Zshrc Setup ( Oh-My-Zsh Compatible )"
-            ( cat "$Tools4Dev_PATH/Templates/zshrc.env" | grep -v '^#!' \
-                                                        | sed "s|<T4D_ROOT_PATH>|$T4D_ROOT_PATH|g" \
-                                                        | sed "s|<T4D_NATIVE>|$T4D_NATIVE|g" \
-                                                        | sed "s|<ZSH_PATH>|$ZSH_PATH|g"  >> "${_path}/.zshrc" ) && _t4dDebugLog $psucceed "$Tools4Dev_PATH/Templates/zshrc.env added at the end of $_path/.zshrc"
-        fi
-    fi
+    _t4dDebugLog $plog ".t4drc Setup"
+    cat "$Tools4Dev_PATH/Templates/t4drc.env" | sed "s|<T4D_ROOT_PATH>|$T4D_ROOT_PATH|g" \
+                                                | sed "s|$HOME|\$HOME|g" \
+                                                | sed "s|<T4D_NATIVE>|$T4D_NATIVE|g" \
+                                                | sed "s|<ZSH_PATH>|$ZSH_PATH|g" > "$_path/.t4drc" \
+                                                && _t4dDebugLog $psucceed "$Tools4Dev_PATH/Templates/t4drc.env copied in ${_path}/.t4drc "
 }
 
 config_root(){
@@ -229,6 +212,15 @@ logo(){
 
 }
 
+clean_tools4dev(){
+    if [[ -e "$Tools4Dev_PATH/.$USER.env" ]]; then
+        _t4dDebugLog $plog "Creating user back-up $HOME/.t4d-$USER-backup.env"
+        cp "$Tools4Dev_PATH/.$USER.env" "$HOME/.t4d-$USER-backup.env"
+    fi
+    _t4dDebugLog $plog "Folder $T4D_ROOT_PATH will be deleted, enter to proceed or Ctrl+C to abort" && read
+    rm -rf "${T4D_ROOT_PATH}"
+}
+
 main(){
     logo
 
@@ -240,6 +232,9 @@ main(){
 
     if [[ ! -d "${T4D_ROOT_PATH}/src" ]]; then
         install_tools4dev
+    elif [[ "$FORCE_T4D_CLONE" == "true" ]]; then
+        clean_tools4dev
+        install_tools4dev
     elif [[ "$SKIP_T4D_CLONE" == "true" ]]; then
         _t4dDebugLog $pskip "Folder $T4D_ROOT_PATH already exist"
     else
@@ -247,7 +242,7 @@ main(){
         return 1
     fi
     
-    if [[ "$KEEP_ZSHRC"   == "false" ]]; then    config_zshrc $HOME; fi
+    config_rc $HOME
     if [[ "$CSH"          == "true"  ]]; then    config_shell $USER; fi
     if [[ "$INSTALL_ROOT" == "true"  ]]; then    config_root; fi
 

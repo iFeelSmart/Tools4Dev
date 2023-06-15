@@ -135,3 +135,6 @@
 - **bugfix**     jks : new version of jenkins was returning a bad in progress status
 - _improvements_ apple-store : upload is now available with local signature provision
 - _improvements_ jks sync : improve output and performance of jenkins pipeline sync
+
+
+## 7.0.0

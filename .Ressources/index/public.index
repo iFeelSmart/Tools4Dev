@@ -1,9 +1,4 @@
 #INDEX
-Modules/bb8/_main_:bb8
-Modules/bpi/_main_:bpi
-Modules/gik/_main_:gik
-Modules/jic/_main_:jic
-Modules/jks/_main_:jks
 Source/Common/debug:t4ddm
 Source/Common/_main_:t4dLogVerbose
 Source/Common/_main_:t4dCheckForLastInit
