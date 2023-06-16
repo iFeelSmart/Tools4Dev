@@ -162,8 +162,8 @@ config_rc(){
                                                 | sed "s|$HOME|\$HOME|g" \
                                                 | sed "s|<T4D_NATIVE>|$T4D_NATIVE|g" \
                                                 | sed "s|<T4D_PROMPT>|$T4D_PROMPT|g" \
-                                                | sed "s|<ZSH_PATH>|$ZSH_PATH|g" > "$_path/.t4drc" \
-                                                && _t4dDebugLog $psucceed "$Tools4Dev_PATH/Templates/t4drc.env copied in ${_path}/.t4drc "
+                                                | sed "s|<ZSH_PATH>|$ZSH_PATH|g" > "$_path/.zshrc" \
+                                                && _t4dDebugLog $psucceed "$Tools4Dev_PATH/Templates/t4drc.env copied in ${_path}/.zshrc "
     
     if [[ ! -e "$HOME/.zshrc" ]] || [[ "$(cat $HOME/.zshrc | grep 'Tools4Dev')" == "" ]]; then
         _t4dDebugLog $plog "Adding Tools4Dev to PATH"
@@ -261,7 +261,7 @@ main(){
         return 1
     fi
     
-    config_rc $HOME
+    config_rc $T4D_ROOT_PATH
     if [[ "$CSH"          == "true"  ]]; then    config_shell $USER; fi
     if [[ "$INSTALL_ROOT" == "true"  ]]; then    config_root; fi
 
