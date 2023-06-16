@@ -79,12 +79,10 @@ pwarning="\033[1;33m [WARNING]\033[m"
 
 #Testing echo statement to allow color management in output and avoid "-e" at beginning on line
 if [[ "$(echo -e toto)" == "toto" ]]; then
-    alias echoE='echo -e'
     _t4dDebugLog(){
         echo -e "$(printf "%-4s" ' ')$1 ${@:2}"
     }
 else
-    alias echoE='echo'
     _t4dDebugLog(){
         echo $(echo $echoArg) "$(printf "%-4s" ' ')$1 ${@:2}"
     }
@@ -216,7 +214,11 @@ wks_clone(){
 }
 
 logo(){
-
+    if [[ "$(echo -e toto)" == "toto" ]]; then
+        alias echoE='echo -e'
+    else
+        alias echoE='echo'
+    fi
     echoE "\033[1;32m            _____            _     _  _     ___           \033[m"
     echoE "\033[1;32m           /__   \___   ___ | |___| || |   /   \_____   __\033[m"
     echoE "\033[1;32m             / /\/ _ \ / _ \| / __| || |_ / /\ / _ \ \ / /\033[m"
