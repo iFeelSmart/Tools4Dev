@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <manifest>
     <team name="Minimal" branch="main"/>
-    <remote name="origin" ssh="ssh://git@github.com" https="https://<user>:<password>@github.com" http="https://github.com"/>
-    <default key="T4D-Suites"    name="default"   remote="origin"      revision="master" />
+    <remote name="github" default="https://github.com"                  ssh="ssh://git@github.com"              http="https://<user>:<password>@github.com"/>
+    <default key="T4D-Suites"    name="default"   remote="origin"      revision="main" />
+    <default key="T4D-Suites"    name="master"   remote="origin"       revision="master" />
+    <project lock="true"  key="T4D-Suites"  remote="github" default="default" name="T4D-Module-Jks"             revision="main"     path="Modules/jks" />
+    <project lock="true"  key="T4D-Suites"  remote="github" default="default" name="T4D-Module-Bb8"             revision="main"     path="Modules/bb8" />
+    <project lock="true"  key="T4D-Suites"  remote="github" default="default" name="T4D-Module-Gik"             revision="main"     path="Modules/gik" />
+    <project lock="true"  key="T4D-Suites"  remote="github" default="default" name="T4D-Module-Vmi"             revision="main"     path="Modules/vmi" />
+    <project lock="true"  key="T4D-Suites"  remote="github" default="default" name="T4D-Module-Jic"             revision="main"     path="Modules/jic" />
+    <project lock="true"  key="T4D-Suites"  remote="github" default="default" name="T4D-Module-Bpi"             revision="main"     path="Modules/bpi" />
+    <project lock="true"  key="T4D-Suites"  remote="github" default="default" name="T4D-Module-Wci"             revision="main"     path="Modules/wci" />
+    <project lock="true"  key="T4D-Suites"  remote="github" default="master" name="t4d-ressources"             revision="master"   path="Utils/assets" />
     <symbolic key="LOCAL" name="zshrc"      origin="$Tools4Dev_PATH/Team/Minimal/_t4d_/users" path="Users" />
     <symbolic key="LOCAL" name="zshrc"      origin="$HOME/.zshrc"           path="$WS_ROOT/.zshrc" />
     <symbolic key="LOCAL" name="t4d"        origin="$Tools4Dev_PATH/t4d"    path="$T4D_ROOT_PATH/bin/t4d" />

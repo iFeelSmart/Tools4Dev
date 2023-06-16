@@ -79,14 +79,15 @@ pwarning="\033[1;33m [WARNING]\033[m"
 
 #Testing echo statement to allow color management in output and avoid "-e" at beginning on line
 if [[ "$(echo -e toto)" == "toto" ]]; then
-    echo "aliasing echo to echo -e"
-    alias echo='echo -e'
-    command -v echo
+    _t4dDebugLog(){
+        echo -e "$(printf "%-4s" ' ')$1 ${@:2}"
+    }
+else
+    _t4dDebugLog(){
+        echo $(echo $echoArg) "$(printf "%-4s" ' ')$1 ${@:2}"
+    }
 fi
 
-_t4dDebugLog(){
-    echo "$(printf "%-4s" ' ')$1 ${@:2}"
-}
 
 _t4dCheckCommand(){
     local _return=0
