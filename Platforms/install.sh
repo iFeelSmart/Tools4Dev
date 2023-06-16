@@ -82,9 +82,15 @@ if [[ "$(echo -e toto)" == "toto" ]]; then
     _t4dDebugLog(){
         echo -e "$(printf "%-4s" ' ')$1 ${@:2}"
     }
+    _t4dEcho(){
+        echo -e $*
+    }
 else
     _t4dDebugLog(){
         echo $(echo $echoArg) "$(printf "%-4s" ' ')$1 ${@:2}"
+    }
+    _t4dEcho(){
+        echo $*
     }
 fi
 
@@ -168,7 +174,7 @@ config_rc(){
     if [[ ! -e "$HOME/.zshrc" ]] || [[ "$(cat $HOME/.zshrc | grep 'Tools4Dev')" == "" ]]; then
         _t4dDebugLog $plog "Adding Tools4Dev to PATH"
         echo "# Tools4Dev" >> $HOME/.zshrc
-        echo "export PATH=\"$PATH:$T4D_ROOT_PATH/bin\"" >> $HOME/.zshrc
+        echo "export PATH=\"\$PATH:$T4D_ROOT_PATH/bin\"" >> $HOME/.zshrc
     fi
 }
 
@@ -215,12 +221,12 @@ wks_clone(){
 
 logo(){
 
-    echo "\033[1;32m            _____            _     _  _     ___           \033[m"
-    echo "\033[1;32m           /__   \___   ___ | |___| || |   /   \_____   __\033[m"
-    echo "\033[1;32m             / /\/ _ \ / _ \| / __| || |_ / /\ / _ \ \ / /\033[m"
-    echo "\033[1;32m            / / | (_) | (_) | \__ \__   _/ /_//  __/\ V / \033[m"
-    echo "\033[1;32m            \/   \___/ \___/|_|___/  |_|/___ / \___| \_/  \033[m"
-    echo ""
+    _t4dEcho "\033[1;32m            _____            _     _  _     ___           \033[m"
+    _t4dEcho "\033[1;32m           /__   \___   ___ | |___| || |   /   \_____   __\033[m"
+    _t4dEcho "\033[1;32m             / /\/ _ \ / _ \| / __| || |_ / /\ / _ \ \ / /\033[m"
+    _t4dEcho "\033[1;32m            / / | (_) | (_) | \__ \__   _/ /_//  __/\ V / \033[m"
+    _t4dEcho "\033[1;32m            \/   \___/ \___/|_|___/  |_|/___ / \___| \_/  \033[m"
+    _t4dEcho ""
 
 }
 
