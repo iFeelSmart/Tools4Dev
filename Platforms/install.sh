@@ -79,7 +79,9 @@ pwarning="\033[1;33m [WARNING]\033[m"
 
 #Testing echo statement to allow color management in output and avoid "-e" at beginning on line
 if [[ "$(echo -e toto)" == "toto" ]]; then
+    echo "aliasing echo to echo -e"
     alias echo='echo -e'
+    command -v echo
 fi
 
 _t4dDebugLog(){
@@ -161,6 +163,12 @@ config_rc(){
                                                 | sed "s|<T4D_PROMPT>|$T4D_PROMPT|g" \
                                                 | sed "s|<ZSH_PATH>|$ZSH_PATH|g" > "$_path/.t4drc" \
                                                 && _t4dDebugLog $psucceed "$Tools4Dev_PATH/Templates/t4drc.env copied in ${_path}/.t4drc "
+    
+    if [[ ! -e "$HOME/.zshrc" ]] || [[ "$(cat $HOME/.zshrc | grep 'Tools4Dev')" == "" ]]; then
+        _t4dDebugLog $plog "Adding Tools4Dev to PATH"
+        echo "# Tools4Dev" >> $HOME/.zshrc
+        echo "export PATH=\"$PATH:$T4D_ROOT_PATH/bin\"" >> $HOME/.zshrc
+    fi
 }
 
 config_root(){
