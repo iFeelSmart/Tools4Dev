@@ -13,7 +13,7 @@ export T4D_SILENT_COMMAND=true
 
 case $1 in
     start)
-        zsh -c "source $HOME/.t4drc"
+        export ZDOTDIR=$HOME/.tools4dev; zsh
     ;;
     team)
         t4d-init &> /dev/null

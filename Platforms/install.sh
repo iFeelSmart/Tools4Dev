@@ -149,12 +149,12 @@ config_shell(){
 
 config_rc(){
     local _prefix
-    local _path="${1:-$HOME}"
+    local _path="${1:-$T4D_ROOT_PATH}"
     local _oldRc=".t4drc_$(date +%Y-%m-%d_%H-%M-%S)"
 
     if [[ -e "$_path/.t4drc" ]]; then
-        _t4dDebugLog $plog "Creating $_path/.t4drc backup's file in $T4D_ROOT_PATH/$_oldRc"
-        cp -f "$_path/.t4drc" "$T4D_ROOT_PATH/$_oldRc"
+        _t4dDebugLog $plog "Creating $_path/.t4drc backup's file in $_path/$_oldRc"
+        cp -f "$_path/.t4drc" "$_path/$_oldRc"
     fi
 
     _t4dDebugLog $plog ".t4drc Setup"
@@ -184,8 +184,8 @@ config_root(){
              _t4dDebugLog $pinfo "Request $_su rights to install .zshrc for root user, press enter to continue" && read
             $_su cat "$Tools4Dev_PATH/Templates/zshrc.env"  | sed "s|<T4D_ROOT_PATH>|/root/.tools4dev|g" \
                                                             | sed "s|<T4D_NATIVE>|$T4D_NATIVE|g" \
-                                                            | sed "s|<ZSH_PATH>|$ZSH_PATH|g" | $_su tee "/root/.zshrc" > /dev/null \
-                                                            && _t4dDebugLog $psucceed "$Tools4Dev_PATH/Templates/zshrc.env copied in /root/.zshrc "
+                                                            | sed "s|<ZSH_PATH>|$ZSH_PATH|g" | $_su tee "$T4D_ROOT_PATH/.zshrc" > /dev/null \
+                                                            && _t4dDebugLog $psucceed "$Tools4Dev_PATH/Templates/zshrc.env copied in $T4D_ROOT_PATH/.zshrc"
         fi
     else
         _t4dDebugLog $pskip "/root does not exist"
