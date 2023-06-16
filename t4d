@@ -1,5 +1,4 @@
 #!/usr/bin/env zsh
-# set -x
 autoload -U colors &> /dev/null 
 colors &> /dev/null 
 export T4D_ROOT_PATH="${T4D_ROOT_PATH:-$HOME/.tools4dev}"
@@ -13,6 +12,9 @@ fi
 export T4D_SILENT_COMMAND=true
 
 case $1 in
+    start)
+        zsh -c "source $HOME/.t4drc"
+    ;;
     team)
         t4d-init &> /dev/null
         if [[ "$2" == "-add" ]]; then

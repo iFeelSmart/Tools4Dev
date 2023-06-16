@@ -48,6 +48,7 @@
 #       * T4D_REMOTE                = set Tools4Dev Remote URL
 #       * T4D_CLONE_ARGS            = transfert args to wks clone
 #       * T4D_NATIVE                = set to false if you don't want t4d to be natively loaded
+#       * T4D_PROMPT                = set to false if you don't want t4d to load his own custom prompt
 #       * T4D_BRANCH                = set Tools4Dev branch to install
 #       * T4D_REPO                  = set Tools4Dev Repo Path
 #       * T4D_MANIFEST              = if not empty and valid, will download manifest file and link to it
@@ -121,6 +122,7 @@ INSTALL_ROOT="${INSTALL_ROOT:-false}"
 FORCE_T4D_CLONE="${FORCE_T4D_CLONE:-false}"
 SKIP_T4D_CLONE="${SKIP_T4D_CLONE:-false}"
 T4D_NATIVE="${T4D_NATIVE:-true}"
+T4D_PROMPT="${T4D_PROMPT:-true}"
 CSH="${CSH:-true}"
 ZSH_PATH="$(command -v zsh || true)"
 
@@ -156,6 +158,7 @@ config_rc(){
     cat "$Tools4Dev_PATH/Templates/t4drc.env" | sed "s|<T4D_ROOT_PATH>|$T4D_ROOT_PATH|g" \
                                                 | sed "s|$HOME|\$HOME|g" \
                                                 | sed "s|<T4D_NATIVE>|$T4D_NATIVE|g" \
+                                                | sed "s|<T4D_PROMPT>|$T4D_PROMPT|g" \
                                                 | sed "s|<ZSH_PATH>|$ZSH_PATH|g" > "$_path/.t4drc" \
                                                 && _t4dDebugLog $psucceed "$Tools4Dev_PATH/Templates/t4drc.env copied in ${_path}/.t4drc "
 }
