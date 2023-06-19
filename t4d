@@ -61,8 +61,8 @@ case $1 in
         cd $Tools4Dev_PATH
         t4d-init &> /dev/null || t4d-init
         # t4dLoadProjectConf &> /dev/null
-        t4dUpdate ${@}
-        wks clone
+        t4dUpdate 
+        wks clone ${@}
     ;;
     exec)
         set -e
