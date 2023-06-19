@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <manifest>
     <team name="Minimal" branch="main"/>
-    <remote name="github" default="https://github.com"                  ssh="ssh://git@github.com"              http="https://<user>:<password>@github.com"/>
-    <default key="T4D-Suites"    name="default"   remote="origin"      revision="main" />
-    <default key="T4D-Suites"    name="master"   remote="origin"       revision="master" />
+    <remote name="origin" default="https://github.com"                  ssh="ssh://git@github.com"              http="https://<user>:<password>@github.com"/>
+    <default key="T4D-Suites"    name="default"   remote="origin"       revision="main" />
+    <default key="T4D-Suites"    name="master"    remote="origin"       revision="master" />
     <project lock="true"  key="T4D-Suites"  remote="github" default="default" name="T4D-Module-Jks"             revision="main"     path="Modules/jks" />
     <project lock="true"  key="T4D-Suites"  remote="github" default="default" name="T4D-Module-Bb8"             revision="main"     path="Modules/bb8" />
     <project lock="true"  key="T4D-Suites"  remote="github" default="default" name="T4D-Module-Gik"             revision="main"     path="Modules/gik" />
