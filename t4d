@@ -86,10 +86,10 @@ case $1 in
             build)
                 rm tools4dev.tar || true
                 echo "docker build -t tools4dev:$_Version ."
-                docker build -t tools4dev:$_Version .
+                docker build --no-cache -t tools4dev:$_Version .
                 echo "docker run -dt tools4dev:$_Version"
                 docker run -dt tools4dev:$_Version > $Tools4Dev_PATH/.t4d/.containerID
-                echo "extract tools4dev.tar"
+                echo "export to $Tools4Dev_PATH/.t4d/docker/build"
                 mkdir -p $Tools4Dev_PATH/.t4d/docker/build
                 docker cp $(cat $Tools4Dev_PATH/.t4d/.containerID):/root/.tools4dev/tools4dev.tar $Tools4Dev_PATH/.t4d/docker/build/tools4dev_${_Version}.tar
                 ls $Tools4Dev_PATH/.t4d/docker/build

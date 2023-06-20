@@ -269,6 +269,8 @@ main(){
     config_rc $T4D_ROOT_PATH
     if [[ "$CSH"          == "true"  ]]; then    config_shell $USER; fi
     if [[ "$INSTALL_ROOT" == "true"  ]]; then    config_root; fi
+    mkdir -p $Tools4Dev_PATH/Team
+    mkdir -p $Tools4Dev_PATH/Modules
     if [[ "$SKIP_T4D_CLONE" != "true"  ]]; then  wks_clone; fi
 
     
