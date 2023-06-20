@@ -2,7 +2,7 @@
 autoload -U colors &> /dev/null 
 colors &> /dev/null 
 export T4D_ROOT_PATH="${T4D_ROOT_PATH:-$HOME/.tools4dev}"
-export Tools4Dev_PATH="${Tools4Dev_PATH:-$T4D_ROOT_PATH/src}"
+export Tools4Dev_PATH="$(dirname $(readlink $0)/..)"
 function t4d-init() { source $T4D_ROOT_PATH/init }
 
 if [[ -e "$Tools4Dev_PATH/manifest.xml" ]]; then
@@ -16,6 +16,8 @@ case $1 in
         export ZDOTDIR=$HOME/.tools4dev; zsh
     ;;
     team)
+        echo "$0"
+        echo "-> T4D_ROOT_PATH=$T4D_ROOT_PATH"
         t4d-init &> /dev/null
         if [[ "$2" == "-add" ]]; then
             _TeamOriginalPath="$PWD"
