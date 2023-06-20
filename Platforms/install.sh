@@ -205,8 +205,9 @@ wks_clone(){
         else
             _t4dDebugLog $pwarning "Unknown type of manifest.xml file - $T4D_MANIFEST -"
             _t4dDebugLog $plog "Initializing $Tools4Dev_PATH/Team/Minimal"
+            cd $Tools4Dev_PATH
             cp -rf $Tools4Dev_PATH/Templates/Team-New $Tools4Dev_PATH/Team/Minimal
-            ln -sfn "$Tools4Dev_PATH/Team/Minimal/t4d-manifest.xml" "$Tools4Dev_PATH/manifest.xml"
+            ln -sfn "Team/Minimal/t4d-manifest.xml" "manifest.xml"
         fi
         cd $Tools4Dev_PATH
         zsh -c "$Tools4Dev_PATH/t4d wks clone $(echo $T4D_CLONE_ARGS)"
@@ -232,10 +233,14 @@ logo(){
 }
 
 clean_tools4dev(){
-    if [[ -e "$Tools4Dev_PATH/.$USER.env" ]]; then
+    if [[ -e "$T4D_ROOT_PATH/.$USER.env" ]]; then
+        _t4dDebugLog $plog "Creating user back-up $HOME/.t4d-$USER-backup.env"
+        cp "$T4D_ROOT_PATH/.$USER.env" "$HOME/.t4d-$USER-backup.env"
+    elif [[ -e "$Tools4Dev_PATH/.$USER.env" ]]; then
         _t4dDebugLog $plog "Creating user back-up $HOME/.t4d-$USER-backup.env"
         cp "$Tools4Dev_PATH/.$USER.env" "$HOME/.t4d-$USER-backup.env"
     fi
+    
     _t4dDebugLog $plog "Folder $T4D_ROOT_PATH will be deleted, enter to proceed or Ctrl+C to abort" && read
     rm -rf "${T4D_ROOT_PATH}"
 }

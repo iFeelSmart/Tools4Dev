@@ -78,16 +78,21 @@ case $1 in
         shift
         cd $Tools4Dev_PATH 
         mkdir -p $Tools4Dev_PATH/.t4d
+        local _Version="$(cat $Tools4Dev_PATH/VERSION)"
         if [[ -e "$Tools4Dev_PATH/.t4d/.containerID" ]]; then
             T4D_CONTAINER_ID="$(cat $Tools4Dev_PATH/.t4d/.containerID)"
         fi
         case $1 in
             build)
-                echo "docker build -t t4d ."
-                docker build -t t4d .
+                rm tools4dev.tar || true
+                echo "docker build -t tools4dev:$_Version ."
+                docker build -t tools4dev:$_Version .
+                docker run -dt tools4dev:$_Version > $Tools4Dev_PATH/.t4d/.containerID
+                docker cp $(cat $Tools4Dev_PATH/.t4d/.containerID):/root/.tools4dev/tools4dev.tar .
+                file tools4dev.tar
             ;;
             run)
-                docker run -dt t4d > $Tools4Dev_PATH/.t4d/.containerID
+                docker run -dt tools4dev:$_Version > $Tools4Dev_PATH/.t4d/.containerID
             ;;
             exec)
                 if [[ -e "$Tools4Dev_PATH/.t4d/.containerID" ]]; then
