@@ -123,7 +123,6 @@ T4D_ROOT_PATH="${T4D_ROOT_PATH:-"$HOME/.tools4dev"}"
 Tools4Dev_PATH="${T4D_ROOT_PATH}/src"
 INSTALL_ROOT="${INSTALL_ROOT:-false}"
 FORCE_T4D_CLONE="${FORCE_T4D_CLONE:-false}"
-SKIP_T4D_CLONE="${SKIP_T4D_CLONE:-true}"
 T4D_NATIVE="${T4D_NATIVE:-true}"
 T4D_PROMPT="${T4D_PROMPT:-true}"
 CSH="${CSH:-true}"
@@ -192,28 +191,6 @@ config_root(){
     fi
 }
 
-wks_clone(){
-    mkdir -p $Tools4Dev_PATH/Team
-    if [[ "$T4D_MANIFEST" != "" ]]; then
-        if [[ -e "$T4D_MANIFEST" ]]; then
-            _t4dDebugLog $plog "Using $T4D_MANIFEST as manifest.xml"
-            ln -sfn "$T4D_MANIFEST" "$Tools4Dev_PATH/manifest.xml"
-        elif [[ "$(echo $T4D_MANIFEST | grep '^http')" != "" ]]; then
-            _t4dDebugLog $plog "Downloading $T4D_MANIFEST as manifest.xml"
-            curl -fsSl "$T4D_MANIFEST" > "$Tools4Dev_PATH/.t4d-manifest.xml"
-            ln -sfn "$Tools4Dev_PATH/.t4d-manifest.xml" "$Tools4Dev_PATH/manifest.xml"
-        else
-            _t4dDebugLog $pwarning "Unknown type of manifest.xml file - $T4D_MANIFEST -"
-            _t4dDebugLog $plog "Initializing $Tools4Dev_PATH/Team/Minimal"
-            cd $Tools4Dev_PATH
-            cp -rf $Tools4Dev_PATH/Templates/Team-New $Tools4Dev_PATH/Team/Minimal
-            ln -sfn "Team/Minimal/t4d-manifest.xml" "manifest.xml"
-        fi
-        cd $Tools4Dev_PATH
-        zsh -c "$Tools4Dev_PATH/t4d wks clone $(echo $T4D_CLONE_ARGS)"
-    fi
-}
-
 logo(){
     if [[ "$(echo -e toto)" == "toto" ]]; then
         echo -e "\033[1;32m            _____            _     _  _     ___           \033[m"
@@ -271,7 +248,6 @@ main(){
     if [[ "$INSTALL_ROOT" == "true"  ]]; then    config_root; fi
     mkdir -p $Tools4Dev_PATH/Team
     mkdir -p $Tools4Dev_PATH/Modules
-    if [[ "$SKIP_T4D_CLONE" != "true"  ]]; then  wks_clone; fi
 
     
 }
