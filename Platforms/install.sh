@@ -150,6 +150,7 @@ config_rc(){
     local _prefix
     local _path="${1:-$T4D_ROOT_PATH}"
     local _oldRc=".t4drc_$(date +%Y-%m-%d_%H-%M-%S)"
+    local _ZSHRC_PATH="/usr/bin/env"
 
     if [[ -e "$_path/.t4drc" ]]; then
         _t4dDebugLog $plog "Creating $_path/.t4drc backup's file in $_path/$_oldRc"
@@ -157,11 +158,17 @@ config_rc(){
     fi
 
     _t4dDebugLog $plog ".t4drc Setup"
+    if [[ -e "$_ZSHRC_PATH" ]]; then
+        _ZSHRC_PATH="$_ZSHRC_PATH zsh"
+    else
+        _ZSHRC_PATH="$ZSH_PATH"
+        
+    fi
     cat "$Tools4Dev_PATH/Templates/t4drc.env" | sed "s|<T4D_ROOT_PATH>|$T4D_ROOT_PATH|g" \
                                                 | sed "s|$HOME|\$HOME|g" \
                                                 | sed "s|<T4D_NATIVE>|$T4D_NATIVE|g" \
                                                 | sed "s|<T4D_PROMPT>|$T4D_PROMPT|g" \
-                                                | sed "s|<ZSH_PATH>|$ZSH_PATH|g" > "$_path/.zshrc" \
+                                                | sed "s|<ZSH_PATH>|$_ZSHRC_PATH|g" > "$_path/.zshrc" \
                                                 && _t4dDebugLog $psucceed "$Tools4Dev_PATH/Templates/t4drc.env copied in ${_path}/.zshrc "
     cd $_path
     mkdir -p completions bin
