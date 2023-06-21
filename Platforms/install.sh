@@ -163,12 +163,10 @@ config_rc(){
                                                 | sed "s|<T4D_PROMPT>|$T4D_PROMPT|g" \
                                                 | sed "s|<ZSH_PATH>|$ZSH_PATH|g" > "$_path/.zshrc" \
                                                 && _t4dDebugLog $psucceed "$Tools4Dev_PATH/Templates/t4drc.env copied in ${_path}/.zshrc "
-    
-    if [[ ! -e "$HOME/.zshrc" ]] || [[ "$(cat $HOME/.zshrc | grep 'Tools4Dev')" == "" ]]; then
-        _t4dDebugLog $plog "Adding Tools4Dev to PATH"
-        echo "# Tools4Dev" >> $HOME/.zshrc
-        echo "export PATH=\"\$PATH:$T4D_ROOT_PATH/bin\"" >> $HOME/.zshrc
-    fi
+    cd $_path
+    ln -sfn "../src/t4d" "$T4D_ROOT_PATH/bin/t4d"
+    ln -sfn "Templates/init.env" "$T4D_ROOT_PATH/init"
+    mkdir -p completions 
 }
 
 config_root(){
