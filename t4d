@@ -2,7 +2,7 @@
 autoload -U colors &> /dev/null 
 colors &> /dev/null 
 export T4D_ROOT_PATH="${T4D_ROOT_PATH:-$HOME/.tools4dev}"
-export Tools4Dev_PATH="$(dirname $(readlink $0)/..)"
+export Tools4Dev_PATH="$(dirname $(readlink $0))"
 function t4d-init() { source $T4D_ROOT_PATH/init }
 
 if [[ -e "$Tools4Dev_PATH/manifest.xml" ]]; then
@@ -77,6 +77,7 @@ case $1 in
         $@
     ;;
     docker)
+        set -e
         shift
         cd $Tools4Dev_PATH 
         mkdir -p $Tools4Dev_PATH/.t4d
