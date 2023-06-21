@@ -13,7 +13,7 @@ export T4D_SILENT_COMMAND=true
 
 case $1 in
     start)
-        local _T4DPATH="${1:-$HOME/.tools4dev}"
+        local _T4DPATH="${2:-$HOME/.tools4dev}"
         export ZDOTDIR=$_T4DPATH; zsh
     ;;
     team)
