@@ -164,9 +164,10 @@ config_rc(){
                                                 | sed "s|<ZSH_PATH>|$ZSH_PATH|g" > "$_path/.zshrc" \
                                                 && _t4dDebugLog $psucceed "$Tools4Dev_PATH/Templates/t4drc.env copied in ${_path}/.zshrc "
     cd $_path
-    ln -sfn "../src/t4d" "$T4D_ROOT_PATH/bin/t4d"
-    ln -sfn "Templates/init.env" "$T4D_ROOT_PATH/init"
-    mkdir -p completions 
+    mkdir -p completions bin
+    ln -sfn "$Tools4Dev_PATH/t4d" "$T4D_ROOT_PATH/bin/t4d"
+    ln -sfn "$Tools4Dev_PATH/Templates/init.env" "$T4D_ROOT_PATH/init"
+    
 }
 
 config_root(){
