@@ -124,7 +124,7 @@ Tools4Dev_PATH="${T4D_ROOT_PATH}/src"
 FORCE_T4D_CLONE="${FORCE_T4D_CLONE:-false}"
 T4D_NATIVE="${T4D_NATIVE:-undefined}"
 T4D_PROMPT="${T4D_PROMPT:-true}"
-CSH="${CSH:-true}"
+CSH="${CSH:-false}"
 ZSH_PATH="$(command -v zsh || true)"
 
 
