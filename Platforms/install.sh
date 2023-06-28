@@ -121,9 +121,8 @@ fi
 T4D_BRANCH="${DEFAULT_T4D_BRANCH:-main}"
 T4D_ROOT_PATH="${T4D_ROOT_PATH:-"$HOME/.tools4dev"}"
 Tools4Dev_PATH="${T4D_ROOT_PATH}/src"
-INSTALL_ROOT="${INSTALL_ROOT:-false}"
 FORCE_T4D_CLONE="${FORCE_T4D_CLONE:-false}"
-T4D_NATIVE="${T4D_NATIVE:-true}"
+T4D_NATIVE="${T4D_NATIVE:-undefined}"
 T4D_PROMPT="${T4D_PROMPT:-true}"
 CSH="${CSH:-true}"
 ZSH_PATH="$(command -v zsh || true)"
@@ -162,7 +161,6 @@ config_rc(){
         _ZSHRC_PATH="$_ZSHRC_PATH zsh"
     else
         _ZSHRC_PATH="$ZSH_PATH"
-        
     fi
     cat "$Tools4Dev_PATH/Templates/t4drc.env" | sed "s|<T4D_ROOT_PATH>|$T4D_ROOT_PATH|g" \
                                                 | sed "s|$HOME|\$HOME|g" \
@@ -174,26 +172,20 @@ config_rc(){
     mkdir -p completions bin
     ln -sfn "$Tools4Dev_PATH/t4d" "$T4D_ROOT_PATH/bin/t4d"
     ln -sfn "$Tools4Dev_PATH/Templates/init.env" "$T4D_ROOT_PATH/init"
-    
-}
 
-config_root(){
-    _t4dDebugLog $plog "Configuring Tools4Dev for root user, it will require $_su rights. Press enter to continue" && read
-    local _simLink="/root/.tools4dev"
-
-    if [[ -d "/root" ]]; then
-        config_shell root
-        _t4dDebugLog $pinfo "Request $_su rights to create simlink $_simLink -> $T4D_ROOT_PATH, press enter to continue" && read
-        $_su ln -sfn $T4D_ROOT_PATH $_simLink && _t4dDebugLog $psucceed "$_simLink -> $T4D_ROOT_PATH"
-        if [[ ! -e "/root/.zshrc" ]]; then
-             _t4dDebugLog $pinfo "Request $_su rights to install .zshrc for root user, press enter to continue" && read
-            $_su cat "$Tools4Dev_PATH/Templates/zshrc.env"  | sed "s|<T4D_ROOT_PATH>|/root/.tools4dev|g" \
-                                                            | sed "s|<T4D_NATIVE>|$T4D_NATIVE|g" \
-                                                            | sed "s|<ZSH_PATH>|$ZSH_PATH|g" | $_su tee "$T4D_ROOT_PATH/.zshrc" > /dev/null \
-                                                            && _t4dDebugLog $psucceed "$Tools4Dev_PATH/Templates/zshrc.env copied in $T4D_ROOT_PATH/.zshrc"
-        fi
-    else
-        _t4dDebugLog $pskip "/root does not exist"
+    _t4dDebugLog $plog ".zshenv Setup"
+    if [[ "$(cat $HOME/.zshenv 2> /dev/null | grep 'Tools4Dev')" == "" ]]; then
+        if [[ "$T4D_NATIVE" != "false" ]]; then
+            if [[ "$T4D_NATIVE" == "undefined" ]]; then
+                echo "Would you like to access T4D loaded natively for zsh ? Enter to proceed, any char to skip"
+                read -N 1 T4D_NATIVE
+            fi
+            if [[ "${T4D_NATIVE:-true}" == "true" ]]; then 
+                echo "#Tools4Dev" >> $HOME/.zshenv
+                echo "if [[ -e \"$_path/.zshrc\" ]]; then" >> $HOME/.zshenv
+                echo "  export ZDOTDIR=$_path" >> $HOME/.zshenv
+                echo "fi" >> $HOME/.zshenv
+            fi
     fi
 }
 
@@ -251,11 +243,13 @@ main(){
     
     config_rc $T4D_ROOT_PATH
     if [[ "$CSH"          == "true"  ]]; then    config_shell $USER; fi
-    if [[ "$INSTALL_ROOT" == "true"  ]]; then    config_root; fi
     mkdir -p $Tools4Dev_PATH/Team
     mkdir -p $Tools4Dev_PATH/Modules
 
-    
+    if [[ "$T4D_NATIVE" == "false" ]]; then
+        _t4dDebugLog $plog "You can now add T4D to your path in your $HOME/.zshenv or .zshrc file"
+        _t4dDebugLog $plog "echo \"export PATH=\$PATH:$T4D_ROOT_PATH/bin\" >> $HOME/.zshenv"
+    fi
 }
 
 main "$@"
