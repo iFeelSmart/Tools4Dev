@@ -2,7 +2,13 @@
 autoload -U colors &> /dev/null 
 colors &> /dev/null 
 export T4D_ROOT_PATH="${T4D_ROOT_PATH:-$HOME/.tools4dev}"
-export Tools4Dev_PATH="$(dirname $(readlink $0))"
+if [[ "$(readlink $0)" != "" ]]; then
+    export Tools4Dev_PATH="$(dirname "$(readlink $0)")"
+elif [[ -e "$0/../src" ]]; then
+    export Tools4Dev_PATH="$(dirname "$0")"
+else
+    export Tools4Dev_PATH="$T4D_ROOT_PATH/src"
+fi
 function t4d-init() { source $T4D_ROOT_PATH/init }
 
 if [[ -e "$Tools4Dev_PATH/manifest.xml" ]]; then
