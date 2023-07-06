@@ -186,6 +186,7 @@ config_rc(){
                 echo "  export ZDOTDIR=$_path" >> $HOME/.zshenv
                 echo "fi" >> $HOME/.zshenv
             fi
+        fi
     fi
 }
 
