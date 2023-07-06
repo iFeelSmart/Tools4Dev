@@ -87,28 +87,41 @@ case $1 in
         set -e
         shift
         cd $Tools4Dev_PATH 
+        t4d-init
         mkdir -p $Tools4Dev_PATH/.t4d
-        local _Version="$(cat $Tools4Dev_PATH/VERSION)"
+        _Commit="$(_t4dSrcGitInfoLogFromBranch "$(_t4dSrcGitInfoLastTag | cut -d ' ' -f1)" HEAD | wc -l | tr -d ' ')"
+        _Version="$(cat $Tools4Dev_PATH/VERSION)"
         if [[ -e "$Tools4Dev_PATH/.t4d/.containerID" ]]; then
             T4D_CONTAINER_ID="$(cat $Tools4Dev_PATH/.t4d/.containerID)"
         fi
+        case $WS_GIT_BRANCH in
+            develop)
+                _VersionSuffix="-dev$_Commit"
+            ;;
+            support/*)
+                _VersionSuffix="-rc$_Commit"
+            ;;
+            $_Version)
+                _VersionSuffix=""
+            ;;
+        esac
         case $1 in
             build)
                 rm tools4dev.tar || true
-                echo "docker build -t tools4dev:$_Version ."
-                docker build --no-cache -t tools4dev:$_Version .
-                echo "docker run -dt tools4dev:$_Version"
-                docker run -dt tools4dev:$_Version > $Tools4Dev_PATH/.t4d/.containerID
+                echo "docker build -t tools4dev:$_Version${_VersionSuffix} ."
+                docker build --no-cache -t tools4dev:$_Version${_VersionSuffix} .
+                echo "docker run -dt tools4dev:$_Version${_VersionSuffix}"
+                docker run -dt tools4dev:$_Version${_VersionSuffix} > $Tools4Dev_PATH/.t4d/.containerID
                 echo "export to $Tools4Dev_PATH/.t4d/docker/build"
                 mkdir -p $Tools4Dev_PATH/.t4d/docker/build/tools4dev
-                docker cp $(cat $Tools4Dev_PATH/.t4d/.containerID):/root/.tools4dev/tools4dev.tar $Tools4Dev_PATH/.t4d/docker/build/tools4dev_${_Version}.tar
+                docker cp $(cat $Tools4Dev_PATH/.t4d/.containerID):/root/.tools4dev/tools4dev.tar $Tools4Dev_PATH/.t4d/docker/build/tools4dev_${_Version}${_VersionSuffix}.tar
                 cd $Tools4Dev_PATH/.t4d/docker/build
-                tar -xf tools4dev_${_Version}.tar -C tools4dev
+                tar -xf tools4dev_${_Version}${_VersionSuffix}.tar -C tools4dev
                 echo "To test new t4d setup you can now launch"
                 echo "t4d start $Tools4Dev_PATH/.t4d/docker/build/tools4dev"
             ;;
             run)
-                docker run -dt tools4dev:$_Version > $Tools4Dev_PATH/.t4d/.containerID
+                docker run -dt tools4dev:$_Version${_VersionSuffix} > $Tools4Dev_PATH/.t4d/.containerID
             ;;
             exec)
                 if [[ -e "$Tools4Dev_PATH/.t4d/.containerID" ]]; then
