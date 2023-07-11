@@ -59,8 +59,26 @@ case $1 in
     ;;
     install)
         set -e 
-        echo "INSTALL"
-        echo "$@"
+        # t4d-init &> /dev/null
+        shift
+        while [[ "$@" != "" ]]; do
+            case "$1" in
+                --prefix)
+                    _prefix="$(echo $1 | cut -d '=' -f2)"
+                ;;
+                --bin)
+                    _bin="$(echo $1 | cut -d '=' -f2)"
+                ;;
+            esac
+            shift
+        done
+
+        echo "    Installing tools4dev in $_prefix"
+        mv src completions bin init "$_prefix/"
+        echo "    ln -sfn $_prefix/src/t4d ${_bin}/t4d"
+        ln -sfn $_prefix/src/t4d ${_bin}/t4d
+        echo "    ln -sfn $_prefix/src/src/Templates/init.env ${_prefix}/init"
+        ln -sfn $_prefix/src/src/Templates/init.env ${_prefix}/init
     ;;
     update)
         set -e
