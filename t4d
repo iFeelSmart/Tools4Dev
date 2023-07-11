@@ -22,6 +22,12 @@ case $1 in
         local _T4DPATH="${2:-$HOME/.tools4dev}"
         export ZDOTDIR=$_T4DPATH; zsh
     ;;
+    *version)
+        cat $Tools4Dev_PATH/VERSION
+    ;;
+    *help)
+        echo "TO DO helper"
+    ;;
     team)
         echo "$0"
         echo "-> T4D_ROOT_PATH=$T4D_ROOT_PATH"
@@ -65,23 +71,28 @@ case $1 in
             case "$1" in
                 --prefix*)
                     _prefix="$(echo $1 | cut -d '=' -f2)"
-                ;;
-                --bin*)
-                    _bin="$(echo $1 | cut -d '=' -f2)"
+                    _bin="$_prefix/bin"
                 ;;
             esac
             shift
         done
 
-        echo "    Installing tools4dev in $_prefix"
-        mv $PWD/src "$_prefix/"
-        mv $PWD/completions "$_prefix/"
-        mv $PWD/bin "$_prefix/"
-        mv $PWD/init "$_prefix/"
-        echo "    ln -sfn $_prefix/src/t4d ${_bin}/t4d"
-        ln -sfn $_prefix/src/t4d ${_bin}/t4d
-        echo "    ln -sfn $_prefix/src/src/Templates/init.env ${_prefix}/init"
-        ln -sfn $_prefix/src/src/Templates/init.env ${_prefix}/init
+        if [[ "$_prefix" != "" ]] && [[ -w "$_prefix" ]] ; then
+            echo "    Installing tools4dev in $_prefix"
+            mv $PWD/src "$_prefix/"
+            mv $PWD/.zshrc "$_prefix/"
+            mv $PWD/completions "$_prefix/"
+            mv $PWD/bin "$_prefix/"
+            mv $PWD/init "$_prefix/"
+            echo "    ln -sfn $_prefix/src/t4d ${_bin}/t4d"
+            ln -sfn $_prefix/src/t4d ${_bin}/t4d
+            echo "    ln -sfn $_prefix/src/Templates/init.env ${_prefix}/init"
+            ln -sfn $_prefix/src/src/Templates/init.env ${_prefix}/init
+            echo "    ln -sfn $_prefix/src/Templates/Team-New ${_prefix}/src/Team/Default"
+            ln -sfn $_prefix/src/Templates/Team-New ${_prefix}/src/Team/Default
+        else
+            echo "$_prefix"
+        fi
     ;;
     update)
         set -e
@@ -142,7 +153,7 @@ case $1 in
             build)
                 rm tools4dev.tar || true
                 echo "docker build -t tools4dev:$_Version${_VersionSuffix} ."
-                docker build --no-cache -t tools4dev:$_Version${_VersionSuffix} .
+                docker build --no-cache --build-arg  T4D_FINAL_VERSION_SUFFIX="$_VersionSuffix" -t tools4dev:$_Version${_VersionSuffix} .
                 echo "docker run -dt tools4dev:$_Version${_VersionSuffix}"
                 docker run -dt tools4dev:$_Version${_VersionSuffix} > $Tools4Dev_PATH/.t4d/.containerID
                 echo "export to $Tools4Dev_PATH/.t4d/docker/build"
