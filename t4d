@@ -63,10 +63,10 @@ case $1 in
         shift
         while [[ "$@" != "" ]]; do
             case "$1" in
-                --prefix)
+                --prefix*)
                     _prefix="$(echo $1 | cut -d '=' -f2)"
                 ;;
-                --bin)
+                --bin*)
                     _bin="$(echo $1 | cut -d '=' -f2)"
                 ;;
             esac
@@ -74,7 +74,10 @@ case $1 in
         done
 
         echo "    Installing tools4dev in $_prefix"
-        mv src completions bin init "$_prefix/"
+        mv $PWD/src "$_prefix/"
+        mv $PWD/completions "$_prefix/"
+        mv $PWD/bin "$_prefix/"
+        mv $PWD/init "$_prefix/"
         echo "    ln -sfn $_prefix/src/t4d ${_bin}/t4d"
         ln -sfn $_prefix/src/t4d ${_bin}/t4d
         echo "    ln -sfn $_prefix/src/src/Templates/init.env ${_prefix}/init"
