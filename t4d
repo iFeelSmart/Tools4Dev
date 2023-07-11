@@ -57,6 +57,11 @@ case $1 in
         fi
         
     ;;
+    install)
+        set -e 
+        echo "INSTALL"
+        echo "$@"
+    ;;
     update)
         set -e
         shift
