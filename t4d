@@ -36,9 +36,9 @@ case $1 in
             _TeamOriginalPath="$PWD"
             if [[ -e "$_TeamOriginalPath/t4d-manifest.xml" ]]; then
                 export WS_TEAM="$(cat $_TeamOriginalPath/t4d-manifest.xml | grep '<team' | grep -Eo 'name=.*' | cut -d '"' -f2)"
-                if [[ ! -e "$Tools4Dev_PATH/Team/$WS_TEAM" ]]; then
-                    ln -sfn $_TeamOriginalPath $Tools4Dev_PATH/Team/$WS_TEAM
-                    ln -sfn $_TeamOriginalPath/t4d-manifest.xml $Tools4Dev_PATH/manifest.xml
+                if [[ ! -e "$T4D_ROOT_PATH/team/$WS_TEAM" ]]; then
+                    ln -sfn $_TeamOriginalPath $T4D_ROOT_PATH/team/$WS_TEAM
+                    ln -sfn $_TeamOriginalPath/t4d-manifest.xml $T4D_ROOT_PATH/manifest.xml
                     _t4dCheckSucceeded "Team $WS_TEAM added to Tools4Dev"
                     _t4dDebugLog $pinfo "you can now use wkd to reload your environment"
                 else
@@ -48,12 +48,12 @@ case $1 in
                 _t4dDebugLog $perror "Folder >$_TeamOriginalPath< does not contain t4d-manifest.xml"
             fi
         else
-            local _TeamOriginalPath="$(readlink $Tools4Dev_PATH/Team/$2)"
+            local _TeamOriginalPath="$(readlink $T4D_ROOT_PATH/team/$2)"
             if [[ "$_TeamOriginalPath" == "" ]]; then
-                _TeamOriginalPath="$Tools4Dev_PATH/Team/$2"
+                _TeamOriginalPath="$T4D_ROOT_PATH/team/$2"
             fi
             if [[ -e "$_TeamOriginalPath/t4d-manifest.xml" ]] && [[ "$WS_TEAM" != "$2" ]]; then
-                ln -sfn $_TeamOriginalPath/t4d-manifest.xml $Tools4Dev_PATH/manifest.xml
+                ln -sfn $_TeamOriginalPath/t4d-manifest.xml $T4D_ROOT_PATH/manifest.xml
                 _t4dDebugLog $plog "Tools4Dev is now linked to $2"
                 _t4dDebugLog $plog "Team folder is now $_TeamOriginalPath"
                 _t4dDebugLog $pinfo "you can now use wkd to reload your environment"
