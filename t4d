@@ -94,7 +94,14 @@ case $1 in
         cd $Tools4Dev_PATH 
         t4d-init
         mkdir -p $Tools4Dev_PATH/.t4d
-        _Commit="$(_t4dSrcGitInfoLogFromBranch "$(_t4dSrcGitInfoLastTag | cut -d ' ' -f1)" HEAD | wc -l | tr -d ' ')"
+        _lastTag="$(_t4dSrcGitInfoLastTag)"
+        _lastTagName="$(echo $_lastTag | cut -d ' ' -f2)"
+        _lastTagCommit="$(echo $_lastTag | cut -d ' ' -f1)"
+        _Commit="$(_t4dSrcGitInfoLogFromBranch "$(echo $_lastTag | cut -d ' ' -f1)" HEAD | wc -l | tr -d ' ')"
+        if [[ "$(echo $_lastTagName | grep -Eo '\-dev[0-9].*')" != "" ]]; then
+            _CountTag="$(echo $_lastTagName | grep -Eo '\-dev[0-9].*' | sed 's|\-dev||g')"
+            _Commit="$(_t4dMath $_Commit + $_CountTag)"
+        fi
         _Version="$(cat $Tools4Dev_PATH/VERSION)"
         if [[ -e "$Tools4Dev_PATH/.t4d/.containerID" ]]; then
             T4D_CONTAINER_ID="$(cat $Tools4Dev_PATH/.t4d/.containerID)"
