@@ -203,11 +203,11 @@ t4d_link(){
     if [[ "$Tools4Dev_PATH" != "$_path/src" ]]; then
         ln -srfn "$Tools4Dev_PATH" "$_path/src"
     fi
-    ln -srfn "$Tools4Dev_PATH/.t4drc" "${_path}/.zshrc"
-    ln -srfn "$Tools4Dev_PATH/t4d" "$_path/bin/t4d"
-    ln -srfn "$Tools4Dev_PATH/Templates/init.env" "$_path/init"
-    ln -srfn "$Tools4Dev_PATH/Templates/Team-New" "$_path/team/Default"
-    ln -srfn "$Tools4Dev_PATH/Templates/Team-New/t4d-manifest.xml" "$_path/manifest.xml"
+    ln -srfn "$T4D_ROOT_PATH/src/.t4drc" "${_path}/.zshrc"
+    ln -srfn "$T4D_ROOT_PATH/src/t4d" "$_path/bin/t4d"
+    ln -srfn "$T4D_ROOT_PATH/src/Templates/init.env" "$_path/init"
+    ln -srfn "$T4D_ROOT_PATH/src/Templates/Team-New" "$_path/team/Default"
+    ln -srfn "$T4D_ROOT_PATH/src/Templates/Team-New/t4d-manifest.xml" "$_path/manifest.xml"
 }
 
 logo(){
