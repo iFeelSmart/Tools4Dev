@@ -174,7 +174,7 @@ case $1 in
                 mkdir -p "${_Version}${_VersionSuffix}"
                 tar -xf tools4dev_${_Version}${_VersionSuffix}.tar -C "${_Version}${_VersionSuffix}"
                 echo "To test new t4d setup you can now launch"
-                echo "t4d start $Tools4Dev_PATH/.t4d/docker/build/tools4dev"
+                echo "t4d start $Tools4Dev_PATH/.t4d/docker/build/${_Version}${_VersionSuffix}"
             ;;
             run)
                 docker run -dt tools4dev:$_Version${_VersionSuffix} > $Tools4Dev_PATH/.t4d/.containerID
