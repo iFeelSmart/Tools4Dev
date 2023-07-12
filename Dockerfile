@@ -11,5 +11,4 @@ RUN bash -c "T4D_NATIVE=false SKIP_T4D_CLONE=true T4D_BRANCH=${T4D_BRANCH} T4D_R
 
 WORKDIR /root/.tools4dev
 RUN cat src/VERSION | sed "s|\$|${T4D_FINAL_VERSION_SUFFIX}|g" > src/VERSION
-RUN tar -cvf tools4dev.tar src completions init bin .zshrc
-
+RUN tar -cvf tools4dev.tar src
