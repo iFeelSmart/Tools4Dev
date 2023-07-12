@@ -256,7 +256,7 @@ main(){
     fi
     
     config_rc $T4D_ROOT_PATH
-    if [[ "$CSH"          == "true"  ]]; then    config_shell $USER; fi
+    if [[ "$CSH"        == "true"  ]]; then    config_shell $USER; fi
     if [[ "$T4D_NATIVE" == "false" ]]; then
         _t4dDebugLog $plog "You can now add T4D to your path in your $HOME/.zshenv or .zshrc file"
         _t4dDebugLog $plog "echo \"export PATH=\$PATH:$T4D_ROOT_PATH/bin\" >> \$HOME/.zshenv"
