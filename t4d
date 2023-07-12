@@ -85,12 +85,19 @@ case $1 in
             mv $PWD/completions "$_prefix/"
             mv $PWD/bin "$_prefix/"
             mv $PWD/init "$_prefix/"
-            echo "    ln -sfn $_prefix/src/t4d ${_bin}/t4d"
-            ln -sfn $_prefix/src/t4d ${_bin}/t4d
-            echo "    ln -sfn $_prefix/src/Templates/init.env ${_prefix}/init"
-            ln -sfn $_prefix/src/src/Templates/init.env ${_prefix}/init
-            echo "    ln -sfn $_prefix/src/Templates/Team-New ${_prefix}/src/Team/Default"
-            ln -sfn $_prefix/src/Templates/Team-New ${_prefix}/src/Team/Default
+            if [[ ! -e "$T4D_ROOT_PATH" ]]; then
+                mkdir -p $T4D_ROOT_PATH/bin
+                echo "ln -sfn $_prefix/src/t4d $T4D_ROOT_PATH/bin/t4d"
+                ln -sfn $_prefix/src/t4d $T4D_ROOT_PATH/bin/t4d
+                echo "ln -sfn $_prefix/src/Templates/init.env $T4D_ROOT_PATH/init"
+                ln -sfn $_prefix/src/Templates/init.env $T4D_ROOT_PATH/init
+
+                echo "ln -sfn $_prefix/src $T4D_ROOT_PATH/src"
+                ln -sfn $_prefix/src $T4D_ROOT_PATH/src
+            elif [[ ! -e "$T4D_ROOT_PATH/src" ]]; then
+                echo "ln -sfn $_prefix/src $T4D_ROOT_PATH/src"
+                ln -sfn $_prefix/src $T4D_ROOT_PATH/src
+            fi
         else
             echo "$_prefix"
         fi

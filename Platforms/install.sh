@@ -120,7 +120,7 @@ fi
 
 T4D_BRANCH="${DEFAULT_T4D_BRANCH:-main}"
 T4D_ROOT_PATH="${T4D_ROOT_PATH:-"$HOME/.tools4dev"}"
-Tools4Dev_PATH="${T4D_ROOT_PATH}/src"
+Tools4Dev_PATH="${T4D_ROOT_PATH}/src-devel"
 FORCE_T4D_CLONE="${FORCE_T4D_CLONE:-false}"
 T4D_NATIVE="${T4D_NATIVE:-undefined}"
 T4D_PROMPT="${T4D_PROMPT:-true}"
@@ -151,9 +151,9 @@ config_rc(){
     local _oldRc=".t4drc_$(date +%Y-%m-%d_%H-%M-%S)"
     local _ZSHRC_PATH="/usr/bin/env"
 
-    if [[ -e "$_path/.t4drc" ]]; then
-        _t4dDebugLog $plog "Creating $_path/.t4drc backup's file in $_path/$_oldRc"
-        cp -f "$_path/.t4drc" "$_path/$_oldRc"
+    if [[ -e "$Tools4Dev_PATH/.t4drc" ]]; then
+        _t4dDebugLog $plog "Creating $Tools4Dev_PATH/.t4drc backup's file in $Tools4Dev_PATH/$_oldRc"
+        cp -f "$Tools4Dev_PATH/.t4drc" "$Tools4Dev_PATH/$_oldRc"
     fi
 
     _t4dDebugLog $plog ".t4drc Setup"
@@ -166,12 +166,11 @@ config_rc(){
                                                 | sed "s|$HOME|\$HOME|g" \
                                                 | sed "s|<T4D_NATIVE>|$T4D_NATIVE|g" \
                                                 | sed "s|<T4D_PROMPT>|$T4D_PROMPT|g" \
-                                                | sed "s|<ZSH_PATH>|$_ZSHRC_PATH|g" > "$_path/.zshrc" \
-                                                && _t4dDebugLog $psucceed "$Tools4Dev_PATH/Templates/t4drc.env copied in ${_path}/.zshrc "
-    cd $_path
-    mkdir -p completions bin
-    ln -sfn "$Tools4Dev_PATH/t4d" "$T4D_ROOT_PATH/bin/t4d"
-    ln -sfn "$Tools4Dev_PATH/Templates/init.env" "$T4D_ROOT_PATH/init"
+                                                | sed "s|<ZSH_PATH>|$_ZSHRC_PATH|g" > "$Tools4Dev_PATH/.t4drc" \
+                                                && _t4dDebugLog $psucceed "$Tools4Dev_PATH/Templates/t4drc.env copied in $Tools4Dev_PATH/.t4drc ${_path}/.zshrc "
+    
+    t4d_link $_path
+
 
     _t4dDebugLog $plog ".zshenv Setup"
     if [[ "$(cat $HOME/.zshenv 2> /dev/null | grep 'Tools4Dev')" == "" ]]; then
@@ -188,6 +187,18 @@ config_rc(){
             fi
         fi
     fi
+}
+
+t4d_link(){
+    local _path="${1:-$T4D_ROOT_PATH}"
+    cd $_path
+    mkdir -p completions bin lib team
+    if [[ "$Tools4Dev_PATH" != "$_path/src" ]]; then
+        ln -sfn "$Tools4Dev_PATH" "$_path/src"
+    fi
+    ln -sfn "$Tools4Dev_PATH/.t4drc" "${_path}/.zshrc"
+    ln -sfn "$Tools4Dev_PATH/t4d" "$_path/bin/t4d"
+    ln -sfn "$Tools4Dev_PATH/Templates/init.env" "$_path/init"
 }
 
 logo(){
@@ -244,12 +255,9 @@ main(){
     
     config_rc $T4D_ROOT_PATH
     if [[ "$CSH"          == "true"  ]]; then    config_shell $USER; fi
-    mkdir -p $Tools4Dev_PATH/Team
-    mkdir -p $Tools4Dev_PATH/Modules
-
     if [[ "$T4D_NATIVE" == "false" ]]; then
         _t4dDebugLog $plog "You can now add T4D to your path in your $HOME/.zshenv or .zshrc file"
-        _t4dDebugLog $plog "echo \"export PATH=\$PATH:$T4D_ROOT_PATH/bin\" >> $HOME/.zshenv"
+        _t4dDebugLog $plog "echo \"export PATH=\$PATH:$T4D_ROOT_PATH/bin\" >> \$HOME/.zshenv"
     fi
 }
 
