@@ -118,6 +118,7 @@ else
     DEFAULT_T4D_BRANCH="${T4D_BRANCH:-main}"
 fi
 
+T4D_VERSION_SUFFIX="${T4D_VERSION_SUFFIX}"
 T4D_BRANCH="${DEFAULT_T4D_BRANCH:-main}"
 T4D_ROOT_PATH="${T4D_ROOT_PATH:-"$HOME/.tools4dev"}"
 Tools4Dev_PATH="${T4D_ROOT_PATH}/src-devel"
@@ -138,6 +139,8 @@ install_tools4dev(){
         _t4dDebugLog $plog "Restoring t4d-$USER-backup file"
         cp "$HOME/.t4d-$USER-backup.env" "$T4D_ROOT_PATH/.$USER.env"
     fi
+
+    cat $Tools4Dev_PATH/VERSION |  sed "s|$|$T4D_VERSION_SUFFIX|g" > $Tools4Dev_PATH/VERSION
 }
 
 config_shell(){
@@ -168,6 +171,8 @@ config_rc(){
                                                 | sed "s|<T4D_PROMPT>|$T4D_PROMPT|g" \
                                                 | sed "s|<ZSH_PATH>|$_ZSHRC_PATH|g" > "$Tools4Dev_PATH/.t4drc" \
                                                 && _t4dDebugLog $psucceed "$Tools4Dev_PATH/Templates/t4drc.env copied in $Tools4Dev_PATH/.t4drc"
+
+    cat $Tools4Dev_PATH/.t4drc
     
     t4d_link $_path
 
