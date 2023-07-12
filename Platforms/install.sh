@@ -140,7 +140,7 @@ install_tools4dev(){
         cp "$HOME/.t4d-$USER-backup.env" "$T4D_ROOT_PATH/.$USER.env"
     fi
 
-    cat $Tools4Dev_PATH/VERSION |  sed "s|$|$T4D_VERSION_SUFFIX|g" > $Tools4Dev_PATH/VERSION.tmp
+    cat $Tools4Dev_PATH/VERSION |  sed "s|\$|$T4D_VERSION_SUFFIX|g" > $Tools4Dev_PATH/VERSION.tmp
     mv $Tools4Dev_PATH/VERSION.tmp $Tools4Dev_PATH/VERSION
 }
 
