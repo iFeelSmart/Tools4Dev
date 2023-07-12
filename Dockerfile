@@ -11,4 +11,4 @@ RUN bash -c "T4D_NATIVE=false SKIP_T4D_CLONE=true T4D_BRANCH=${T4D_BRANCH} $(cur
 
 WORKDIR /root/.tools4dev
 RUN cat src-devel/VERSION | sed "s|\$|${T4D_FINAL_VERSION_SUFFIX}|g" > src-devel/VERSION
-RUN tar -cvf tools4dev.tar src-devel bin completions team init src 
+RUN tar -cvf tools4dev.tar src-devel bin completions team init src manifest.xml

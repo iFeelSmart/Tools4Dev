@@ -199,6 +199,8 @@ t4d_link(){
     ln -srfn "$Tools4Dev_PATH/.t4drc" "${_path}/.zshrc"
     ln -srfn "$Tools4Dev_PATH/t4d" "$_path/bin/t4d"
     ln -srfn "$Tools4Dev_PATH/Templates/init.env" "$_path/init"
+    ln -srfn "$Tools4Dev_PATH/Templates/Team-New" "$_path/team/Default"
+    ln -srfn "$Tools4Dev_PATH/Templates/Team-New/t4d-manifest.xml" "$_path/manifest.xml"
 }
 
 logo(){
