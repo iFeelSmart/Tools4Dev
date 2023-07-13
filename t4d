@@ -85,25 +85,26 @@ case $1 in
             mv $PWD/completions "$_prefix/"
             mv $PWD/bin "$_prefix/"
             mv $PWD/init "$_prefix/"
+
             if [[ ! -e "$T4D_ROOT_PATH" ]]; then
-                mkdir -p $T4D_ROOT_PATH/bin
-                echo "ln -sfn $_prefix/src/t4d $T4D_ROOT_PATH/bin/t4d"
-                ln -sfn $_prefix/src/t4d $T4D_ROOT_PATH/bin/t4d
-                echo "ln -sfn $_prefix/src/Templates/init.env $T4D_ROOT_PATH/init"
-                ln -sfn $_prefix/init.env $T4D_ROOT_PATH/init
-
-                echo "ln -sfn $_prefix/src/Templates/init.env $T4D_ROOT_PATH/init"
-                ln -sfn $_prefix/src/Templates/init.env $T4D_ROOT_PATH/init
-
-                echo "ln -sfn $_prefix/src $T4D_ROOT_PATH/src"
-                ln -sfn $_prefix/src $T4D_ROOT_PATH/src
-            elif [[ ! -e "$T4D_ROOT_PATH/src" ]]; then
-                echo "ln -sfn $_prefix/src $T4D_ROOT_PATH/src"
-                ln -sfn $_prefix/src $T4D_ROOT_PATH/src
+                mkdir -p $T4D_ROOT_PATH
             fi
+            cd $T4D_ROOT_PATH
+            mkdir -p completions bin lib team
+            if [[ "$Tools4Dev_PATH" != "$T4D_ROOT_PATH/src" ]]; then
+                ln -srfvn "$Tools4Dev_PATH" "$T4D_ROOT_PATH/src"
+            fi
+            ln -srfvn "$T4D_ROOT_PATH/src/.t4drc" "${_prefix}/.zshrc"
+            ln -srfvn "$T4D_ROOT_PATH/src/t4d" "$_prefix/bin/t4d"
+            ln -srfvn "$T4D_ROOT_PATH/src/Templates/init.env" "$_prefix/init"
+            ln -srfvn "$T4D_ROOT_PATH/src/Templates/Team-New" "$_prefix/team/Default"
+            ln -srfvn "$T4D_ROOT_PATH/src/Templates/Team-New/t4d-manifest.xml" "$_prefix/manifest.xml"
         else
             echo "$_prefix"
         fi
+    ;;
+    link)
+        ln -srfvn "$Tools4Dev_PATH" "$T4D_ROOT_PATH/src"
     ;;
     update)
         set -e
