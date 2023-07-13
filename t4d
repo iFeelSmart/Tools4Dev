@@ -94,17 +94,19 @@ case $1 in
             if [[ "$Tools4Dev_PATH" != "$T4D_ROOT_PATH/src" ]]; then
                 ln -srfvn "$Tools4Dev_PATH" "$T4D_ROOT_PATH/src"
             fi
-            ln -srfvn "$T4D_ROOT_PATH/src/.t4drc" "${_prefix}/.zshrc"
-            ln -srfvn "$T4D_ROOT_PATH/src/t4d" "$_prefix/bin/t4d"
-            ln -srfvn "$T4D_ROOT_PATH/src/Templates/init.env" "$_prefix/init"
-            ln -srfvn "$T4D_ROOT_PATH/src/Templates/Team-New" "$_prefix/team/Default"
-            ln -srfvn "$T4D_ROOT_PATH/src/Templates/Team-New/t4d-manifest.xml" "$_prefix/manifest.xml"
+            ln -sfvn "$T4D_ROOT_PATH/src/.t4drc" "${_prefix}/.zshrc"
+            ln -sfvn "$T4D_ROOT_PATH/src/t4d" "$_prefix/bin/t4d"
+            ln -sfvn "$T4D_ROOT_PATH/src/Templates/init.env" "$_prefix/init"
+            ln -sfvn "$T4D_ROOT_PATH/src/Templates/Team-New" "$_prefix/team/Default"
+            ln -sfvn "$T4D_ROOT_PATH/src/Templates/Team-New/t4d-manifest.xml" "$_prefix/manifest.xml"
         else
             echo "$_prefix"
         fi
     ;;
     link)
-        ln -srfvn "$Tools4Dev_PATH" "$T4D_ROOT_PATH/src"
+        if [[ "$Tools4Dev_PATH" != "$T4D_ROOT_PATH/src" ]]; then
+            ln -sfnv "$Tools4Dev_PATH" "$T4D_ROOT_PATH/src"
+        fi
     ;;
     update)
         set -e
