@@ -201,13 +201,12 @@ t4d_link(){
     cd $_path
     mkdir -p completions bin lib team
     if [[ "$Tools4Dev_PATH" != "$_path/src" ]]; then
-        ln -srfn "$Tools4Dev_PATH" "$_path/src"
+        ln -sfvn "$Tools4Dev_PATH" "$_path/src"
     fi
-    ln -srfn "$T4D_ROOT_PATH/src/.t4drc" "${_path}/.zshrc"
-    ln -srfn "$T4D_ROOT_PATH/src/t4d" "$_path/bin/t4d"
-    ln -srfn "$T4D_ROOT_PATH/src/Templates/init.env" "$_path/init"
-    ln -srfn "$T4D_ROOT_PATH/src/Templates/Team-New" "$_path/team/Default"
-    ln -srfn "$T4D_ROOT_PATH/src/Templates/Team-New/t4d-manifest.xml" "$_path/manifest.xml"
+    ln -sfvn "src/.t4drc" "${_path}/.zshrc"
+    ln -sfvn "../src/t4d" "$_path/bin/t4d"
+    ln -sfvn "src/Templates/init.env" "$_path/init"
+    ln -sfvn "../src/Templates/Team-New" "$_path/team/Default"
 }
 
 logo(){
