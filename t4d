@@ -78,9 +78,11 @@ case $1 in
 
         if [[ "$_prefix" != "" ]] && [[ -w "$_prefix" ]] ; then
             echo "    Installing tools4dev in $_prefix"
-            mv $PWD/src "$_prefix/"
-            mv $PWD/completions "$_prefix/"
-            mv $PWD/bin "$_prefix/"
+            if [[ "$PWD" != "$_prefix" ]]; then
+                mv $PWD/src "$_prefix/"
+                mv $PWD/completions "$_prefix/"
+                mv $PWD/bin "$_prefix/"
+            fi
 
             if [[ ! -e "$T4D_ROOT_PATH" ]]; then
                 mkdir -p $T4D_ROOT_PATH
