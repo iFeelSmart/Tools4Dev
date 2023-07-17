@@ -69,7 +69,7 @@ case $1 in
         shift
         while [[ "$@" != "" ]]; do
             case "$1" in
-         ch       --prefix*)
+                --prefix*)
                     _prefix="$(echo $1 | cut -d '=' -f2)"
                 ;;
             esac
