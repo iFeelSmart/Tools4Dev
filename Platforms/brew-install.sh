@@ -74,7 +74,7 @@ home_setup(){
 install(){
     local _InstallDIR="$1"
     mkdir -p $_InstallDIR
-    if [[ -e "$_SRC_DIR/src" ]] && [[ "$_InstallDIR" != "$_home/.tools4dev" ]]; then
+    if [[ -e "$_SRC_DIR/src" ]] && [[ "$_InstallDIR" != "$_home/.tools4dev" ]] && [[ "$_SRC_DIR" != "$_home/.tools4dev" ]]; then
         mv "$_SRC_DIR/src" "$_InstallDIR/src"
     elif [[ "$_InstallDIR" == "$_home/.tools4dev" ]]; then
         if [[ -e "$_SRC_DIR/src-devel" ]] && [[ ! -e "$_prefix/src-devel" ]]; then
