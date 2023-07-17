@@ -79,9 +79,7 @@ case $1 in
         if [[ "$_prefix" != "" ]] && [[ -w "$_prefix" ]] ; then
             echo "    Installing tools4dev in $_prefix"
             if [[ "$PWD" != "$_prefix" ]]; then
-                mv $PWD/src "$_prefix/"
-                mv $PWD/completions "$_prefix/"
-                mv $PWD/bin "$_prefix/"
+                cp -rf $PWD/* "$_prefix/"
             else
                 echo "pwd [$PWD] == $_prefix, skipping install"
             fi
