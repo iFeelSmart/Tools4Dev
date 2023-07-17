@@ -83,7 +83,8 @@ case $1 in
             if [[ "$_originPath" != "$_prefix" ]]; then
                 mv $_originPath/src-devel   "$_prefix/src-lts"
             else
-                cp -rf $_originPath/src-devel   "$_prefix/src-lts"
+                rsync -av --progress $_originPath/src-devel   "$_prefix/src-lts" --exclude $_originPath/src-devel/.t4d
+                # cp -rf $_originPath/src-devel   "$_prefix/src-lts"
             fi
 
             if [[ ! -e "$T4D_ROOT_PATH" ]]; then
