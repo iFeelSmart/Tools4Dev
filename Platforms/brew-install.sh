@@ -76,15 +76,15 @@ install(){
     mkdir -p $_InstallDIR
     if [[ -e "$_SRC_DIR/src" ]] && [[ "$_InstallDIR" != "$_home/.tools4dev" ]] && [[ "$_SRC_DIR" != "$_home/.tools4dev" ]]; then
         mv "$_SRC_DIR/src" "$_InstallDIR/src"
-    elif [[ "$_InstallDIR" == "$_home/.tools4dev" ]]; then
-        if [[ -e "$_SRC_DIR/src-devel" ]] && [[ ! -e "$_prefix/src-devel" ]]; then
-            rsync -a --progress "$_SRC_DIR/src-devel" "$_prefix"  \
+    elif [[ "$_SRC_DIR" == "$_home/.tools4dev" ]]; then
+        if [[ -e "$_SRC_DIR/src-devel" ]] && [[ ! -e "$_InstallDIR/src-devel" ]]; then
+            rsync -a --progress "$_SRC_DIR/src-devel" "$_InstallDIR"  \
                      --exclude .git \
                      --exclude .t4d \
                      --exclude Modules  \
                      --exclude Teams
         else
-            _t4dDebugLog $perror "$_SRC_DIR/src-devel can't be duplicated to $_prefix"
+            _t4dDebugLog $perror "$_SRC_DIR/src-devel can't be duplicated to $_InstallDIR"
             return 1
         fi
     else
