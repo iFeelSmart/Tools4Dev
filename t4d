@@ -77,9 +77,11 @@ case $1 in
         done
 
         if [[ "$_prefix" != "" ]] && [[ -w "$_prefix" ]] ; then
-            echo "    Installing tools4dev in $_prefix"
+            echo "    Exporting tools4dev in $_prefix"
             if [[ "$PWD" != "$_prefix" ]]; then
-                cp -rf $PWD/* "$_prefix/"
+                mv $PWD/src-devel   "$_prefix/src-lts"
+                mv $PWD/completions "$_prefix/"
+                mv $PWD/bin         "$_prefix/"
             else
                 echo "pwd [$PWD] == $_prefix, skipping install"
             fi
@@ -89,8 +91,8 @@ case $1 in
             fi
             cd $T4D_ROOT_PATH
             mkdir -p completions bin lib team
-            if [[ "$Tools4Dev_PATH" != "$T4D_ROOT_PATH/src" ]]; then
-                ln -sfvn "$Tools4Dev_PATH" "$T4D_ROOT_PATH/src"
+            if [[ "$_prefix" != "$T4D_ROOT_PATH" ]]; then
+                ln -sfvn "${_prefix}/src-lts" "$T4D_ROOT_PATH/src"
             fi
             ln -sfvn "src/.t4drc" "${_prefix}/.zshrc"
             ln -sfvn "../src/t4d" "$_prefix/bin/t4d"
