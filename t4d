@@ -80,11 +80,7 @@ case $1 in
 
         if [[ "$_prefix" != "" ]] && [[ -w "$_prefix" ]] ; then
             echo "    Exporting tools4dev in $_prefix"
-            if [[ "$_originPath" != "$T4D_ROOT_PATH" ]]; then
-                mv $_originPath/src-devel   "$_prefix/src-lts"
-            else
-                rsync -a --progress $_originPath/src-devel "$_prefix/src-lts"  --exclude .git --exclude .t4d --exclude Modules  --exclude Teams
-            fi
+            rsync -a --progress $_originPath/src-devel "$_prefix/src-lts"  --exclude .git --exclude .t4d --exclude Modules  --exclude Teams
 
             if [[ ! -e "$T4D_ROOT_PATH" ]]; then
                 mkdir -p $T4D_ROOT_PATH
