@@ -83,7 +83,7 @@ case $1 in
             if [[ "$_originPath" != "$_prefix" ]]; then
                 mv $_originPath/src-devel   "$_prefix/src-lts"
             else
-                rsync -av --progress $_originPath/src-devel   "$_prefix/src-lts" --exclude $_originPath/src-devel/.t4d
+                rsync -av --progress $_originPath/src-devel   "$_prefix/src-lts" --exclude $_originPath/src-devel/.t4d --exclude $_originPath/src-devel/.git
                 # cp -rf $_originPath/src-devel   "$_prefix/src-lts"
             fi
 
