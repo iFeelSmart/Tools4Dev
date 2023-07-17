@@ -20,9 +20,10 @@ pskip="\033[1;35m[SKIPPED]\033[m"
 perror="\033[1;31m [ERROR]\033[m"
 pwarning="\033[1;33m [WARNING]\033[m"
 
-_home="/Users/$USER"
 
-if [[ ! -e "$_home" ]] &&  [[ -e "/home/$USER" ]]; then
+if [[ -e "/Users/$USER" ]]; then
+    _home="/Users/$USER"
+elif [[ -e "/home/$USER" ]]; then
     _home="/home/$USER"
 else
     _t4dDebugLog $perror "HOME not supported"
