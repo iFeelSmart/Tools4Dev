@@ -67,6 +67,8 @@ case $1 in
     link)
         if [[ "$Tools4Dev_PATH" != "$T4D_ROOT_PATH/src" ]]; then
             ln -sfnv "$Tools4Dev_PATH" "$T4D_ROOT_PATH/src"
+        elif [[ -e "$T4D_ROOT_PATH/src-devel" ]]; then
+            ln -sfnv "$T4D_ROOT_PATH/src-devel" "$T4D_ROOT_PATH/src"
         fi
     ;;
     update)
