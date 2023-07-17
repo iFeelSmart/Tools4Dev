@@ -64,56 +64,6 @@ case $1 in
         fi
         
     ;;
-    # install)
-    #     set -e 
-    #     shift
-    #     _prefix="$T4D_ROOT_PATH"
-    #     _originPath="$(dirname $Tools4Dev_PATH)"
-    #     while [[ "$@" != "" ]]; do
-    #         case "$1" in
-    #             --prefix*)
-    #                 _prefix="$(echo $1 | cut -d '=' -f2)"
-    #             ;;
-
-    #             --tmp*)
-    #                 _originPath="$(echo $1 | cut -d '=' -f2)"
-    #             ;;
-    #         esac
-    #         shift
-    #     done
-
-    #     if [[ "$_prefix" != "" ]] && [[ -w "$_prefix" ]] ; then
-    #         echo "    Exporting tools4dev in $_prefix"
-    #         if [[ -e "$_originPath/src-devel" ]]; then
-    #             rsync -a --progress $_originPath/src-devel "$_prefix"  --exclude .git --exclude .t4d --exclude Modules  --exclude Teams
-    #             mv $_prefix/src-devel $_prefix/src-lts
-    #         else
-    #             echo "$_originPath/src-devel does not exist"
-    #             return 1
-    #         fi
-
-    #         if [[ ! -e "$T4D_ROOT_PATH" ]]; then
-    #             mkdir -p $T4D_ROOT_PATH
-    #         fi
-    #         cd $T4D_ROOT_PATH
-    #         mkdir -p completions bin lib team
-    #         if [[ "$_prefix" != "$T4D_ROOT_PATH" ]]; then
-    #             ln -sfvn "${_prefix}/src-lts" "$T4D_ROOT_PATH/src"
-    #             ln -sfvn "$_prefix/src-lts" "$_prefix/src"
-    #         fi
-    #         ln -sfvn "src/.t4drc" "${_prefix}/.zshrc"
-    #         ln -sfvn "../src/t4d" "${_prefix}/bin/t4d"
-    #         ln -sfvn "src/Templates/init.env" "$T4D_ROOT_PATH/init"
-    #         ln -sfvn "../src/Templates/Team-New" "$T4D_ROOT_PATH/team/Default"
-    #         if [[ ! -e "$T4D_ROOT_PATH/manifest.xml" ]]; then
-    #             ln -sfvn "src/Templates/Team-New/t4d-manifest.xml" "$T4D_ROOT_PATH/manifest.xml"
-    #         fi
-    #     else
-    #         echo "$_prefix"
-    #         ls -la $_prefix
-    #         return 1
-    #     fi
-    # ;;
     link)
         if [[ "$Tools4Dev_PATH" != "$T4D_ROOT_PATH/src" ]]; then
             ln -sfnv "$Tools4Dev_PATH" "$T4D_ROOT_PATH/src"
