@@ -74,13 +74,22 @@ case $1 in
                 --prefix*)
                     _prefix="$(echo $1 | cut -d '=' -f2)"
                 ;;
+
+                --tmp*)
+                    _originPath="$(echo $1 | cut -d '=' -f2)"
+                ;;
             esac
             shift
         done
 
         if [[ "$_prefix" != "" ]] && [[ -w "$_prefix" ]] ; then
             echo "    Exporting tools4dev in $_prefix"
-            rsync -a --progress $_originPath/src-devel "$_prefix/src-lts"  --exclude .git --exclude .t4d --exclude Modules  --exclude Teams
+            if [[ -e "$_originPath/src-devel" ]]; then
+                rsync -a --progress $_originPath/src-devel "$_prefix/src-lts"  --exclude .git --exclude .t4d --exclude Modules  --exclude Teams
+            else
+                echo "$_originPath/src-devel does not exist"
+                return 1
+            fi
 
             if [[ ! -e "$T4D_ROOT_PATH" ]]; then
                 mkdir -p $T4D_ROOT_PATH
