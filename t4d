@@ -82,6 +82,8 @@ case $1 in
                 mv $PWD/src "$_prefix/"
                 mv $PWD/completions "$_prefix/"
                 mv $PWD/bin "$_prefix/"
+            else
+                echo "pwd [$PWD] == $_prefix, skipping install"
             fi
 
             if [[ ! -e "$T4D_ROOT_PATH" ]]; then
@@ -101,6 +103,8 @@ case $1 in
             fi
         else
             echo "$_prefix"
+            ls -la $_prefix
+            return 1
         fi
     ;;
     link)
