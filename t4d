@@ -49,7 +49,7 @@ case $1 in
             )
         fi
 
-        export ZDOTDIR=$_T4DPATH; zsh
+        export ZDOTDIR=$_T4DRootPATH; zsh
     ;;
     *version)
         cat $Tools4Dev_PATH/VERSION
