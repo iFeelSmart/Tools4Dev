@@ -28,7 +28,7 @@ case $1 in
             _T4DPATH="$_T4DRootPATH/src"
         fi
 
-        if [[ "$(readlink -f $T4D_ROOT_PATH/src)" != "$_T4DPATH" ]] && [[ -e "$_T4DPATH/t4d"]]; then
+        if [[ "$(readlink -f $T4D_ROOT_PATH/src)" != "$_T4DPATH" ]] && [[ -e "$_T4DPATH/t4d" ]]; then
             echo "Tools4Dev Update Src [ $_T4DPATH ]"
             if [[ ! -e "$(readlink -f $T4D_ROOT_PATH/src)" ]] || [[ "$_ForceSrcUpdate" == "-f" ]]; then
                 ln -sfvn "${_T4DPATH}" "$T4D_ROOT_PATH/src"
