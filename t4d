@@ -104,6 +104,13 @@ case $1 in
             ln -sfnv "$T4D_ROOT_PATH/src-devel" "$T4D_ROOT_PATH/src"
         fi
     ;;
+    native)
+        if [[ -e "$HOME/.zshenv" ]]; then
+            cat "$HOME/.zshenv" | grep -v "^ZDOTDIR" > $HOME/.zshenv.tmp
+            mv $HOME/.zshenv.tmp $HOME/.zshenv
+        fi
+        echo "ZDOTDIR=$HOME/.tools4dev" > $HOME/.zshenv
+    ;;
     update)
         set -e
         shift
