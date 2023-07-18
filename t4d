@@ -164,10 +164,7 @@ case $1 in
         esac
     ;;
     -path|path)
-         
-        echo "$0"
         set -e
-        set -x
         cd $2
         shift
         shift
