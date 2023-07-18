@@ -19,7 +19,36 @@ export T4D_SILENT_COMMAND=true
 
 case $1 in
     start)
-        local _T4DPATH="${2:-$HOME/.tools4dev}"
+        _T4DRootPATH="${2:-$HOME/.tools4dev}"
+        _ForceSrcUpdate="$3"
+
+        if [[ -e "$_T4DRootPATH/src-devel" ]]; then
+            _T4DPATH="$_T4DRootPATH/src-devel"
+        else
+            _T4DPATH="$_T4DRootPATH/src"
+        fi
+
+        if [[ "$(readlink -f $T4D_ROOT_PATH/src)" != "$_T4DPATH" ]] && [[ -e "$_T4DPATH/t4d"]]; then
+            echo "Tools4Dev Update Src [ $_T4DPATH ]"
+            if [[ ! -e "$(readlink -f $T4D_ROOT_PATH/src)" ]] || [[ "$_ForceSrcUpdate" == "-f" ]]; then
+                ln -sfvn "${_T4DPATH}" "$T4D_ROOT_PATH/src"
+            fi
+        fi
+        if [[ ! -e "$_T4DPATH/.zshrc" ]]; then
+            echo "Tools4Dev setup Link"
+            (
+                cd $T4D_ROOT_PATH
+                mkdir -p completions bin lib team
+                ln -sfvn "src/.t4drc"                   "${T4D_ROOT_PATH}/.zshrc"
+                ln -sfvn "../src/t4d"                   "${T4D_ROOT_PATH}/bin/t4d"
+                ln -sfvn "src/Templates/init.env"       "${T4D_ROOT_PATH}/init"
+                ln -sfvn "../src/Templates/Team-New"    "${T4D_ROOT_PATH}/team/Default"
+                if [[ ! -e "${T4D_ROOT_PATH}/manifest.xml" ]]; then
+                    ln -sfvn "src/Templates/Team-New/t4d-manifest.xml" "${T4D_ROOT_PATH}/manifest.xml"
+                fi
+            )
+        fi
+
         export ZDOTDIR=$_T4DPATH; zsh
     ;;
     *version)

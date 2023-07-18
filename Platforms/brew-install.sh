@@ -21,56 +21,6 @@ perror="\033[1;31m [ERROR]\033[m"
 pwarning="\033[1;33m [WARNING]\033[m"
 
 
-if [[ -e "/Users/$USER" ]]; then
-    _home="/Users/$USER"
-elif [[ -e "/home/$USER" ]]; then
-    _home="/home/$USER"
-else
-    _t4dDebugLog $perror "HOME not supported"
-    return 1
-fi
-
-
-if [[ "$(readlink $0)" != "" ]]; then
-    _SRC_DIR="$(dirname "$(readlink $0)")"
-elif [[ -e "$0/../src" ]]; then
-    _SRC_DIR="$(dirname "$0")"
-else
-    _SRC_DIR="$_home/.tools4dev"
-fi
-
-
-home_setup(){
-    local _T4DHomeFolder="$1"
-    local _InstallDIR="$2"
-    _t4dDebugLog "$plog" "Link $_InstallDIR to $_T4DHomeFolder"
-
-    if [[ ! -e "$_T4DHomeFolder" ]]; then
-        mkdir -p $_T4DHomeFolder
-    fi
-
-    cd $_T4DHomeFolder
-    mkdir -p completions bin lib team
-    _t4dDebugLog "$plog" "Tools4Dev source Link"
-    if [[ "$_InstallDIR" != "$_T4DHomeFolder" ]] && [[ -e "${_InstallDIR}/src" ]]; then
-        ln -sfvn "${_InstallDIR}/src" "$_T4DHomeFolder/src"
-    elif [[ -e "${_InstallDIR}/src-devel" ]]; then
-        ln -sfvn "${_InstallDIR}/src-devel" "$_T4DHomeFolder/src"
-    else
-        _t4dDebugLog $perror "No source found, could not create src link"
-        return 1
-    fi
-
-    _t4dDebugLog "$plog" "Tools4Dev setup Link"
-    ln -sfvn "src/.t4drc"                   "${_T4DHomeFolder}/.zshrc"
-    ln -sfvn "../src/t4d"                   "${_T4DHomeFolder}/bin/t4d"
-    ln -sfvn "src/Templates/init.env"       "${_T4DHomeFolder}/init"
-    ln -sfvn "../src/Templates/Team-New"    "${_T4DHomeFolder}/team/Default"
-    if [[ ! -e "${_T4DHomeFolder}/manifest.xml" ]]; then
-        ln -sfvn "src/Templates/Team-New/t4d-manifest.xml" "${_T4DHomeFolder}/manifest.xml"
-    fi
-}
-
 install(){
     local _InstallDIR="$1"
     mkdir -p $_InstallDIR
@@ -109,7 +59,7 @@ main(){
     done
 
     install "$_prefix"
-    home_setup "$_home/.tools4dev" "$_prefix"
+    # home_setup "$_home/.tools4dev" "$_prefix"
 }
 
 main $@
