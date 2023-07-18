@@ -3,7 +3,7 @@ autoload -U colors &> /dev/null
 colors &> /dev/null 
 export T4D_ROOT_PATH="${T4D_ROOT_PATH:-$HOME/.tools4dev}"
 if [[ "$(readlink $0)" != "" ]]; then
-    export Tools4Dev_PATH="$(dirname "$(readlink $0)")"
+    export Tools4Dev_PATH="$(dirname "$(readlink -f $0)")"
 elif [[ -e "$0/../src" ]]; then
     export Tools4Dev_PATH="$(dirname "$0")"
 else
@@ -164,7 +164,10 @@ case $1 in
         esac
     ;;
     -path|path)
+         
+        echo "$0"
         set -e
+        set -x
         cd $2
         shift
         shift
