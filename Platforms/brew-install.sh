@@ -59,7 +59,6 @@ main(){
     done
 
     install "$_prefix"
-    # home_setup "$_home/.tools4dev" "$_prefix"
 }
 
 main $@
