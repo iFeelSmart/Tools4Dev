@@ -23,9 +23,21 @@ pwarning="\033[1;33m [WARNING]\033[m"
 
 install(){
     local _InstallDIR="$1"
+    local _SRC_DIR="$PWD"
     mkdir -p $_InstallDIR
+    if [[ -e "$_SRC_DIR/src-lts" ]] && [[ "$_InstallDIR" != "$_home/.tools4dev" ]] && [[ "$_SRC_DIR" != "$_home/.tools4dev" ]]; then
+        rsync -a    --progress "$_SRC_DIR/src-lts" "$_InstallDIR"  \
+                    --exclude .git \
+                    --exclude .t4d \
+                    --exclude Modules  \
+                    --exclude Teams
+        mv "$_InstallDIR/src-lts" "$_InstallDIR/src"
     if [[ -e "$_SRC_DIR/src" ]] && [[ "$_InstallDIR" != "$_home/.tools4dev" ]] && [[ "$_SRC_DIR" != "$_home/.tools4dev" ]]; then
-        mv "$_SRC_DIR/src" "$_InstallDIR/src"
+        rsync -a    --progress "$_SRC_DIR/src" "$_InstallDIR"  \
+                    --exclude .git \
+                    --exclude .t4d \
+                    --exclude Modules  \
+                    --exclude Teams
     elif [[ "$_SRC_DIR" == "$_home/.tools4dev" ]]; then
         if [[ -e "$_SRC_DIR/src-devel" ]] && [[ ! -e "$_InstallDIR/src-devel" ]]; then
             rsync -a --progress "$_SRC_DIR/src-devel" "$_InstallDIR"  \
@@ -44,13 +56,13 @@ install(){
 }
 
 main(){
-    _prefix="$_home/.tools4dev"
+    _prefix="$HOME/.tools4dev"
+    _home="$HOME"
     while [[ "$@" != "" ]]; do
         case "$1" in
             --prefix*)
                 _prefix="$(echo $1 | cut -d '=' -f2)"
             ;;
-
             --home*)
                 _home="$(echo $1 | cut -d '=' -f2)"
             ;;
@@ -58,7 +70,7 @@ main(){
         shift
     done
 
-    install "$_prefix"
+    install "$_prefix" "$_home"
 }
 
 main $@
