@@ -49,6 +49,9 @@ install(){
     if [[ "$(basename $_SRC_DIR)" != "src" ]] && [[ "$(basename $_SRC_DIR)" != "src-devel" ]]; then
         mv "$_SRC_DIR" "$_InstallDIR/src"
     fi
+
+    mkdir -p $_InstallDIR/bin
+    ln -sfvn "$_InstallDIR/src/t4d" "$_InstallDIR/bin/t4d"
 }
 
 main(){
