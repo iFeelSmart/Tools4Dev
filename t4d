@@ -19,10 +19,9 @@ export T4D_SILENT_COMMAND=true
 
 case $1 in
     start)
-        _T4DRootPATH="$(dirname $Tools4Dev_PATH)"
         _ForceSrcUpdate="$2"
-        if [[ -e "$_T4DRootPATH/src" ]] && [[ "$_ForceSrcUpdate" != "-f" ]]; then
-            echo "Using $(readlink -f $_T4DRootPATH/src) [$0]"
+        if [[ -e "$T4D_ROOT_PATH/src" ]] && [[ "$_ForceSrcUpdate" != "-f" ]]; then
+            echo "Using $(readlink -f $T4D_ROOT_PATH/src) [$0]"
         else
             echo "Linking $Tools4Dev_PATH [$0]"
             # local _Src="$Tools4Dev_PATH"
@@ -38,6 +37,7 @@ case $1 in
             (
                 cd $T4D_ROOT_PATH
                 mkdir -p completions bin lib team
+                ln -sfvn "src/project.env"              "${T4D_ROOT_PATH}/project.env"
                 ln -sfvn "src/.t4drc"                   "${T4D_ROOT_PATH}/.zshrc"
                 ln -sfvn "../src/t4d"                   "${T4D_ROOT_PATH}/bin/t4d"
                 ln -sfvn "src/Templates/init.env"       "${T4D_ROOT_PATH}/init"
@@ -48,7 +48,7 @@ case $1 in
             )
         fi
         echo "Welcome to Tools4Dev [$(cat $Tools4Dev_PATH/VERSION)]"
-        export ZDOTDIR=$_T4DRootPATH; zsh
+        export ZDOTDIR=$T4D_ROOT_PATH; zsh
     ;;
     *version)
         cat $Tools4Dev_PATH/VERSION
