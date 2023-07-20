@@ -23,35 +23,31 @@ pwarning="\033[1;33m [WARNING]\033[m"
 
 install(){
     local _InstallDIR="$1"
-    local _SRC_DIR="$PWD"
+    local _SRC_DIR="$PWD/src-devel"
     mkdir -p $_InstallDIR
-    if [[ -e "$_SRC_DIR/src-lts" ]] && [[ "$_InstallDIR" != "$_home/.tools4dev" ]] && [[ "$_SRC_DIR" != "$_home/.tools4dev" ]]; then
-        rsync -a    --progress "$_SRC_DIR/src-lts" "$_InstallDIR"  \
-                    --exclude .git \
-                    --exclude .t4d \
-                    --exclude Modules  \
-                    --exclude Teams
-        mv "$_InstallDIR/src-lts" "$_InstallDIR/src"
-    if [[ -e "$_SRC_DIR/src" ]] && [[ "$_InstallDIR" != "$_home/.tools4dev" ]] && [[ "$_SRC_DIR" != "$_home/.tools4dev" ]]; then
-        rsync -a    --progress "$_SRC_DIR/src" "$_InstallDIR"  \
-                    --exclude .git \
-                    --exclude .t4d \
-                    --exclude Modules  \
-                    --exclude Teams
-    elif [[ "$_SRC_DIR" == "$_home/.tools4dev" ]]; then
-        if [[ -e "$_SRC_DIR/src-devel" ]] && [[ ! -e "$_InstallDIR/src-devel" ]]; then
-            rsync -a --progress "$_SRC_DIR/src-devel" "$_InstallDIR"  \
-                     --exclude .git \
-                     --exclude .t4d \
-                     --exclude Modules  \
-                     --exclude Teams
+    if [[ -e "$PWD/src-lts" ]] && [[ "$_InstallDIR" != "$_home/.tools4dev" ]] && [[ "$PWD" != "$_home/.tools4dev" ]]; then
+        _SRC_DIR="$PWD/src-lts"
+    if [[ -e "$PWD/src" ]] && [[ "$_InstallDIR" != "$_home/.tools4dev" ]] && [[ "$PWD" != "$_home/.tools4dev" ]]; then
+        _SRC_DIR="$PWD/src"
+    elif [[ "$PWD" == "$_home/.tools4dev" ]]; then
+        if [[ -e "$PWD/src-devel" ]] && [[ ! -e "$_InstallDIR/src-devel" ]]; then
+            _SRC_DIR="$PWD/src-devel"
         else
-            _t4dDebugLog $perror "$_SRC_DIR/src-devel can't be duplicated to $_InstallDIR"
+            _t4dDebugLog $perror "$PWD/src-devel can't be duplicated to $_InstallDIR"
             return 1
         fi
     else
-        _t4dDebugLog $perror "$_SRC_DIR/src-lts does not exist"
+        _t4dDebugLog $perror "$PWD/src-lts does not exist"
         return 1
+    fi
+
+    rsync -a    --progress "$_SRC_DIR" "$_InstallDIR"  \
+                --exclude .git \
+                --exclude .t4d \
+                --exclude Modules  \
+                --exclude Teams
+    if [[ "$(basename $_SRC_DIR)" != "src" ]] && [[ "$(basename $_SRC_DIR)" != "src-devel" ]]; then
+        mv "$_SRC_DIR" "$_InstallDIR/src"
     fi
 }
 
