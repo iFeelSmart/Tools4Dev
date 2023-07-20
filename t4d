@@ -19,21 +19,20 @@ export T4D_SILENT_COMMAND=true
 
 case $1 in
     start)
-        _T4DRootPATH="${2:-$HOME/.tools4dev}"
-        _ForceSrcUpdate="$3"
-
-        if [[ -e "$_T4DRootPATH/src-devel" ]]; then
-            _T4DPATH="$_T4DRootPATH/src-devel"
+        _T4DRootPATH="$(dirname $Tools4Dev_PATH)"
+        _ForceSrcUpdate="$2"
+        if [[ -e "$_T4DRootPATH/src" ]] && [[ "$_ForceSrcUpdate" != "-f" ]]; then
+            echo "Using $(readlink -f $_T4DRootPATH/src) [$0]"
         else
-            _T4DPATH="$_T4DRootPATH/src"
-        fi
-
-        if [[ "$(readlink -f $T4D_ROOT_PATH/src)" != "$_T4DPATH" ]] && [[ -e "$_T4DPATH/t4d" ]]; then
-            echo "Tools4Dev Update Src [ $_T4DPATH ]"
-            if [[ ! -e "$(readlink -f $T4D_ROOT_PATH/src)" ]] || [[ "$_ForceSrcUpdate" == "-f" ]]; then
-                ln -sfvn "${_T4DPATH}" "$T4D_ROOT_PATH/src"
+            echo "Linking $Tools4Dev_PATH [$0]"
+            # local _Src="$Tools4Dev_PATH"
+            if [[ "$Tools4Dev_PATH" != "$T4D_ROOT_PATH/src" ]]; then
+                ln -sfnv "$Tools4Dev_PATH" "$T4D_ROOT_PATH/src"
+            elif [[ -e "$T4D_ROOT_PATH/src-devel" ]]; then
+                ln -sfnv "$T4D_ROOT_PATH/src-devel" "$T4D_ROOT_PATH/src"
             fi
         fi
+
         if [[ ! -e "$_T4DPATH/.zshrc" ]]; then
             echo "Tools4Dev setup Link"
             (
@@ -48,7 +47,7 @@ case $1 in
                 fi
             )
         fi
-
+        echo "Welcome to Tools4Dev [$(cat $Tools4Dev_PATH/VERSION)]"
         export ZDOTDIR=$_T4DRootPATH; zsh
     ;;
     *version)
@@ -95,7 +94,7 @@ case $1 in
     ;;
     link)
         echo "Using $Tools4Dev_PATH [$0]"
-        local _Src="$(dirname $0)"
+        local _Src="$Tools4Dev_PATH"
         if [[ "$_Src" != "$T4D_ROOT_PATH/src" ]]; then
             ln -sfnv "$_Src" "$T4D_ROOT_PATH/src"
         elif [[ "$Tools4Dev_PATH" != "$T4D_ROOT_PATH/src" ]]; then
