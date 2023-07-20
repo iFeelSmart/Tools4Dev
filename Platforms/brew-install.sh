@@ -27,7 +27,7 @@ install(){
     mkdir -p $_InstallDIR
     if [[ -e "$PWD/src-lts" ]] && [[ "$_InstallDIR" != "$_home/.tools4dev" ]] && [[ "$PWD" != "$_home/.tools4dev" ]]; then
         _SRC_DIR="$PWD/src-lts"
-    if [[ -e "$PWD/src" ]] && [[ "$_InstallDIR" != "$_home/.tools4dev" ]] && [[ "$PWD" != "$_home/.tools4dev" ]]; then
+    elif [[ -e "$PWD/src" ]] && [[ "$_InstallDIR" != "$_home/.tools4dev" ]] && [[ "$PWD" != "$_home/.tools4dev" ]]; then
         _SRC_DIR="$PWD/src"
     elif [[ "$PWD" == "$_home/.tools4dev" ]]; then
         if [[ -e "$PWD/src-devel" ]] && [[ ! -e "$_InstallDIR/src-devel" ]]; then
