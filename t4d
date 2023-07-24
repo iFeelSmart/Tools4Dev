@@ -20,6 +20,7 @@ export T4D_SILENT_COMMAND=true
 case $1 in
     start)
         _ForceSrcUpdate="$2"
+        mkdir -p $T4D_ROOT_PATH
         if [[ -e "$T4D_ROOT_PATH/src" ]] && [[ "$_ForceSrcUpdate" != "-f" ]]; then
             echo "Using $(readlink -f $T4D_ROOT_PATH/src) [$0]"
         else
