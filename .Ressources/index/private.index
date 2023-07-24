@@ -401,6 +401,11 @@ Source/Manifest/manifest-xml:_t4dManifestXmlGetMarker
 Source/Manifest/manifest-xml:_t4dManifestXmlOpen
 Source/Manifest/manifest-xml:_t4dManifestXmlSetLine
 Source/Math/_main_:_t4dMath
+Source/Matrix/matrix-api:_t4dSrcMatrixDefaultMessage
+Source/Matrix/matrix-api:_t4dSrcMatrixGenerateJsonMessage
+Source/Matrix/matrix-api:_t4dSrcMatrixMessageParsing
+Source/Matrix/matrix-api:_t4dSrcMatrixNotif
+Source/Matrix/matrix-api:_t4dSrcMatrixSendToChannel
 Source/Redmine/_main_:_t4dSrcRedmineDownloadFile
 Source/Slack/_main_:_t4dSrcSlackDefaultMessage
 Source/Slack/_main_:_t4dSrcSlackNotif
