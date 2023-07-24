@@ -33,18 +33,18 @@ case $1 in
             fi
         fi
 
-        if [[ ! -e "$_T4DPATH/.zshrc" ]]; then
+        if [[ ! -e "$T4D_ROOT_PATH/.zshrc" ]]; then
             echo "Tools4Dev setup Link"
             (
                 cd $T4D_ROOT_PATH
                 mkdir -p completions bin lib team
-                ln -sfvn "src/project.env"              "${T4D_ROOT_PATH}/project.env"
-                ln -sfvn "src/.t4drc"                   "${T4D_ROOT_PATH}/.zshrc"
-                ln -sfvn "../src/t4d"                   "${T4D_ROOT_PATH}/bin/t4d"
-                ln -sfvn "src/Templates/init.env"       "${T4D_ROOT_PATH}/init"
-                ln -sfvn "../src/Templates/Team-New"    "${T4D_ROOT_PATH}/team/Default"
+                ln -sfn "src/project.env"              "${T4D_ROOT_PATH}/project.env"
+                ln -sfn "src/.t4drc"                   "${T4D_ROOT_PATH}/.zshrc"
+                ln -sfn "../src/t4d"                   "${T4D_ROOT_PATH}/bin/t4d"
+                ln -sfn "src/Templates/init.env"       "${T4D_ROOT_PATH}/init"
+                ln -sfn "../src/Templates/Team-New"    "${T4D_ROOT_PATH}/team/Default"
                 if [[ ! -e "${T4D_ROOT_PATH}/manifest.xml" ]]; then
-                    ln -sfvn "src/Templates/Team-New/t4d-manifest.xml" "${T4D_ROOT_PATH}/manifest.xml"
+                    ln -sfn "src/Templates/Team-New/t4d-manifest.xml" "${T4D_ROOT_PATH}/manifest.xml"
                 fi
             )
         fi
