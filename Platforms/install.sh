@@ -170,6 +170,7 @@ config_rc(){
     cat "$Tools4Dev_PATH/Templates/t4drc.env" | sed "s|<T4D_ROOT_PATH>|$T4D_ROOT_PATH|g" \
                                                 | sed "s|$HOME|\$HOME|g" \
                                                 | sed "s|<T4D_NATIVE>|$T4D_NATIVE|g" \
+                                                | sed "s|<T4D_USE_ZSHRC>|$T4D_USE_ZSHRC|g" \
                                                 | sed "s|<T4D_PROMPT>|$T4D_PROMPT|g" \
                                                 | sed "s|<ZSH_PATH>|$_ZSHRC_PATH|g" > "$Tools4Dev_PATH/.t4drc" \
                                                 && _t4dDebugLog $psucceed "$Tools4Dev_PATH/Templates/t4drc.env copied in $Tools4Dev_PATH/.t4drc"
