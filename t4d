@@ -73,6 +73,7 @@ case $1 in
                     _t4dDebugLog $pinfo "you can now use wkd to reload your environment"
                 else
                     _t4dCheckInfo "Team $WS_TEAM already exist"
+                    ln -sfn $_TeamOriginalPath/t4d-manifest.xml $T4D_ROOT_PATH/manifest.xml
                 fi
             else
                 _t4dDebugLog $perror "Folder >$_TeamOriginalPath< does not contain t4d-manifest.xml"
