@@ -156,7 +156,8 @@ case $1 in
         if [[ -e "$Tools4Dev_PATH/.t4d/.containerID" ]]; then
             T4D_CONTAINER_ID="$(cat $Tools4Dev_PATH/.t4d/.containerID)"
         fi
-        case $WS_GIT_BRANCH in
+        _gitRevision="$(_t4dSrcGitInfoRevision)"
+        case $_gitRevision in
             develop)
                 _VersionSuffix="-dev$_Commit"
             ;;
