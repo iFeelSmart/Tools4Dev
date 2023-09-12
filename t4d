@@ -150,7 +150,9 @@ case $1 in
         _Commit="$(_t4dSrcGitInfoLogFromBranch "$(echo $_lastTag | cut -d ' ' -f1)" HEAD | wc -l | tr -d ' ')"
         if [[ "$(echo $_lastTagName | grep -Eo '\-dev[0-9].*')" != "" ]]; then
             _CountTag="$(echo $_lastTagName | grep -Eo '\-dev[0-9].*' | sed 's|\-dev||g')"
-            _Commit="$(_t4dMath $_Commit + $_CountTag)"
+            _CommitSuffix="$(_t4dMath $_Commit + $_CountTag)"
+        else
+            _CommitSuffix="$_Commit"
         fi
         _Version="$(cat $Tools4Dev_PATH/VERSION)"
         if [[ -e "$Tools4Dev_PATH/.t4d/.containerID" ]]; then
@@ -159,10 +161,10 @@ case $1 in
         _gitRevision="$(_t4dSrcGitInfoRevision)"
         case $_gitRevision in
             develop)
-                _VersionSuffix="-dev$_Commit"
+                _VersionSuffix="-dev$_CommitSuffix"
             ;;
             support/*)
-                _VersionSuffix="-rc$_Commit"
+                _VersionSuffix="-rc$_CommitSuffix"
             ;;
             $_Version)
                 _VersionSuffix=""
@@ -170,7 +172,7 @@ case $1 in
         esac
         case $1 in
             build)
-                rm tools4dev.tar || true
+                rm tools4dev.tar 2> /dev/null || true
                 echo "docker build -t tools4dev:$_Version${_VersionSuffix} ."
                 docker build --no-cache --progress=plain --build-arg T4D_FINAL_VERSION_SUFFIX="$_VersionSuffix" -t tools4dev:$_Version${_VersionSuffix} .
                 echo "docker run -dt tools4dev:$_Version${_VersionSuffix}"
