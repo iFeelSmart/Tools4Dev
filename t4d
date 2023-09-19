@@ -18,11 +18,13 @@ fi
 export T4D_SILENT_COMMAND=true
 
 case $1 in
-    start)
+    start*)
         _ForceSrcUpdate="$2"
         mkdir -p $T4D_ROOT_PATH
         if [[ -e "$T4D_ROOT_PATH/src" ]] && [[ "$_ForceSrcUpdate" != "-f" ]]; then
-            echo "Using $(readlink -f $T4D_ROOT_PATH/src) [$0]"
+            if [[ "$1" == "start-with-debug" ]]; then
+                echo "Using $(readlink -f $T4D_ROOT_PATH/src) [$0]"
+            fi
         else
             echo "Linking $Tools4Dev_PATH [$0]"
             if [[ "$Tools4Dev_PATH" != "$T4D_ROOT_PATH/src" ]]; then
@@ -58,7 +60,9 @@ case $1 in
                 fi
             )
         fi
-        echo "Welcome to Tools4Dev [$(cat $Tools4Dev_PATH/VERSION)]"
+        if [[ "$1" == "start-with-debug" ]]; then
+            echo "Welcome to Tools4Dev [$(cat $Tools4Dev_PATH/VERSION)]"
+        fi
         export ZDOTDIR=$T4D_ROOT_PATH; zsh
     ;;
     *version)
@@ -67,9 +71,11 @@ case $1 in
     *help)
         echo "TO DO helper"
     ;;
-    team)
-        echo "$0"
-        echo "-> T4D_ROOT_PATH=$T4D_ROOT_PATH"
+    team*)
+        if [[ "$1" == "team-with-debug" ]]; then
+            echo "$0"
+            echo "-> T4D_ROOT_PATH=$T4D_ROOT_PATH"
+        fi
         mkdir -p $T4D_ROOT_PATH/team
         t4d-init &> /dev/null
         if [[ "$2" == "-add" ]]; then
