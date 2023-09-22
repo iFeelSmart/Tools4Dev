@@ -105,7 +105,9 @@ case $1 in
                 _t4dDebugLog $plog "Team folder is now $_TeamOriginalPath"
                 _t4dDebugLog $pinfo "you can now use wkd to reload your environment"
             elif [[ "$WS_TEAM" == "$2" ]]; then
-                _t4dCheckSucceeded "Team $2 already setup in Tools4Dev"
+                if [[ "$1" == "team-with-debug" ]]; then
+                    _t4dCheckSucceeded "Team $2 already setup in Tools4Dev"
+                fi
             fi
         fi
         
