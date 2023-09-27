@@ -9,7 +9,52 @@ elif [[ -e "$0/../src" ]]; then
 else
     export Tools4Dev_PATH="$T4D_ROOT_PATH/src"
 fi
-function t4d-init() { source $T4D_ROOT_PATH/init }
+
+
+function t4d-init() { 
+    source $T4D_ROOT_PATH/init
+}
+
+function t4d-native(){
+    if [[ -e "$HOME/.zshenv" ]]; then
+        echo "BackUp $HOME/.zshenv -> $HOME/.zshenv.old"
+        cat "$HOME/.zshenv" > $HOME/.zshenv.old
+        cat "$HOME/.zshenv" | grep -v "^ZDOTDIR" > $HOME/.zshenv.tmp
+        mv $HOME/.zshenv.tmp $HOME/.zshenv
+    fi
+    echo "ZDOTDIR=$HOME/.tools4dev" >> $HOME/.zshenv
+}
+
+function t4d-setup() {
+    if [[ ! -e "$T4D_ROOT_PATH/src/.t4drc" ]]; then
+        ZSH_PATH="$(command -v env) zsh"
+        if [[ -e $HOME/.zshrc ]] && [[ "$(cat $HOME/.zshrc | grep 'tools4dev')" == "" ]]; then
+            T4D_USE_ZSHRC="true"
+            T4D_PROMPT="false"
+        fi
+        if [[ -e "$T4D_ROOT_PATH/src/Templates/t4drc.env" ]]; then
+            cat "$T4D_ROOT_PATH/src/Templates/t4drc.env"    | sed "s|<T4D_USE_ZSHRC>|${T4D_USE_ZSHRC:-false}|g" \
+                                                            | sed "s|<ZSH_PATH>|${ZSH_PATH:-$(which zsh)}|g" \
+                                                            | sed "s|<T4D_PROMPT>|${T4D_PROMPT:-true}|g" > "src/.t4drc"
+        fi
+    fi
+    if [[ ! -e "$T4D_ROOT_PATH/.zshrc" ]]; then
+        echo "Tools4Dev setup Link"
+        (
+            cd $T4D_ROOT_PATH
+            mkdir -p completions bin lib team
+            ln -sfn "src/project.env"              "${T4D_ROOT_PATH}/project.env"
+            ln -sfn "src/.t4drc"                   "${T4D_ROOT_PATH}/.zshrc"
+            ln -sfn "../src/t4d"                   "${T4D_ROOT_PATH}/bin/t4d"
+            ln -sfn "src/Templates/init.env"       "${T4D_ROOT_PATH}/init"
+            ln -sfn "../src/Templates/Team-New"    "${T4D_ROOT_PATH}/team/Default"
+            if [[ ! -e "${T4D_ROOT_PATH}/manifest.xml" ]]; then
+                ln -sfn "src/Templates/Team-New/t4d-manifest.xml" "${T4D_ROOT_PATH}/manifest.xml"
+            fi
+        )
+    fi
+    t4d-native
+}
 
 if [[ -e "$Tools4Dev_PATH/manifest.xml" ]]; then
     export WS_TEAM="$(cat $Tools4Dev_PATH/manifest.xml | grep '<team' | grep -Eo 'name=.*' | cut -d '"' -f2)"
@@ -33,33 +78,9 @@ case $1 in
                 ln -sfnv "$T4D_ROOT_PATH/src-devel" "$T4D_ROOT_PATH/src"
             fi
         fi
-        if [[ ! -e "$T4D_ROOT_PATH/src/.t4drc" ]]; then
-            ZSH_PATH="$(command -v env) zsh"
-            if [[ -e $HOME/.zshrc ]] && [[ "$(cat $HOME/.zshrc | grep 'tools4dev')" == "" ]]; then
-                T4D_USE_ZSHRC="true"
-                T4D_PROMPT="false"
-            fi
-            if [[ -e "$T4D_ROOT_PATH/src/Templates/t4drc.env" ]]; then
-                cat "$T4D_ROOT_PATH/src/Templates/t4drc.env"    | sed "s|<T4D_USE_ZSHRC>|${T4D_USE_ZSHRC:-false}|g" \
-                                                                | sed "s|<ZSH_PATH>|${ZSH_PATH:-$(which zsh)}|g" \
-                                                                | sed "s|<T4D_PROMPT>|${T4D_PROMPT:-true}|g" > "src/.t4drc"
-            fi
-        fi
-        if [[ ! -e "$T4D_ROOT_PATH/.zshrc" ]]; then
-            echo "Tools4Dev setup Link"
-            (
-                cd $T4D_ROOT_PATH
-                mkdir -p completions bin lib team
-                ln -sfn "src/project.env"              "${T4D_ROOT_PATH}/project.env"
-                ln -sfn "src/.t4drc"                   "${T4D_ROOT_PATH}/.zshrc"
-                ln -sfn "../src/t4d"                   "${T4D_ROOT_PATH}/bin/t4d"
-                ln -sfn "src/Templates/init.env"       "${T4D_ROOT_PATH}/init"
-                ln -sfn "../src/Templates/Team-New"    "${T4D_ROOT_PATH}/team/Default"
-                if [[ ! -e "${T4D_ROOT_PATH}/manifest.xml" ]]; then
-                    ln -sfn "src/Templates/Team-New/t4d-manifest.xml" "${T4D_ROOT_PATH}/manifest.xml"
-                fi
-            )
-        fi
+
+        t4d-setup
+        
         if [[ "$1" == "start-with-debug" ]]; then
             echo "Welcome to Tools4Dev [$(cat $Tools4Dev_PATH/VERSION)]"
         fi
@@ -76,7 +97,7 @@ case $1 in
             echo "$0"
             echo "-> T4D_ROOT_PATH=$T4D_ROOT_PATH"
         fi
-        mkdir -p $T4D_ROOT_PATH/team
+        t4d-setup
         t4d-init &> /dev/null
         if [[ "$2" == "-add" ]]; then
             _TeamOriginalPath="$PWD"
@@ -124,11 +145,7 @@ case $1 in
         fi
     ;;
     native)
-        if [[ -e "$HOME/.zshenv" ]]; then
-            cat "$HOME/.zshenv" | grep -v "^ZDOTDIR" > $HOME/.zshenv.tmp
-            mv $HOME/.zshenv.tmp $HOME/.zshenv
-        fi
-        echo "ZDOTDIR=$HOME/.tools4dev" > $HOME/.zshenv
+        t4d-native
     ;;
     update)
         set -e
