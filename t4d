@@ -26,6 +26,16 @@ function t4d-native(){
 }
 
 function t4d-setup() {
+    
+    mkdir -p $T4D_ROOT_PATH
+    if [[ ! -e "$T4D_ROOT_PATH/src" ]]
+        echo "Initial T4D Setup $Tools4Dev_PATH [$0]"
+        if [[ "$Tools4Dev_PATH" != "$T4D_ROOT_PATH/src" ]]; then
+            ln -sfnv "$Tools4Dev_PATH" "$T4D_ROOT_PATH/src"
+        elif [[ -e "$T4D_ROOT_PATH/src-devel" ]]; then
+            ln -sfnv "$T4D_ROOT_PATH/src-devel" "$T4D_ROOT_PATH/src"
+        fi
+    fi
     if [[ ! -e "$T4D_ROOT_PATH/src/.t4drc" ]]; then
         ZSH_PATH="$(command -v env) zsh"
         if [[ -e $HOME/.zshrc ]] && [[ "$(cat $HOME/.zshrc | grep 'tools4dev')" == "" ]]; then
@@ -69,13 +79,6 @@ case $1 in
         if [[ -e "$T4D_ROOT_PATH/src" ]] && [[ "$_ForceSrcUpdate" != "-f" ]]; then
             if [[ "$1" == "start-with-debug" ]]; then
                 echo "Using $(readlink -f $T4D_ROOT_PATH/src) [$0]"
-            fi
-        else
-            echo "Linking $Tools4Dev_PATH [$0]"
-            if [[ "$Tools4Dev_PATH" != "$T4D_ROOT_PATH/src" ]]; then
-                ln -sfnv "$Tools4Dev_PATH" "$T4D_ROOT_PATH/src"
-            elif [[ -e "$T4D_ROOT_PATH/src-devel" ]]; then
-                ln -sfnv "$T4D_ROOT_PATH/src-devel" "$T4D_ROOT_PATH/src"
             fi
         fi
 
