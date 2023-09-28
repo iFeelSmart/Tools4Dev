@@ -224,6 +224,11 @@ case $1 in
                 tar -xf "tools4dev_${_Version}${_VersionSuffix}.tar" -C "${_Version}${_VersionSuffix}"
                 echo "To test new t4d setup you can now launch"
                 echo "t4d start $Tools4Dev_PATH/.t4d/docker/build/${_Version}${_VersionSuffix}"
+                echo "OR"
+                echo "git tag ${_Version}${_VersionSuffix}"
+                if [[ -e "$Tools4Dev_PATH/.t4d/docker/build/tools4dev_${_Version}${_VersionSuffix}.tar.sha" ]]; then
+                    echo "sha -> $(cat "$Tools4Dev_PATH/.t4d/docker/build/tools4dev_${_Version}${_VersionSuffix}.tar.sha")"
+                fi
             ;;
             run)
                 docker run -dt tools4dev:$_Version${_VersionSuffix} > $Tools4Dev_PATH/.t4d/.containerID
