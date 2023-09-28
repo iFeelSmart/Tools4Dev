@@ -226,6 +226,7 @@ case $1 in
                 echo "t4d start $Tools4Dev_PATH/.t4d/docker/build/${_Version}${_VersionSuffix}"
                 echo "OR"
                 echo "git tag ${_Version}${_VersionSuffix}"
+                echo "gh release create \"${_Version}${_VersionSuffix}\" -p -t \"Development Build\" \"$Tools4Dev_PATH/.t4d/docker/build/tools4dev_${_Version}${_VersionSuffix}.tar\""
                 if [[ -e "$Tools4Dev_PATH/.t4d/docker/build/tools4dev_${_Version}${_VersionSuffix}.tar.sha" ]]; then
                     echo "sha -> $(cat "$Tools4Dev_PATH/.t4d/docker/build/tools4dev_${_Version}${_VersionSuffix}.tar.sha")"
                 fi
