@@ -42,7 +42,9 @@ function t4d-setup() {
         ZSH_PATH="$(command -v env) zsh"
         if [[ -e $HOME/.zshrc ]] && [[ "$(cat $HOME/.zshrc | grep 'tools4dev')" == "" ]]; then
             T4D_USE_ZSHRC="true"
-            T4D_PROMPT="false"
+            if [[ -e "$HOME/.oh-my-zsh" ]]; then
+                T4D_PROMPT="false"
+            fi
         fi
         if [[ -e "$T4D_ROOT_PATH/src/Templates/t4drc.env" ]]; then
             cat "$T4D_ROOT_PATH/src/Templates/t4drc.env"    | sed "s|<T4D_USE_ZSHRC>|${T4D_USE_ZSHRC:-false}|g" \
