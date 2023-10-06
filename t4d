@@ -236,6 +236,7 @@ case $1 in
                 fi
                 _DockerContainer="$(docker ps | grep "tools4dev:$_Version${_VersionSuffix}" | cut -d ' ' -f1)"
                 docker stop $_DockerContainer
+                docker rm $_DockerContainer
             ;;
             run)
                 docker run -dt tools4dev:$_Version${_VersionSuffix} > $Tools4Dev_PATH/.t4d/.containerID
