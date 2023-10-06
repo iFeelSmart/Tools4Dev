@@ -234,6 +234,8 @@ case $1 in
                 if [[ -e "$Tools4Dev_PATH/.t4d/docker/build/tools4dev_${_Version}${_VersionSuffix}.tar.sha" ]]; then
                     echo "sha -> $(cat "$Tools4Dev_PATH/.t4d/docker/build/tools4dev_${_Version}${_VersionSuffix}.tar.sha")"
                 fi
+                _DockerContainer="$(docker ps | grep "tools4dev:$_Version${_VersionSuffix}" | cut -d ' ' -f1)"
+                docker stop $_DockerContainer
             ;;
             run)
                 docker run -dt tools4dev:$_Version${_VersionSuffix} > $Tools4Dev_PATH/.t4d/.containerID
