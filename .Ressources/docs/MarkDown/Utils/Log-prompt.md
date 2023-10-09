@@ -175,6 +175,13 @@ _t4dPromptIndent <NumberOfIndent> <Content>
 
 
 
+# _t4dPromptAsk
+
+## Synopsis
+<p>description</p>
+
+
+
 # _t4dPromptCentralLine
 
 ## Synopsis

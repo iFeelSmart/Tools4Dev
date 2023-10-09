@@ -56,6 +56,12 @@
 
 
 ### colors
+* [_t4dColorInfo](Log-colors.md#_t4dColorInfo)
+    prompt panel of all available colors in prompt
+
+* [_t4dColorDisabled](Log-colors.md#_t4dColorDisabled)
+    Used when you want to exec a color function and want to remove colored syntax
+
 
 ### debug
 * [_t4dDebugLog](Log-debug.md#_t4dDebugLog)
@@ -83,6 +89,9 @@
 
 * [_t4dPromptIndent](Log-prompt.md#_t4dPromptIndent)
     |One-line description of what it does. (less than 55 char)|
+
+* [_t4dPromptAsk](Log-prompt.md#_t4dPromptAsk)
+    description
 
 * [_t4dPromptCentralLine](Log-prompt.md#_t4dPromptCentralLine)
     Will read your term Length create a line with char send in $1
