@@ -46,9 +46,14 @@ function t4d-setup() {
             T4D_USE_ZSHRC="true"
         fi
         if [[ -e "$T4D_ROOT_PATH/src/Templates/t4drc.env" ]] || [[ "$1" == "-force" ]]; then
-            cat "$T4D_ROOT_PATH/src/Templates/t4drc.env"    | sed "s|<T4D_USE_ZSHRC>|${T4D_USE_ZSHRC:-false}|g" \
-                                                            | sed "s|<ZSH_PATH>|${ZSH_PATH:-$(which zsh)}|g" \
-                                                            | sed "s|<T4D_PROMPT>|${T4D_PROMPT:-true}|g" > "src/.t4drc"
+            cd $T4D_ROOT_PATH
+            if [[ ! -e ".zshrc" ]]; then
+                cat "$T4D_ROOT_PATH/src/Templates/t4drc.env"    | sed "s|<T4D_USE_ZSHRC>|${T4D_USE_ZSHRC:-false}|g" \
+                                                                | sed "s|<ZSH_PATH>|${ZSH_PATH:-$(which zsh)}|g" \
+                                                                | sed "s|<T4D_PROMPT>|${T4D_PROMPT:-true}|g" > ".zshrc"
+            else
+                echo "$T4D_ROOT_PATH/.zshrc already exist"
+            fi
         fi
     fi
     if [[ ! -e "$T4D_ROOT_PATH/.zshrc" ]] || [[ "$1" == "-force" ]]; then
@@ -57,7 +62,7 @@ function t4d-setup() {
             cd $T4D_ROOT_PATH
             mkdir -p completions bin lib team
             ln -sfn "src/project.env"              "${T4D_ROOT_PATH}/project.env"
-            ln -sfn "src/.t4drc"                   "${T4D_ROOT_PATH}/.zshrc"
+            # ln -sfn "src/.t4drc"                   "${T4D_ROOT_PATH}/.zshrc"
             ln -sfn "../src/t4d"                   "${T4D_ROOT_PATH}/bin/t4d"
             ln -sfn "src/Templates/init.env"       "${T4D_ROOT_PATH}/init"
             ln -sfn "../src/Templates/Team-New"    "${T4D_ROOT_PATH}/team/Default"
