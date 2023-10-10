@@ -204,7 +204,7 @@ case $1 in
             develop)
                 _VersionSuffix="-dev$_CommitSuffix"
             ;;
-            support/*)
+            support/*|release/*)
                 _VersionSuffix="-rc$_CommitSuffix"
             ;;
             $_Version)
