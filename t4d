@@ -205,7 +205,8 @@ case $1 in
                 _VersionSuffix="-dev$_CommitSuffix"
             ;;
             support/*|release/*)
-                _VersionSuffix="-rc$_CommitSuffix"
+                _CommitSuffix="$(_t4dSrcGitInfoLogFromBranch "develop" HEAD | wc -l | tr -d ' ')"
+                _VersionSuffix="-rc${_CommitSuffix}"
             ;;
             $_Version)
                 _VersionSuffix=""
