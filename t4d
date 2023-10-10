@@ -40,7 +40,10 @@ function t4d-setup() {
             ln -sfnv "$T4D_ROOT_PATH/src-devel" "$T4D_ROOT_PATH/src"
         fi
     fi
-    if [[ ! -e "$T4D_ROOT_PATH/.zshrc" ]]; then
+    if [[ ! -e "$(readlink -f $T4D_ROOT_PATH/.zshrc)" ]]; then
+        if [[ "$(readlink -f $T4D_ROOT_PATH/.zshrc)" != "$T4D_ROOT_PATH/.zshrc" ]]; then
+            rm $T4D_ROOT_PATH/.zshrc
+        fi
         ZSH_PATH="$(command -v env) zsh"
         if [[ -e $HOME/.zshrc ]] && [[ "$(cat $HOME/.zshrc | grep 'tools4dev')" == "" ]]; then
             T4D_USE_ZSHRC="true"
