@@ -28,7 +28,7 @@ function t4d-native(){
 function t4d-setup() {
 
     mkdir -p $T4D_ROOT_PATH
-    if [[ ! -e "$T4D_ROOT_PATH/src" ]]; then
+    if [[ ! -e "$T4D_ROOT_PATH/src" ]] || [[ "$1" == "-force" ]]; then
         echo "Initial T4D Setup $Tools4Dev_PATH [$0]"
         if [[ "$Tools4Dev_PATH" != "$T4D_ROOT_PATH/src" ]] && [[ -e "/opt/homebrew/opt/tools4dev" ]]; then
             ln -sfnv "/opt/homebrew/opt/tools4dev/src" "$T4D_ROOT_PATH/src"
@@ -45,13 +45,13 @@ function t4d-setup() {
         if [[ -e $HOME/.zshrc ]] && [[ "$(cat $HOME/.zshrc | grep 'tools4dev')" == "" ]]; then
             T4D_USE_ZSHRC="true"
         fi
-        if [[ -e "$T4D_ROOT_PATH/src/Templates/t4drc.env" ]]; then
+        if [[ -e "$T4D_ROOT_PATH/src/Templates/t4drc.env" ]] || [[ "$1" == "-force" ]]; then
             cat "$T4D_ROOT_PATH/src/Templates/t4drc.env"    | sed "s|<T4D_USE_ZSHRC>|${T4D_USE_ZSHRC:-false}|g" \
                                                             | sed "s|<ZSH_PATH>|${ZSH_PATH:-$(which zsh)}|g" \
                                                             | sed "s|<T4D_PROMPT>|${T4D_PROMPT:-true}|g" > "src/.t4drc"
         fi
     fi
-    if [[ ! -e "$T4D_ROOT_PATH/.zshrc" ]]; then
+    if [[ ! -e "$T4D_ROOT_PATH/.zshrc" ]] || [[ "$1" == "-force" ]]; then
         echo "Tools4Dev setup Link"
         (
             cd $T4D_ROOT_PATH
@@ -97,6 +97,9 @@ case $1 in
     ;;
     *help)
         echo "TO DO helper"
+    ;;
+    setup)
+        t4d-setup -force
     ;;
     team*)
         if [[ "$1" == "team-with-debug" ]]; then
