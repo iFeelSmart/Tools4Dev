@@ -41,7 +41,7 @@ function t4d-setup() {
         fi
     fi
     if [[ ! -e "$(readlink -f $T4D_ROOT_PATH/.zshrc)" ]]; then
-        if [[ "$(readlink -f $T4D_ROOT_PATH/.zshrc)" != "$T4D_ROOT_PATH/.zshrc" ]]; then
+        if [[ -e "$T4D_ROOT_PATH/.zshrc" ]] && [[ "$(readlink -f $T4D_ROOT_PATH/.zshrc)" != "$T4D_ROOT_PATH/.zshrc" ]]; then
             rm $T4D_ROOT_PATH/.zshrc
         fi
         ZSH_PATH="$(command -v env) zsh"
