@@ -175,10 +175,17 @@ _t4dPromptIndent <NumberOfIndent> <Content>
 
 
 
+# _t4dPromptFolderTree
+
+## Synopsis
+<p>Return tree of given folders</p>
+
+
+
 # _t4dPromptAsk
 
 ## Synopsis
-<p>description</p>
+<p>Ask for answer threw prompt then echo his result</p>
 
 
 

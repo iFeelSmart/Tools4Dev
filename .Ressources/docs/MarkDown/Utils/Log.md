@@ -90,8 +90,11 @@
 * [_t4dPromptIndent](Log-prompt.md#_t4dPromptIndent)
     |One-line description of what it does. (less than 55 char)|
 
+* [_t4dPromptFolderTree](Log-prompt.md#_t4dPromptFolderTree)
+    Return tree of given folders
+
 * [_t4dPromptAsk](Log-prompt.md#_t4dPromptAsk)
-    description
+    Ask for answer threw prompt then echo his result
 
 * [_t4dPromptCentralLine](Log-prompt.md#_t4dPromptCentralLine)
     Will read your term Length create a line with char send in $1

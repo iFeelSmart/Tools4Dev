@@ -521,6 +521,7 @@ Engine/Log/prompt:_t4dPromptEmptyCenter
 Engine/Log/prompt:_t4dPromptEndOfLine
 Engine/Log/prompt:_t4dPromptError
 Engine/Log/prompt:_t4dPromptFixedCol
+Engine/Log/prompt:_t4dPromptFolderTree
 Engine/Log/prompt:_t4dPromptHyperLink
 Engine/Log/prompt:_t4dPromptIndent
 Engine/Log/prompt:_t4dPromptInfo
