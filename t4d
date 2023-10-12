@@ -21,6 +21,9 @@ function t4d-native(){
         cat "$HOME/.zshenv" > $HOME/.zshenv.old
         cat "$HOME/.zshenv" | grep -v "^ZDOTDIR" > $HOME/.zshenv.tmp
         mv $HOME/.zshenv.tmp $HOME/.zshenv
+        if [[ ! -e "$HOME/.tools4dev/.zsh_history" ]]; then
+            cp $HOME/.zsh_history $HOME/.tools4dev/
+        fi
     fi
     echo "ZDOTDIR=$HOME/.tools4dev" >> $HOME/.zshenv
 }
