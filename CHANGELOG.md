@@ -153,3 +153,5 @@
 - **bugfix**     some function was using t4d path to write logs, now using T4D_PROJECT_LOG_PATH
 - _improvements_ t4d is now using .zshenv file to avoid editing user zshrc file
 - _improvements_ wks clone can now clone only a filtered list of manifest projects
+
+## 7.1.0
