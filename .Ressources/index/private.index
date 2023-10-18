@@ -167,6 +167,8 @@ Source/Common/_project_:_wksPatchSource
 Source/Common/_project_:_wksUpdateConfigFile
 Source/Common/_team_:_t4dTeamGitServerSetBuildStatus
 Source/Common/_team_:_t4dTeamIrcSendNotif
+Source/Common/_team_:_t4dTeamProjectLoadWks
+Source/Common/_team_:_t4dTeamProjectLoadWksVar
 Source/Common/_tools_:_t4dMakeAll
 Source/Common/_tools_:_t4dMakeTools
 Source/Docker/_main_:_t4dDocker
@@ -411,6 +413,11 @@ Source/Slack/_main_:_t4dSrcSlackDefaultMessage
 Source/Slack/_main_:_t4dSrcSlackNotif
 Source/Slack/_main_:_t4dSrcSlackSendToChannel
 Source/SysAdmin/sysadmin-network:_t4dSrcSysAdminNetworkCheckUrl
+Source/Tilt/tilt-api:_t4dSrcTiltApiStartServer
+Source/Tilt/tilt-api:_t4dSrcTiltApiStopServer
+Source/Tilt/_main_:_t4dSrcTiltCheckServer
+Source/Tilt/_main_:_t4dSrcTiltConfigure
+Source/Tilt/_main_:_t4dSrcTiltWaitForTiltfileLoaded
 Source/WikiJS/wikijs-api:_t4dSrcWikiJsApi
 Source/WikiJS/wikijs-graphql:_t4dSrcWikiJsGraphQLCreatePage
 Source/WikiJS/wikijs-graphql:_t4dSrcWikiJsGraphQLMove
@@ -503,6 +510,7 @@ Engine/Log/colors:_t4dColorInfo
 Engine/Log/debug:_t4dDebugLog
 Engine/Log/debug:_t4dDebugLogInProgress
 Engine/Log/debug:_t4dDebugTimerReset
+Engine/Log/prompt:_t4dPromptAsk
 Engine/Log/prompt:_t4dPromptAskForChar
 Engine/Log/prompt:_t4dPromptCenterSpace
 Engine/Log/prompt:_t4dPromptCentralLine
@@ -513,6 +521,7 @@ Engine/Log/prompt:_t4dPromptEmptyCenter
 Engine/Log/prompt:_t4dPromptEndOfLine
 Engine/Log/prompt:_t4dPromptError
 Engine/Log/prompt:_t4dPromptFixedCol
+Engine/Log/prompt:_t4dPromptFolderTree
 Engine/Log/prompt:_t4dPromptHyperLink
 Engine/Log/prompt:_t4dPromptIndent
 Engine/Log/prompt:_t4dPromptInfo

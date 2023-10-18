@@ -17,6 +17,7 @@ RUN rm -rf "src-devel/.git"
 # Generating src-lts folder
 RUN mv "src-devel" "src-lts"
 RUN ln -sfvn "src-lts" "src"
+RUN rm "src/.t4drc"
 
 # Creating Archive
 RUN tar -cvf tools4dev.tar src-lts bin completions team init src manifest.xml

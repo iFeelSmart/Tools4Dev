@@ -21,6 +21,9 @@ function t4d-native(){
         cat "$HOME/.zshenv" > $HOME/.zshenv.old
         cat "$HOME/.zshenv" | grep -v "^ZDOTDIR" > $HOME/.zshenv.tmp
         mv $HOME/.zshenv.tmp $HOME/.zshenv
+        if [[ ! -e "$HOME/.tools4dev/.zsh_history" ]] && [[ "$$HOME/.zsh_history" ]] ; then
+            cp $HOME/.zsh_history $HOME/.tools4dev/
+        fi
     fi
     echo "ZDOTDIR=$HOME/.tools4dev" >> $HOME/.zshenv
 }
@@ -28,34 +31,40 @@ function t4d-native(){
 function t4d-setup() {
 
     mkdir -p $T4D_ROOT_PATH
-    if [[ ! -e "$T4D_ROOT_PATH/src" ]]; then
+    if [[ ! -e "$T4D_ROOT_PATH/src" ]] || [[ "$1" == "-force" ]]; then
         echo "Initial T4D Setup $Tools4Dev_PATH [$0]"
         if [[ "$Tools4Dev_PATH" != "$T4D_ROOT_PATH/src" ]] && [[ -e "/opt/homebrew/opt/tools4dev" ]]; then
             ln -sfnv "/opt/homebrew/opt/tools4dev/src" "$T4D_ROOT_PATH/src"
+        elif [[ "$Tools4Dev_PATH" != "$T4D_ROOT_PATH/src" ]] && [[ -e "/usr/local/opt/tools4dev" ]]; then
+            ln -sfnv "/usr/local/opt/tools4dev/src" "$T4D_ROOT_PATH/src"
         elif [[ "$Tools4Dev_PATH" != "$T4D_ROOT_PATH/src" ]]; then
             ln -sfnv "$Tools4Dev_PATH" "$T4D_ROOT_PATH/src"
         elif [[ -e "$T4D_ROOT_PATH/src-devel" ]]; then
             ln -sfnv "$T4D_ROOT_PATH/src-devel" "$T4D_ROOT_PATH/src"
         fi
     fi
-    if [[ ! -e "$T4D_ROOT_PATH/src/.t4drc" ]]; then
+    if [[ ! -e "$(readlink -f $T4D_ROOT_PATH/.zshrc)" ]]; then
+        if [[ -e "$T4D_ROOT_PATH/.zshrc" ]] && [[ "$(readlink -f $T4D_ROOT_PATH/.zshrc)" != "$T4D_ROOT_PATH/.zshrc" ]]; then
+            rm $T4D_ROOT_PATH/.zshrc
+        fi
         ZSH_PATH="$(command -v env) zsh"
         if [[ -e $HOME/.zshrc ]] && [[ "$(cat $HOME/.zshrc | grep 'tools4dev')" == "" ]]; then
             T4D_USE_ZSHRC="true"
         fi
-        if [[ -e "$T4D_ROOT_PATH/src/Templates/t4drc.env" ]]; then
+        if [[ -e "$T4D_ROOT_PATH/src/Templates/t4drc.env" ]] || [[ "$1" == "-force" ]]; then
+            cd $T4D_ROOT_PATH
+            echo "Creating $T4D_ROOT_PATH/.zshrc"
             cat "$T4D_ROOT_PATH/src/Templates/t4drc.env"    | sed "s|<T4D_USE_ZSHRC>|${T4D_USE_ZSHRC:-false}|g" \
                                                             | sed "s|<ZSH_PATH>|${ZSH_PATH:-$(which zsh)}|g" \
-                                                            | sed "s|<T4D_PROMPT>|${T4D_PROMPT:-true}|g" > "src/.t4drc"
+                                                            | sed "s|<T4D_PROMPT>|${T4D_PROMPT:-true}|g" > ".zshrc"
         fi
     fi
-    if [[ ! -e "$T4D_ROOT_PATH/.zshrc" ]]; then
+    if [[ ! -e "$T4D_ROOT_PATH/.zshrc" ]] || [[ "$1" == "-force" ]]; then
         echo "Tools4Dev setup Link"
         (
             cd $T4D_ROOT_PATH
             mkdir -p completions bin lib team
             ln -sfn "src/project.env"              "${T4D_ROOT_PATH}/project.env"
-            ln -sfn "src/.t4drc"                   "${T4D_ROOT_PATH}/.zshrc"
             ln -sfn "../src/t4d"                   "${T4D_ROOT_PATH}/bin/t4d"
             ln -sfn "src/Templates/init.env"       "${T4D_ROOT_PATH}/init"
             ln -sfn "../src/Templates/Team-New"    "${T4D_ROOT_PATH}/team/Default"
@@ -95,6 +104,9 @@ case $1 in
     ;;
     *help)
         echo "TO DO helper"
+    ;;
+    setup)
+        t4d-setup -force
     ;;
     team*)
         if [[ "$1" == "team-with-debug" ]]; then
@@ -183,6 +195,7 @@ case $1 in
         cd $Tools4Dev_PATH 
         t4d-init
         mkdir -p $Tools4Dev_PATH/.t4d
+        _branch="$(_t4dSrcGitInfoBranch)"
         _lastTag="$(_t4dSrcGitInfoLastTag)"
         _lastTagName="$(echo $_lastTag | cut -d ' ' -f2)"
         _lastTagCommit="$(echo $_lastTag | cut -d ' ' -f1)"
@@ -202,8 +215,9 @@ case $1 in
             develop)
                 _VersionSuffix="-dev$_CommitSuffix"
             ;;
-            support/*)
-                _VersionSuffix="-rc$_CommitSuffix"
+            support/*|release/*)
+                _CommitSuffix="$(_t4dSrcGitInfoLogFromBranch "develop" HEAD | wc -l | tr -d ' ')"
+                _VersionSuffix="-rc${_CommitSuffix}"
             ;;
             $_Version)
                 _VersionSuffix=""
@@ -213,7 +227,7 @@ case $1 in
             build)
                 rm tools4dev.tar 2> /dev/null || true
                 echo "docker build -t tools4dev:$_Version${_VersionSuffix} ."
-                docker build --no-cache --progress=plain --build-arg T4D_FINAL_VERSION_SUFFIX="$_VersionSuffix" -t tools4dev:$_Version${_VersionSuffix} .
+                docker build --no-cache --progress=plain --build-arg T4D_BRANCH="$_branch" --build-arg T4D_FINAL_VERSION_SUFFIX="$_VersionSuffix" -t tools4dev:$_Version${_VersionSuffix} .
                 echo "docker run -dt tools4dev:$_Version${_VersionSuffix}"
                 docker run -dt tools4dev:$_Version${_VersionSuffix} > $Tools4Dev_PATH/.t4d/.containerID
                 echo "export to $Tools4Dev_PATH/.t4d/docker/build"

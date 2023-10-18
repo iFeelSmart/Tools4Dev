@@ -138,3 +138,18 @@
 
 
 ## 7.0.0
+- _improvements_ gik : tree - new option to see manifest tree
+- **feature**    Tools4Dev Brew Tap Formula available
+- documentation  Add news functions docs
+- _improvements_ index for modules are now in modules git repo
+- _improvements_ add _t4dTeamProjectLoadWks to load shared function from team folder
+- _improvements_ add Matrix Messaging API implementation
+- **feature**    add Tilt support implementation
+- **feature**    wkteam now available to execute code in team folder threw anywhere
+- _improvements_ user file are now searching for user named in git config instead of USER var to avoid duplicates or random confict names
+- _improvements_ t4d docker image fix to generate tar properly during build
+- **bugfix**     several bugfixes in order to handle brew support
+- **bugfix**     fix chp option indent
+- **bugfix**     some function was using t4d path to write logs, now using T4D_PROJECT_LOG_PATH
+- _improvements_ t4d is now using .zshenv file to avoid editing user zshrc file
+- _improvements_ wks clone can now clone only a filtered list of manifest projects

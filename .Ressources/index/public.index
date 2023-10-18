@@ -16,8 +16,10 @@ Source/Common/_main_:t4dvv
 Source/Common/_project_:findDataInXML
 Source/Common/_project_:findTypeInXML
 Source/Common/_project_:wkd
+Source/Common/_team_:wkteam
 Source/_main_:t4dClearEnv
 Source/_main_:t4dLoadFile
+Source/_main_:t4dLoadGitConfig
 Source/_main_:t4dLoadProjectConf
 Source/_main_:t4dMake
 Source/_main_:t4dModuleTest
