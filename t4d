@@ -1,10 +1,80 @@
-#!/bin/zsh
-
+#!/usr/bin/env zsh
 autoload -U colors &> /dev/null 
 colors &> /dev/null 
 export T4D_ROOT_PATH="${T4D_ROOT_PATH:-$HOME/.tools4dev}"
-export Tools4Dev_PATH="${Tools4Dev_PATH:-$T4D_ROOT_PATH/src}"
-function t4d-init() { source $T4D_ROOT_PATH/init }
+if [[ "$(readlink $0)" != "" ]]; then
+    export Tools4Dev_PATH="$(dirname "$(readlink -f $0)")"
+elif [[ -e "$0/../src" ]]; then
+    export Tools4Dev_PATH="$(dirname "$0")"
+else
+    export Tools4Dev_PATH="$T4D_ROOT_PATH/src"
+fi
+
+
+function t4d-init() { 
+    source $T4D_ROOT_PATH/init
+}
+
+function t4d-native(){
+    if [[ -e "$HOME/.zshenv" ]]; then
+        echo "BackUp $HOME/.zshenv -> $HOME/.zshenv.old"
+        cat "$HOME/.zshenv" > $HOME/.zshenv.old
+        cat "$HOME/.zshenv" | grep -v "^ZDOTDIR" > $HOME/.zshenv.tmp
+        mv $HOME/.zshenv.tmp $HOME/.zshenv
+        if [[ ! -e "$HOME/.tools4dev/.zsh_history" ]] && [[ "$$HOME/.zsh_history" ]] ; then
+            cp $HOME/.zsh_history $HOME/.tools4dev/
+        fi
+    fi
+    echo "ZDOTDIR=$HOME/.tools4dev" >> $HOME/.zshenv
+}
+
+function t4d-setup() {
+
+    mkdir -p $T4D_ROOT_PATH
+    if [[ ! -e "$T4D_ROOT_PATH/src" ]] || [[ "$1" == "-force" ]]; then
+        echo "Initial T4D Setup $Tools4Dev_PATH [$0]"
+        if [[ "$Tools4Dev_PATH" != "$T4D_ROOT_PATH/src" ]] && [[ -e "/opt/homebrew/opt/tools4dev" ]]; then
+            ln -sfnv "/opt/homebrew/opt/tools4dev/src" "$T4D_ROOT_PATH/src"
+        elif [[ "$Tools4Dev_PATH" != "$T4D_ROOT_PATH/src" ]] && [[ -e "/usr/local/opt/tools4dev" ]]; then
+            ln -sfnv "/usr/local/opt/tools4dev/src" "$T4D_ROOT_PATH/src"
+        elif [[ "$Tools4Dev_PATH" != "$T4D_ROOT_PATH/src" ]]; then
+            ln -sfnv "$Tools4Dev_PATH" "$T4D_ROOT_PATH/src"
+        elif [[ -e "$T4D_ROOT_PATH/src-devel" ]]; then
+            ln -sfnv "$T4D_ROOT_PATH/src-devel" "$T4D_ROOT_PATH/src"
+        fi
+    fi
+    if [[ ! -e "$(readlink -f $T4D_ROOT_PATH/.zshrc)" ]]; then
+        if [[ -e "$T4D_ROOT_PATH/.zshrc" ]] && [[ "$(readlink -f $T4D_ROOT_PATH/.zshrc)" != "$T4D_ROOT_PATH/.zshrc" ]]; then
+            rm $T4D_ROOT_PATH/.zshrc
+        fi
+        ZSH_PATH="$(command -v env) zsh"
+        if [[ -e $HOME/.zshrc ]] && [[ "$(cat $HOME/.zshrc | grep 'tools4dev')" == "" ]]; then
+            T4D_USE_ZSHRC="true"
+        fi
+        if [[ -e "$T4D_ROOT_PATH/src/Templates/t4drc.env" ]] || [[ "$1" == "-force" ]]; then
+            cd $T4D_ROOT_PATH
+            echo "Creating $T4D_ROOT_PATH/.zshrc"
+            cat "$T4D_ROOT_PATH/src/Templates/t4drc.env"    | sed "s|<T4D_USE_ZSHRC>|${T4D_USE_ZSHRC:-false}|g" \
+                                                            | sed "s|<ZSH_PATH>|${ZSH_PATH:-$(which zsh)}|g" \
+                                                            | sed "s|<T4D_PROMPT>|${T4D_PROMPT:-true}|g" > ".zshrc"
+        fi
+    fi
+    if [[ ! -e "$T4D_ROOT_PATH/.zshrc" ]] || [[ "$1" == "-force" ]]; then
+        echo "Tools4Dev setup Link"
+        (
+            cd $T4D_ROOT_PATH
+            mkdir -p completions bin lib team
+            ln -sfn "src/project.env"              "${T4D_ROOT_PATH}/project.env"
+            ln -sfn "../src/t4d"                   "${T4D_ROOT_PATH}/bin/t4d"
+            ln -sfn "src/Templates/init.env"       "${T4D_ROOT_PATH}/init"
+            ln -sfn "../src/Templates/Team-New"    "${T4D_ROOT_PATH}/team/Default"
+            if [[ ! -e "${T4D_ROOT_PATH}/manifest.xml" ]]; then
+                ln -sfn "src/Templates/Team-New/t4d-manifest.xml" "${T4D_ROOT_PATH}/manifest.xml"
+            fi
+        )
+    fi
+    t4d-native
+}
 
 if [[ -e "$Tools4Dev_PATH/manifest.xml" ]]; then
     export WS_TEAM="$(cat $Tools4Dev_PATH/manifest.xml | grep '<team' | grep -Eo 'name=.*' | cut -d '"' -f2)"
@@ -13,73 +83,85 @@ fi
 export T4D_SILENT_COMMAND=true
 
 case $1 in
-    team)
+    start*)
+        _ForceSrcUpdate="$2"
+        mkdir -p $T4D_ROOT_PATH
+        if [[ -e "$T4D_ROOT_PATH/src" ]] && [[ "$_ForceSrcUpdate" != "-f" ]]; then
+            if [[ "$1" == "start-with-debug" ]]; then
+                echo "Using $(readlink -f $T4D_ROOT_PATH/src) [$0]"
+            fi
+        fi
+
+        t4d-setup
+        
+        if [[ "$1" == "start-with-debug" ]]; then
+            echo "Welcome to Tools4Dev [$(cat $Tools4Dev_PATH/VERSION)]"
+        fi
+        export ZDOTDIR=$T4D_ROOT_PATH; zsh
+    ;;
+    *version)
+        cat $Tools4Dev_PATH/VERSION
+    ;;
+    *help)
+        echo "TO DO helper"
+    ;;
+    setup)
+        t4d-setup -force
+    ;;
+    team*)
+        if [[ "$1" == "team-with-debug" ]]; then
+            echo "$0"
+            echo "-> T4D_ROOT_PATH=$T4D_ROOT_PATH"
+        fi
+        t4d-setup
         t4d-init &> /dev/null
         if [[ "$2" == "-add" ]]; then
             _TeamOriginalPath="$PWD"
             if [[ -e "$_TeamOriginalPath/t4d-manifest.xml" ]]; then
                 export WS_TEAM="$(cat $_TeamOriginalPath/t4d-manifest.xml | grep '<team' | grep -Eo 'name=.*' | cut -d '"' -f2)"
-                if [[ ! -e "$Tools4Dev_PATH/Team/$WS_TEAM" ]]; then
-                    ln -sfn $_TeamOriginalPath $Tools4Dev_PATH/Team/$WS_TEAM
-                    ln -sfn $_TeamOriginalPath/t4d-manifest.xml $Tools4Dev_PATH/manifest.xml
+                if [[ ! -e "$T4D_ROOT_PATH/team/$WS_TEAM" ]]; then
+                    ln -sfn $_TeamOriginalPath $T4D_ROOT_PATH/team/$WS_TEAM
+                    ln -sfn $_TeamOriginalPath/t4d-manifest.xml $T4D_ROOT_PATH/manifest.xml
                     _t4dCheckSucceeded "Team $WS_TEAM added to Tools4Dev"
                     _t4dDebugLog $pinfo "you can now use wkd to reload your environment"
                 else
                     _t4dCheckInfo "Team $WS_TEAM already exist"
+                    ln -sfn $_TeamOriginalPath/t4d-manifest.xml $T4D_ROOT_PATH/manifest.xml
                 fi
             else
                 _t4dDebugLog $perror "Folder >$_TeamOriginalPath< does not contain t4d-manifest.xml"
             fi
         else
-            local _TeamOriginalPath="$(readlink $Tools4Dev_PATH/Team/$2)"
+            local _TeamOriginalPath="$(readlink $T4D_ROOT_PATH/team/$2)"
             if [[ "$_TeamOriginalPath" == "" ]]; then
-                _TeamOriginalPath="$Tools4Dev_PATH/Team/$2"
+                _TeamOriginalPath="$T4D_ROOT_PATH/team/$2"
             fi
             if [[ -e "$_TeamOriginalPath/t4d-manifest.xml" ]] && [[ "$WS_TEAM" != "$2" ]]; then
-                ln -sfn $_TeamOriginalPath/t4d-manifest.xml $Tools4Dev_PATH/manifest.xml
+                ln -sfn $_TeamOriginalPath/t4d-manifest.xml $T4D_ROOT_PATH/manifest.xml
                 _t4dDebugLog $plog "Tools4Dev is now linked to $2"
                 _t4dDebugLog $plog "Team folder is now $_TeamOriginalPath"
                 _t4dDebugLog $pinfo "you can now use wkd to reload your environment"
             elif [[ "$WS_TEAM" == "$2" ]]; then
-                _t4dCheckSucceeded "Team $2 already setup in Tools4Dev"
+                if [[ "$1" == "team-with-debug" ]]; then
+                    _t4dCheckSucceeded "Team $2 already setup in Tools4Dev"
+                fi
             fi
         fi
         
     ;;
-    install)
-        set -e
-        _t4dDebugLog $perror "Do not exist anymore"
+    link)
+        echo "Using $Tools4Dev_PATH [$0]"
+        local _Src="$Tools4Dev_PATH"
+        if [[ "$_Src" != "$T4D_ROOT_PATH/src" ]]; then
+            ln -sfnv "$_Src" "$T4D_ROOT_PATH/src"
+        elif [[ "$Tools4Dev_PATH" != "$T4D_ROOT_PATH/src" ]]; then
+            ln -sfnv "$Tools4Dev_PATH" "$T4D_ROOT_PATH/src"
+        elif [[ -e "$T4D_ROOT_PATH/src-devel" ]]; then
+            ln -sfnv "$T4D_ROOT_PATH/src-devel" "$T4D_ROOT_PATH/src"
+        fi
     ;;
-    uninstall)
-        source $Tools4Dev_PATH/tools4Dev.env
-        if [[ "$(echo $PWD | grep '.tools4dev')" != "" ]]; then
-            _t4dDebugLog $perror "Please uninstall tools4dev from another repository"
-            _t4dDebugLog $pinfo "cd $HOME"
-            return 1
-        fi
-        _t4dPromptObjectCenter "$(_t4dPromptSquare --no-color 'UNINSTALL')" "$plyellow" "15"
-        echo ""
-        echo "${plyellow}You are going to do nasty things, please verify first :${pstd}"
-        echo "    - Local Git Content will be erased, please verify that your work is commited & pushed"
-        echo "    - Also check cmake sub-repository that you might forgotten"
-        echo "    - Check if you are local or hidden files that you want to keep in $T4D_ROOT_PATH or $Tools4Dev_PATH"
-        if [[ -e "$Tools4Dev_PATH/.${USER}.env" ]]; then
-            _t4dDebugLog $pinfo "Found $Tools4Dev_PATH/.${USER}.env backing up in $HOME/.t4d-$USER-backup.env"
-            cp -f "$Tools4Dev_PATH/.${USER}.env" "$HOME/.t4d-$USER-backup.env"
-        fi
-        _t4dPromptSquare "Enter to continue, Ctrl+C to abort" $plpurple
-        read answer
-        echo ""
-        echo ""
-        echo ""
-        
-        echo ""
-        _t4dPromptObjectCenter "$(_t4dPromptSquare --no-color 'Deleting Tools4Dev ?')" "$plyellow" "15"
-        _t4dPromptObjectCenter "$(_t4dPromptSquare --no-color 'Enter to proceed, Ctrl+C to abort')" "$plyellow" "15"
-        _t4dDebugLog $pinfo "It will erase $T4D_ROOT_PATH from your computer"
-        
-        read answer
-        rm -rf "${T4D_ROOT_PATH:-$HOME/.tools4dev}" &
+    native)
+        t4d-native
     ;;
     update)
         set -e
@@ -94,8 +176,8 @@ case $1 in
         cd $Tools4Dev_PATH
         t4d-init &> /dev/null || t4d-init
         # t4dLoadProjectConf &> /dev/null
-        t4dUpdate ${@}
-        wks clone
+        t4dUpdate 
+        wks clone ${@}
     ;;
     exec)
         set -e
@@ -108,19 +190,67 @@ case $1 in
         $@
     ;;
     docker)
+        set -e
         shift
         cd $Tools4Dev_PATH 
+        t4d-init
         mkdir -p $Tools4Dev_PATH/.t4d
+        _branch="$(_t4dSrcGitInfoBranch)"
+        _lastTag="$(_t4dSrcGitInfoLastTag)"
+        _lastTagName="$(echo $_lastTag | cut -d ' ' -f2)"
+        _lastTagCommit="$(echo $_lastTag | cut -d ' ' -f1)"
+        _Commit="$(_t4dSrcGitInfoLogFromBranch "$(echo $_lastTag | cut -d ' ' -f1)" HEAD | wc -l | tr -d ' ')"
+        if [[ "$(echo $_lastTagName | grep -Eo '\-dev[0-9].*')" != "" ]]; then
+            _CountTag="$(echo $_lastTagName | grep -Eo '\-dev[0-9].*' | sed 's|\-dev||g')"
+            _CommitSuffix="$(_t4dMath $_Commit + $_CountTag)"
+        else
+            _CommitSuffix="$_Commit"
+        fi
+        _Version="$(cat $Tools4Dev_PATH/VERSION)"
         if [[ -e "$Tools4Dev_PATH/.t4d/.containerID" ]]; then
             T4D_CONTAINER_ID="$(cat $Tools4Dev_PATH/.t4d/.containerID)"
         fi
+        _gitRevision="$(_t4dSrcGitInfoRevision)"
+        case $_gitRevision in
+            develop)
+                _VersionSuffix="-dev$_CommitSuffix"
+            ;;
+            support/*|release/*)
+                _CommitSuffix="$(_t4dSrcGitInfoLogFromBranch "develop" HEAD | wc -l | tr -d ' ')"
+                _VersionSuffix="-rc${_CommitSuffix}"
+            ;;
+            $_Version)
+                _VersionSuffix=""
+            ;;
+        esac
         case $1 in
             build)
-                echo "docker build -t t4d ."
-                docker build -t t4d .
+                rm tools4dev.tar 2> /dev/null || true
+                echo "docker build -t tools4dev:$_Version${_VersionSuffix} ."
+                docker build --no-cache --progress=plain --build-arg T4D_BRANCH="$_branch" --build-arg T4D_FINAL_VERSION_SUFFIX="$_VersionSuffix" -t tools4dev:$_Version${_VersionSuffix} .
+                echo "docker run -dt tools4dev:$_Version${_VersionSuffix}"
+                docker run -dt tools4dev:$_Version${_VersionSuffix} > $Tools4Dev_PATH/.t4d/.containerID
+                echo "export to $Tools4Dev_PATH/.t4d/docker/build"
+                mkdir -p $Tools4Dev_PATH/.t4d/docker/build/tools4dev
+                docker cp $(cat $Tools4Dev_PATH/.t4d/.containerID):/root/.tools4dev/tools4dev.tar $Tools4Dev_PATH/.t4d/docker/build/tools4dev_${_Version}${_VersionSuffix}.tar
+                cd $Tools4Dev_PATH/.t4d/docker/build
+                mkdir -p "${_Version}${_VersionSuffix}"
+                sha256sum "tools4dev_${_Version}${_VersionSuffix}.tar" > "tools4dev_${_Version}${_VersionSuffix}.tar.sha"
+                tar -xf "tools4dev_${_Version}${_VersionSuffix}.tar" -C "${_Version}${_VersionSuffix}"
+                echo "To test new t4d setup you can now launch"
+                echo "t4d start $Tools4Dev_PATH/.t4d/docker/build/${_Version}${_VersionSuffix}"
+                echo "OR"
+                echo "git tag ${_Version}${_VersionSuffix}"
+                echo "gh release create \"${_Version}${_VersionSuffix}\" -p -t \"Development Build\" \"$Tools4Dev_PATH/.t4d/docker/build/tools4dev_${_Version}${_VersionSuffix}.tar\""
+                if [[ -e "$Tools4Dev_PATH/.t4d/docker/build/tools4dev_${_Version}${_VersionSuffix}.tar.sha" ]]; then
+                    echo "sha -> $(cat "$Tools4Dev_PATH/.t4d/docker/build/tools4dev_${_Version}${_VersionSuffix}.tar.sha")"
+                fi
+                _DockerContainer="$(docker ps | grep "tools4dev:$_Version${_VersionSuffix}" | cut -d ' ' -f1)"
+                docker stop $_DockerContainer
+                docker rm $_DockerContainer
             ;;
             run)
-                docker run -dt t4d > $Tools4Dev_PATH/.t4d/.containerID
+                docker run -dt tools4dev:$_Version${_VersionSuffix} > $Tools4Dev_PATH/.t4d/.containerID
             ;;
             exec)
                 if [[ -e "$Tools4Dev_PATH/.t4d/.containerID" ]]; then
@@ -135,7 +265,6 @@ case $1 in
             ;;
         esac
     ;;
-
     -path|path)
         set -e
         cd $2

@@ -1,5 +1,26 @@
 
 ### template-module
+* [_t4dUtilsModuleMain](G4d-template-module.md#_t4dUtilsModuleMain)
+    Module generator engine function
+
+* [_t4dUtilsModuleMainHeader](G4d-template-module.md#_t4dUtilsModuleMainHeader)
+    Template fonction to generate module header
+
+* [_t4dUtilsModuleMainFunction](G4d-template-module.md#_t4dUtilsModuleMainFunction)
+    Template fonction to generate module structure
+
+* [_t4dUtilsModuleMainCompletion](G4d-template-module.md#_t4dUtilsModuleMainCompletion)
+    Template fonction to generate module structure completion
+
+* [_t4dUtilsModuleMainDoc](G4d-template-module.md#_t4dUtilsModuleMainDoc)
+    Template fonction to generate module structure documentation
+
+* [_t4dUtilsModuleMainLogo](G4d-template-module.md#_t4dUtilsModuleMainLogo)
+    Template fonction to generate module logo
+
+* [_t4dUtilsModuleCreateFile](G4d-template-module.md#_t4dUtilsModuleCreateFile)
+    Template fonction to create module file
+
 
 ### template-project
 * [_t4dUtilsTemplateErrorCode](G4d-template-project.md#_t4dUtilsTemplateErrorCode)

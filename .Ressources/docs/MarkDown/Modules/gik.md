@@ -76,6 +76,8 @@ Show Option documentation
         >         -no-logo
 - **shasync**
     - _Checkout all project using .diff information will be DETACHED_
+- **tree**
+    - _Return tree of given folders_
 - **push**
     - _Push your work in your global project and every sub-repositories_
         >        * -f

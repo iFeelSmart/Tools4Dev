@@ -45,10 +45,10 @@
 #       * T4D_ROOT_PATH            = Set Tools4Dev install path (default is $HOME/.tools4dev)
 #       * INSTALL_ROOT              = On linux system, also create simlink for root user
 #       * CSH                       = Configure zsh to be your default shell
-#       * KEEP_ZSHRC                = if true do not install new zshrc file
 #       * T4D_REMOTE                = set Tools4Dev Remote URL
 #       * T4D_CLONE_ARGS            = transfert args to wks clone
 #       * T4D_NATIVE                = set to false if you don't want t4d to be natively loaded
+#       * T4D_PROMPT                = set to false if you don't want t4d to load his own custom prompt
 #       * T4D_BRANCH                = set Tools4Dev branch to install
 #       * T4D_REPO                  = set Tools4Dev Repo Path
 #       * T4D_MANIFEST              = if not empty and valid, will download manifest file and link to it
@@ -79,12 +79,15 @@ pwarning="\033[1;33m [WARNING]\033[m"
 
 #Testing echo statement to allow color management in output and avoid "-e" at beginning on line
 if [[ "$(echo -e toto)" == "toto" ]]; then
-    alias echo='echo -e'
+    _t4dDebugLog(){
+        echo -e "$(printf "%-4s" ' ')$1 ${@:2}"
+    }
+else
+    _t4dDebugLog(){
+        echo $(echo $echoArg) "$(printf "%-4s" ' ')$1 ${@:2}"
+    }
 fi
 
-_t4dDebugLog(){
-    echo "$(printf "%-4s" ' ')$1 ${@:2}"
-}
 
 _t4dCheckCommand(){
     local _return=0
@@ -115,14 +118,14 @@ else
     DEFAULT_T4D_BRANCH="${T4D_BRANCH:-main}"
 fi
 
+T4D_VERSION_SUFFIX="${T4D_VERSION_SUFFIX}"
 T4D_BRANCH="${DEFAULT_T4D_BRANCH:-main}"
 T4D_ROOT_PATH="${T4D_ROOT_PATH:-"$HOME/.tools4dev"}"
-Tools4Dev_PATH="${T4D_ROOT_PATH}/src"
-INSTALL_ROOT="${INSTALL_ROOT:-false}"
-SKIP_T4D_CLONE="${SKIP_T4D_CLONE:-false}"
-T4D_NATIVE="${T4D_NATIVE:-true}"
-CSH="${CSH:-true}"
-KEEP_ZSHRC="${KEEP_ZSHRC:-false}"
+Tools4Dev_PATH="${T4D_ROOT_PATH}/src-devel"
+FORCE_T4D_CLONE="${FORCE_T4D_CLONE:-false}"
+T4D_NATIVE="${T4D_NATIVE:-undefined}"
+T4D_PROMPT="${T4D_PROMPT:-true}"
+CSH="${CSH:-false}"
 ZSH_PATH="$(command -v zsh || true)"
 
 
@@ -134,8 +137,12 @@ install_tools4dev(){
     git clone -b ${T4D_BRANCH} "${T4D_REMOTE}${T4D_REPO}" "$(basename $Tools4Dev_PATH)" && _t4dDebugLog $psucceed "Repository Cloned"
     if [[ -e "$HOME/.t4d-$USER-backup.env" ]]; then
         _t4dDebugLog $plog "Restoring t4d-$USER-backup file"
-        cp "$HOME/.t4d-$USER-backup.env" "$Tools4Dev_PATH/.$USER.env"
+        cp "$HOME/.t4d-$USER-backup.env" "$T4D_ROOT_PATH/.$USER.env"
     fi
+
+    echo "Patching VERSION with suffix $T4D_VERSION_SUFFIX"
+    cat $Tools4Dev_PATH/VERSION |  sed "s|\$|$T4D_VERSION_SUFFIX|g" > $Tools4Dev_PATH/VERSION.tmp
+    mv $Tools4Dev_PATH/VERSION.tmp $Tools4Dev_PATH/VERSION
 }
 
 config_shell(){
@@ -143,90 +150,96 @@ config_shell(){
 
 }
 
-config_zshrc(){
+config_rc(){
     local _prefix
-    local _path="${1:-$HOME}"
-    local _oldZshrc=".zshrc_$(date +%Y-%m-%d_%H-%M-%S)"
+    local _path="${1:-$T4D_ROOT_PATH}"
+    local _oldRc=".t4drc_$(date +%Y-%m-%d_%H-%M-%S)"
+    local _ZSHRC_PATH="/usr/bin/env"
 
-    if [[ -e "$_path/.zshrc" ]]; then
-        _t4dDebugLog $plog "Creating $_path/.zshrc backup's file in $T4D_ROOT_PATH/$_oldZshrc"
-        if [[ -e "$HOME/.oh-my-zsh" ]]; then
-            local _answer
-            echo "Press enter to continue, Ctrl+C to abort"
-            read
-        fi
-        cp -f "$_path/.zshrc" "$T4D_ROOT_PATH/$_oldZshrc"
+    if [[ -e "$Tools4Dev_PATH/.t4drc" ]]; then
+        _t4dDebugLog $plog "Creating $Tools4Dev_PATH/.t4drc backup's file in $Tools4Dev_PATH/$_oldRc"
+        cp -f "$Tools4Dev_PATH/.t4drc" "$Tools4Dev_PATH/$_oldRc"
     fi
 
-    if [[ "$KEEP_ZSHRC" == "false" ]]; then
-        _t4dDebugLog $plog "Zshrc Setup"
-        cat "$Tools4Dev_PATH/Templates/zshrc.env" | sed "s|<T4D_ROOT_PATH>|$T4D_ROOT_PATH|g" \
-                                                  | sed "s|<T4D_NATIVE>|$T4D_NATIVE|g" \
-                                                  | sed "s|<ZSH_PATH>|$ZSH_PATH|g" > "$_path/.zshrc" \
-                                                 && _t4dDebugLog $psucceed "$Tools4Dev_PATH/Templates/zshrc.env copied in ${_path}/.zshrc "
+    _t4dDebugLog $plog ".t4drc Setup"
+    if [[ -e "$_ZSHRC_PATH" ]]; then
+        _ZSHRC_PATH="$_ZSHRC_PATH zsh"
     else
-        if [[ "$(cat ${_path}/.zshrc | grep '#Tools4Dev')" != "" ]]; then
-            _t4dDebugLog $pskip "Tools4Dev setup detected in $_path/.zshrc"
-        else
-            _t4dDebugLog $plog "Zshrc Setup ( Oh-My-Zsh Compatible )"
-            ( cat "$Tools4Dev_PATH/Templates/zshrc.env" | grep -v '^#!' \
-                                                        | sed "s|<T4D_ROOT_PATH>|$T4D_ROOT_PATH|g" \
-                                                        | sed "s|<T4D_NATIVE>|$T4D_NATIVE|g" \
-                                                        | sed "s|<ZSH_PATH>|$ZSH_PATH|g"  >> "${_path}/.zshrc" ) && _t4dDebugLog $psucceed "$Tools4Dev_PATH/Templates/zshrc.env added at the end of $_path/.zshrc"
+        _ZSHRC_PATH="$ZSH_PATH"
+    fi
+    cat "$Tools4Dev_PATH/Templates/t4drc.env" | sed "s|<T4D_ROOT_PATH>|$T4D_ROOT_PATH|g" \
+                                                | sed "s|$HOME|\$HOME|g" \
+                                                | sed "s|<T4D_NATIVE>|$T4D_NATIVE|g" \
+                                                | sed "s|<T4D_USE_ZSHRC>|$T4D_USE_ZSHRC|g" \
+                                                | sed "s|<T4D_PROMPT>|$T4D_PROMPT|g" \
+                                                | sed "s|<ZSH_PATH>|$_ZSHRC_PATH|g" > "$Tools4Dev_PATH/.t4drc" \
+                                                && _t4dDebugLog $psucceed "$Tools4Dev_PATH/Templates/t4drc.env copied in $Tools4Dev_PATH/.t4drc"
+
+    cat $Tools4Dev_PATH/.t4drc
+    
+    t4d_link $_path
+
+
+    _t4dDebugLog $plog ".zshenv Setup"
+    if [[ "$(cat $HOME/.zshenv 2> /dev/null | grep 'Tools4Dev')" == "" ]]; then
+        if [[ "$T4D_NATIVE" != "false" ]]; then
+            if [[ "$T4D_NATIVE" == "undefined" ]]; then
+                echo "Would you like to access T4D loaded natively for zsh ? Enter to proceed, any char to skip"
+                read -N 1 T4D_NATIVE
+            fi
+            if [[ "${T4D_NATIVE:-true}" == "true" ]]; then 
+                echo "#Tools4Dev" >> $HOME/.zshenv
+                echo "if [[ -e \"$_path/.zshrc\" ]]; then" >> $HOME/.zshenv
+                echo "  export ZDOTDIR=$_path" >> $HOME/.zshenv
+                echo "fi" >> $HOME/.zshenv
+            fi
         fi
     fi
 }
 
-config_root(){
-    _t4dDebugLog $plog "Configuring Tools4Dev for root user, it will require $_su rights. Press enter to continue" && read
-    local _simLink="/root/.tools4dev"
-
-    if [[ -d "/root" ]]; then
-        config_shell root
-        _t4dDebugLog $pinfo "Request $_su rights to create simlink $_simLink -> $T4D_ROOT_PATH, press enter to continue" && read
-        $_su ln -sfn $T4D_ROOT_PATH $_simLink && _t4dDebugLog $psucceed "$_simLink -> $T4D_ROOT_PATH"
-        if [[ ! -e "/root/.zshrc" ]]; then
-             _t4dDebugLog $pinfo "Request $_su rights to install .zshrc for root user, press enter to continue" && read
-            $_su cat "$Tools4Dev_PATH/Templates/zshrc.env"  | sed "s|<T4D_ROOT_PATH>|/root/.tools4dev|g" \
-                                                            | sed "s|<T4D_NATIVE>|$T4D_NATIVE|g" \
-                                                            | sed "s|<ZSH_PATH>|$ZSH_PATH|g" | $_su tee "/root/.zshrc" > /dev/null \
-                                                            && _t4dDebugLog $psucceed "$Tools4Dev_PATH/Templates/zshrc.env copied in /root/.zshrc "
-        fi
-    else
-        _t4dDebugLog $pskip "/root does not exist"
+t4d_link(){
+    local _path="${1:-$T4D_ROOT_PATH}"
+    cd $_path
+    mkdir -p completions bin lib team
+    if [[ "$Tools4Dev_PATH" != "$_path/src" ]]; then
+        ln -sfvn "$Tools4Dev_PATH" "$_path/src"
     fi
-}
-
-wks_clone(){
-    mkdir -p $Tools4Dev_PATH/Team
-    if [[ "$T4D_MANIFEST" != "" ]]; then
-        if [[ -e "$T4D_MANIFEST" ]]; then
-            _t4dDebugLog $plog "Using $T4D_MANIFEST as manifest.xml"
-            ln -sfn "$T4D_MANIFEST" "$Tools4Dev_PATH/manifest.xml"
-        elif [[ "$(echo $T4D_MANIFEST | grep '^http')" != "" ]]; then
-            _t4dDebugLog $plog "Downloading $T4D_MANIFEST as manifest.xml"
-            curl -fsSl "$T4D_MANIFEST" > "$Tools4Dev_PATH/.t4d-manifest.xml"
-            ln -sfn "$Tools4Dev_PATH/.t4d-manifest.xml" "$Tools4Dev_PATH/manifest.xml"
-        else
-            _t4dDebugLog $pwarning "Unknown type of manifest.xml file - $T4D_MANIFEST -"
-            _t4dDebugLog $plog "Initializing $Tools4Dev_PATH/Team/Minimal"
-            cp -rf $Tools4Dev_PATH/Templates/Team-New $Tools4Dev_PATH/Team/Minimal
-            ln -sfn "$Tools4Dev_PATH/Team/Minimal/t4d-manifest.xml" "$Tools4Dev_PATH/manifest.xml"
-        fi
-        cd $Tools4Dev_PATH
-        zsh -c "$Tools4Dev_PATH/t4d wks clone $(echo $T4D_CLONE_ARGS)"
-    fi
+    ln -sfvn "src/.t4drc" "${_path}/.zshrc"
+    ln -sfvn "../src/t4d" "$_path/bin/t4d"
+    ln -sfvn "src/Templates/init.env" "$_path/init"
+    ln -sfvn "../src/Templates/Team-New" "$_path/team/Default"
+    ln -sfvn "../src/Templates/Team-New/t4d-manifest" "$_path/manifest.xml"
 }
 
 logo(){
+    if [[ "$(echo -e toto)" == "toto" ]]; then
+        echo -e "\033[1;32m            _____            _     _  _     ___           \033[m"
+        echo -e "\033[1;32m           /__   \___   ___ | |___| || |   /   \_____   __\033[m"
+        echo -e "\033[1;32m             / /\/ _ \ / _ \| / __| || |_ / /\ / _ \ \ / /\033[m"
+        echo -e "\033[1;32m            / / | (_) | (_) | \__ \__   _/ /_//  __/\ V / \033[m"
+        echo -e "\033[1;32m            \/   \___/ \___/|_|___/  |_|/___ / \___| \_/  \033[m"
+        echo -e ""
+    else
+        echo "\033[1;32m            _____            _     _  _     ___           \033[m"
+        echo "\033[1;32m           /__   \___   ___ | |___| || |   /   \_____   __\033[m"
+        echo "\033[1;32m             / /\/ _ \ / _ \| / __| || |_ / /\ / _ \ \ / /\033[m"
+        echo "\033[1;32m            / / | (_) | (_) | \__ \__   _/ /_//  __/\ V / \033[m"
+        echo "\033[1;32m            \/   \___/ \___/|_|___/  |_|/___ / \___| \_/  \033[m"
+        echo ""
+    fi
+}
 
-    echo "\033[1;32m            _____            _     _  _     ___           \033[m"
-    echo "\033[1;32m           /__   \___   ___ | |___| || |   /   \_____   __\033[m"
-    echo "\033[1;32m             / /\/ _ \ / _ \| / __| || |_ / /\ / _ \ \ / /\033[m"
-    echo "\033[1;32m            / / | (_) | (_) | \__ \__   _/ /_//  __/\ V / \033[m"
-    echo "\033[1;32m            \/   \___/ \___/|_|___/  |_|/___ / \___| \_/  \033[m"
-    echo ""
-
+clean_tools4dev(){
+    if [[ -e "$T4D_ROOT_PATH/.$USER.env" ]]; then
+        _t4dDebugLog $plog "Creating user back-up $HOME/.t4d-$USER-backup.env"
+        cp "$T4D_ROOT_PATH/.$USER.env" "$HOME/.t4d-$USER-backup.env"
+    elif [[ -e "$Tools4Dev_PATH/.$USER.env" ]]; then
+        _t4dDebugLog $plog "Creating user back-up $HOME/.t4d-$USER-backup.env"
+        cp "$Tools4Dev_PATH/.$USER.env" "$HOME/.t4d-$USER-backup.env"
+    fi
+    
+    _t4dDebugLog $plog "Folder $T4D_ROOT_PATH will be deleted, enter to proceed or Ctrl+C to abort" && read
+    rm -rf "${T4D_ROOT_PATH}"
 }
 
 main(){
@@ -240,6 +253,9 @@ main(){
 
     if [[ ! -d "${T4D_ROOT_PATH}/src" ]]; then
         install_tools4dev
+    elif [[ "$FORCE_T4D_CLONE" == "true" ]]; then
+        clean_tools4dev
+        install_tools4dev
     elif [[ "$SKIP_T4D_CLONE" == "true" ]]; then
         _t4dDebugLog $pskip "Folder $T4D_ROOT_PATH already exist"
     else
@@ -247,11 +263,12 @@ main(){
         return 1
     fi
     
-    if [[ "$KEEP_ZSHRC"   == "false" ]]; then    config_zshrc $HOME; fi
-    if [[ "$CSH"          == "true"  ]]; then    config_shell $USER; fi
-    if [[ "$INSTALL_ROOT" == "true"  ]]; then    config_root; fi
-
-    wks_clone
+    config_rc $T4D_ROOT_PATH
+    if [[ "$CSH"        == "true"  ]]; then    config_shell $USER; fi
+    if [[ "$T4D_NATIVE" == "false" ]]; then
+        _t4dDebugLog $plog "You can now add T4D to your path in your $HOME/.zshenv or .zshrc file"
+        _t4dDebugLog $plog "echo \"export PATH=\$PATH:$T4D_ROOT_PATH/bin\" >> \$HOME/.zshenv"
+    fi
 }
 
 main "$@"
