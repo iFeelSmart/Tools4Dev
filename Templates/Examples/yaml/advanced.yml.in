@@ -1,4 +1,6 @@
 |---|0|OTHER||
+||0|NONE||
+.version|2§DOT§1|0|KEY|version|§DASH§
 >name~Set§SPACE§up§SPACE§DB§SPACE§server~|Set§SPACE§up§SPACE§DB§SPACE§server|0|LIST|name|§DASH§
 >name~Set§SPACE§up§SPACE§DB§SPACE§server~.hosts|§DQUOTE§{{§SPACE§myhosts§SPACE§§PIPE§§SPACE§default(§SQUOTE§§DASH§dbservers§SQUOTE§)§SPACE§}}§DQUOTE§|2|KEY|hosts|§DASH§
 >name~Set§SPACE§up§SPACE§DB§SPACE§server~.become|yes|2|KEY|become|§DASH§
