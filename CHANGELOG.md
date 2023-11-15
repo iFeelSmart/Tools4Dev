@@ -155,3 +155,10 @@
 - _improvements_ wks clone can now clone only a filtered list of manifest projects
 
 ## 7.1.0
+- **bugfix**     documentation with context like *) was not parsed properly
+- **bugfix**     add backward compat for jira api using JIRA_SERVER_URL instead of _t4dJiraBaseURL
+- **bugfix**     documentation with context like *) was not parsed properly
+- **bugfix**     add backward compat for jira api using JIRA_SERVER_URL instead of _t4dJiraBaseURL
+- _improvements_ add ability to cat output or json path after jira api call
+- _improvements_ add setJirapassword inside checkCredentials to avoid jira api try to use wrong password
+- **bugfix**     docker build was not building tag properly
