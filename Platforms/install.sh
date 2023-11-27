@@ -208,7 +208,7 @@ t4d_link(){
     ln -sfvn "../src/t4d" "$_path/bin/t4d"
     ln -sfvn "src/Templates/init.env" "$_path/init"
     ln -sfvn "../src/Templates/Team-New" "$_path/team/Default"
-    ln -sfvn "../src/Templates/Team-New/t4d-manifest" "$_path/manifest.xml"
+    ln -sfvn "../src/Templates/Team-New/t4d-manifest.xml" "$_path/manifest.xml"
 }
 
 logo(){

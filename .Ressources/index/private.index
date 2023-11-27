@@ -374,6 +374,7 @@ Source/Jira/jira-release:_t4dJiraReleaseLinkIssueJson
 Source/Jira/jira-utils:_t4dSrcJiraCheckCredentials
 Source/Jira/jira-utils:_t4dSrcJiraGenerateJsonLogin
 Source/Jira/jira-utils:_t4dSrcJiraGetUsers
+Source/Jira/jira-utils:_t4dSrcJiraParseOutput
 Source/Jira/jira-utils:_t4dSrcJiraSetPassword
 Source/Jira/jira-utils:_t4dSrcJiraTestURL
 Source/Kubernetes/kubernetes-info:_t4dSrcKubeGetIngress
@@ -448,6 +449,7 @@ Engine/Documentation/_main_:_t4dDocConvertContentInto
 Engine/Documentation/_main_:_t4dDocGetAliasContent
 Engine/Documentation/_main_:_t4dDocGetAliases
 Engine/Documentation/_main_:_t4dDocGetAvailableModules
+Engine/Documentation/_main_:_t4dDocGetAvailableOptions
 Engine/Documentation/_main_:_t4dDocGetDependencies
 Engine/Documentation/_main_:_t4dDocGetFunctionContent
 Engine/Documentation/_main_:_t4dDocGetFunctionsList
