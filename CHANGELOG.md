@@ -162,3 +162,6 @@
 - _improvements_ add setJirapassword inside checkCredentials to avoid jira api try to use wrong password
 - **bugfix**     docker build was not building tag properly
 - **bugfix**     team-new manifest simlink
+
+
+## 7.2.0
