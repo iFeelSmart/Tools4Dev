@@ -14,7 +14,6 @@
     <project lock="true"  key="T4D-Suites"  remote="origin" default="default" name="T4D-Module-Nvm"             revision="master"   path="lib/nvm" />
     <project lock="true"  key="T4D-Suites"  remote="origin" default="master" name="t4d-ressources"              revision="master"   path="Utils/assets" />
     <symbolic key="LOCAL" name="zshrc"      origin="$Tools4Dev_PATH/Team/Minimal/_t4d_/users" path="Users" />
-    <symbolic key="LOCAL" name="zshrc"      origin="$HOME/.zshrc"           path="$WS_ROOT/.zshrc" />
     <symbolic key="LOCAL" name="t4d"        origin="$Tools4Dev_PATH/t4d"    path="$T4D_ROOT_PATH/bin/t4d" />
     <symbolic key="LOCAL" name="init"       origin="$Tools4Dev_PATH/Templates/init.env" path="$T4D_ROOT_PATH/init" />
 </manifest>
