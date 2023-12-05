@@ -105,6 +105,7 @@ Source/Common/system:_t4dSystemGetOsArch
 Source/Common/system:_t4dSystemGetVariable
 Source/Common/system:_t4dSystemHealthInfo
 Source/Common/system:_t4dSystemInstallDeps
+Source/Common/system:_t4dSystemKillProcess
 Source/Common/system:_t4dSystemLineCount
 Source/Common/system:_t4dSystemLineInFiles
 Source/Common/system:_t4dSystemSilentCommand
