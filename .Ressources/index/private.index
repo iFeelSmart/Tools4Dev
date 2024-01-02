@@ -12,6 +12,8 @@ Source/Ansible/ansible-inventory:_t4dSrcAnsibleInventoryFind
 Source/Ansible/ansible-inventory:_t4dSrcAnsibleSortGroups
 Source/Ansible/_main_:_t4dSrcAnsibleInventory
 Source/Apple/apple-api:_t4dAppleApiCall
+Source/Apple/apple-xctrace:_t4dSrcAppleXcrun
+Source/Apple/apple-xctrace:_t4dSrcAppleXctraceGetUuid
 Source/Apple/_main_:_t4dSrcAppleUploadOnTestFlight
 Source/Apple/_main_:_t4sSrcApplePrintPlistForUpload
 Source/Aws/aws-api:_t4dSrcAwsCp
@@ -510,6 +512,7 @@ Engine/Log/checkIfExist:_t4dCheckVersion
 Engine/Log/checkIfExist:_t4dCheckWarning
 Engine/Log/colors:_t4dColorDisabled
 Engine/Log/colors:_t4dColorInfo
+Engine/Log/debug:_t4dDebugGetTime
 Engine/Log/debug:_t4dDebugLog
 Engine/Log/debug:_t4dDebugLogInProgress
 Engine/Log/debug:_t4dDebugTimerReset

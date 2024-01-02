@@ -70,6 +70,9 @@
 * [_t4dDebugTimerReset](Log-debug.md#_t4dDebugTimerReset)
     Reset _t4dDebugLogInProgress with end of line statement
 
+* [_t4dDebugGetTime](Log-debug.md#_t4dDebugGetTime)
+    description
+
 
 ### prompt
 * [_t4dPromptLine](Log-prompt.md#_t4dPromptLine)

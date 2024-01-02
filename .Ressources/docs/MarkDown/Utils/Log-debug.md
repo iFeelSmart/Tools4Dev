@@ -28,3 +28,10 @@
 
 
 
+# _t4dDebugGetTime
+
+## Synopsis
+<p>description</p>
+
+
+
