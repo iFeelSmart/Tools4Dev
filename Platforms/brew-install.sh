@@ -68,8 +68,9 @@ main(){
             --home*)
                 _home="$(echo $1 | cut -d '=' -f2)"
             ;;
-            --devel)
-                _suffix="-devel"
+            --suffix)
+                _suffix="-$2"
+                shift
             ;;
         esac
         shift
