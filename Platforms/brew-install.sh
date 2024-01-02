@@ -23,6 +23,8 @@ pwarning="\033[1;33m [WARNING]\033[m"
 
 install(){
     local _InstallDIR="$1"
+    local _home="$2"
+    local _suffix="$3"
     local _SRC_DIR="$PWD/src-devel"
     mkdir -p $_InstallDIR
     if [[ -e "$PWD/src-lts" ]] && [[ "$_InstallDIR" != "$_home/.tools4dev" ]] && [[ "$PWD" != "$_home/.tools4dev" ]]; then
@@ -51,12 +53,13 @@ install(){
     fi
 
     mkdir -p $_InstallDIR/bin
-    ln -sfvn "$_InstallDIR/src/t4d" "$_InstallDIR/bin/t4d"
+    ln -sfvn "$_InstallDIR/src/t4d" "$_InstallDIR/bin/t4d${_suffix}"
 }
 
 main(){
     _prefix="$HOME/.tools4dev"
     _home="$HOME"
+    _suffix=""
     while [[ "$@" != "" ]]; do
         case "$1" in
             --prefix*)
@@ -65,11 +68,14 @@ main(){
             --home*)
                 _home="$(echo $1 | cut -d '=' -f2)"
             ;;
+            --devel)
+                _suffix="-devel"
+            ;;
         esac
         shift
     done
 
-    install "$_prefix" "$_home"
+    install "$_prefix" "$_home" "$_suffix"
 }
 
 main $@
